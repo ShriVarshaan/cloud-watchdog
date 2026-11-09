@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-import type { WatchdogApi } from '../shared/api'
+import type { WatchdogApi } from '../shared/ipc'
 
 declare global {
   interface Window {

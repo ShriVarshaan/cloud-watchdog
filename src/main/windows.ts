@@ -12,6 +12,9 @@ const POPOVER_SIZE = { width: 360, height: 480 }
 // the click that follows, or the popover would immediately reopen.
 const REOPEN_GUARD_MS = 250
 
+/** The built renderer page. The IPC sender check accepts messages from this file only. */
+export const RENDERER_FILE = join(import.meta.dirname, '../renderer/index.html')
+
 let mainWindow: BrowserWindow | null = null
 let popover: BrowserWindow | null = null
 let popoverHiddenAt = 0
@@ -35,7 +38,7 @@ function loadView(win: BrowserWindow, view: View): Promise<void> {
   if (devServer && !app.isPackaged) {
     return win.loadURL(`${devServer}?view=${view}`)
   }
-  return win.loadFile(join(import.meta.dirname, '../renderer/index.html'), { query: { view } })
+  return win.loadFile(RENDERER_FILE, { query: { view } })
 }
 
 /** Lets windows really close when the app is quitting, instead of hiding. */
