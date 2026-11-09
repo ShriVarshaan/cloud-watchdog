@@ -1,0 +1,63 @@
+# Dependencies and build output
+node_modules/
+out/
+dist/
+release/
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Secrets and credentials: never commit
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+.aws/
+credentials
+**/aws-config*
+*.credentials.json
+
+# Local scan databases and app data
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite
+*.sqlite3
+*.sqlite-*
+
+# Raw (unsanitised) AWS fixture recordings
+tests/fixtures/_raw/
+
+# Test output
+test-results/
+playwright-report/
+blob-report/
+coverage/
+
+# Installed third-party agent skills (reinstall with docs/SKILLS.md)
+.claude/skills/
+.agents/
+.agent/
+.skills/
+.cursor/
+.windsurf/
+.codex/
+.gemini/
+.github/skills/
+
+# Local Claude Code settings
+.claude/settings.local.json
+
+# Editor and OS
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
