@@ -94,16 +94,27 @@ function scanWith(http: ReturnType<typeof fakeHttp>) {
   return createScanEngine({ clients, scanners: [ec2Instances], loadPrevious: () => [] }).run()
 }
 
-/** The SDK waits between retries. Fake time is moved on until the scan settles. */
+/**
+ * The SDK waits between retries. Fake time is moved on until the scan settles.
+ *
+ * The SDK also does real work that fake time cannot hurry (it reads the AWS
+ * config files from disk), so each step first lets the real event loop run.
+ * A fixed number of steps could run out before that work finished, leaving
+ * the retry timer unfired for ever.
+ */
 async function settle<T>(promise: Promise<T>): Promise<T> {
   let settled = false
   const tracked = promise.finally(() => (settled = true))
   tracked.catch(() => {})
-  for (let i = 0; i < 200 && !settled; i++) await vi.advanceTimersByTimeAsync(1_000)
+  while (!settled) {
+    await new Promise((resolve) => setImmediate(resolve))
+    await vi.advanceTimersByTimeAsync(1_000)
+  }
   return tracked
 }
 
-beforeEach(() => void vi.useFakeTimers())
+// Only the timers the SDK's retry delay uses are faked; setImmediate stays real for settle().
+beforeEach(() => void vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout', 'Date'] }))
 afterEach(() => void vi.useRealTimers())
 
 describe('throttling through the real SDK retry code', () => {
