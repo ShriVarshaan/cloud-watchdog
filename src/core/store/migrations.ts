@@ -139,6 +139,12 @@ export const MIGRATIONS: readonly Migration[] = [
         error        TEXT
       ) STRICT;
     `
+  },
+  {
+    // The cache holds one price per unit, and not every unit is an hour
+    // (storage is priced per GB-month). The unit is part of price_key.
+    version: 2,
+    sql: 'ALTER TABLE price_cache RENAME COLUMN hourly_usd TO unit_usd;'
   }
 ]
 

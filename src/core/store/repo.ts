@@ -32,6 +32,17 @@ export interface Repo {
 
   addPlanSnapshot(accountId: string, plan: PlanState): void
   getLatestPlanSnapshot(accountId: string): PlanState | null
+
+  /** A public list price fetched earlier, however old. The caller decides whether it is still fresh. */
+  getCachedPrice(priceKey: string): CachedPrice | null
+  putCachedPrice(priceKey: string, price: { unitUsd: number; sku: string | null }, fetchedAt: string): void
+}
+
+export interface CachedPrice {
+  /** USD per unit. The unit (hour, GB-month, ...) is part of the price key. */
+  unitUsd: number
+  sku: string | null
+  fetchedAt: string
 }
 
 type ScanRow = {
@@ -328,6 +339,28 @@ export function createRepo(db: Db): Repo {
         expiresAt: row.expires_at,
         fetchedAt: row.fetched_at
       }
+    },
+
+    getCachedPrice(priceKey) {
+      const row = db.get<{ unit_usd: number; sku: string | null; fetched_at: string }>(
+        'SELECT unit_usd, sku, fetched_at FROM price_cache WHERE price_key = ?',
+        priceKey
+      )
+      return row ? { unitUsd: row.unit_usd, sku: row.sku, fetchedAt: row.fetched_at } : null
+    },
+
+    putCachedPrice(priceKey, price, fetchedAt) {
+      db.run(
+        `INSERT INTO price_cache (price_key, unit_usd, sku, fetched_at) VALUES (?, ?, ?, ?)
+         ON CONFLICT (price_key) DO UPDATE SET
+           unit_usd = excluded.unit_usd,
+           sku = excluded.sku,
+           fetched_at = excluded.fetched_at`,
+        priceKey,
+        price.unitUsd,
+        price.sku,
+        fetchedAt
+      )
     }
   }
 }

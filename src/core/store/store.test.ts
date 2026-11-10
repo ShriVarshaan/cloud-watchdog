@@ -285,3 +285,36 @@ describe('repo: plan snapshots', () => {
     expect(repo.getLatestPlanSnapshot('999988887777')).toBeNull()
   })
 })
+
+describe('repo: price cache', () => {
+  const KEY = 'AmazonEC2|instanceType=t3.micro&regionCode=eu-west-1|BoxUsage:t3.micro|hour'
+
+  it('returns null for a price that was never stored', () => {
+    expect(repo.getCachedPrice(KEY)).toBeNull()
+  })
+
+  it('round-trips a unit price with its SKU and fetch time', () => {
+    repo.putCachedPrice(KEY, { unitUsd: 0.0114, sku: 'ABCDEFGH12345678' }, '2026-11-10T09:00:00.000Z')
+    expect(repo.getCachedPrice(KEY)).toEqual({
+      unitUsd: 0.0114,
+      sku: 'ABCDEFGH12345678',
+      fetchedAt: '2026-11-10T09:00:00.000Z'
+    })
+  })
+
+  it('replaces the stored price when it is fetched again', () => {
+    repo.putCachedPrice(KEY, { unitUsd: 0.0114, sku: 'OLD' }, '2026-11-01T09:00:00.000Z')
+    repo.putCachedPrice(KEY, { unitUsd: 0.012, sku: null }, '2026-11-10T09:00:00.000Z')
+    expect(repo.getCachedPrice(KEY)).toEqual({ unitUsd: 0.012, sku: null, fetchedAt: '2026-11-10T09:00:00.000Z' })
+  })
+
+  it('keeps prices cached by the first schema version', () => {
+    const old = openDb(':memory:')
+    migrate(old, MIGRATIONS.slice(0, 1))
+    old.run("INSERT INTO price_cache (price_key, hourly_usd, sku, fetched_at) VALUES (?, 0.045, 'SKU1', '2026-11-09T00:00:00.000Z')", KEY)
+
+    migrate(old)
+    expect(createRepo(old).getCachedPrice(KEY)).toEqual({ unitUsd: 0.045, sku: 'SKU1', fetchedAt: '2026-11-09T00:00:00.000Z' })
+    old.close()
+  })
+})
