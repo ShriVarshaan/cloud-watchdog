@@ -1,0 +1,144 @@
+// Builds src/core/pricing/bundledPrices.json, the small price snapshot the app
+// falls back to when it cannot reach the Price List API. Prices from it are
+// always shown as estimates.
+//
+//   npm run record-prices -- --profile <name>     (writes tests/fixtures/_raw/pricing/)
+//   npm run build-bundled-prices
+//
+// It calls no AWS API. It prices a list of common resources with the app's
+// own price plans (priceKeys.ts) against the recording, so the snapshot keys
+// are exactly the keys the engine will look up. A resource whose price is not
+// in the recording is reported and left out.
+
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { join } from 'node:path'
+import { planContext, pricePlan } from '../src/core/pricing/priceKeys.ts'
+import { selectUnitPrice } from '../src/core/pricing/priceListClient.ts'
+import { priceQueryKey, type PriceQuery } from '../src/core/pricing/query.ts'
+import type { AttrValue, Resource, ResourceKind } from '../src/shared/types.ts'
+
+const RAW_DIR = join('tests', 'fixtures', '_raw', 'pricing')
+const OUT_FILE = join('src', 'core', 'pricing', 'bundledPrices.json')
+
+interface Product {
+  product: { productFamily?: string; attributes: Record<string, string> }
+  serviceCode: string
+  publicationDate?: string
+}
+
+function common(region: string): Resource[] {
+  const make = (kind: ResourceKind, state: string, attrs: Record<string, AttrValue>): Resource => ({
+    key: `0:${kind}:${region}:x`,
+    kind,
+    region,
+    id: 'x',
+    state,
+    attrs
+  })
+  const resources: Resource[] = []
+
+  for (const instanceType of ['t3.micro', 'g4dn.xlarge']) {
+    for (const usageOperation of ['RunInstances', 'RunInstances:0002']) {
+      resources.push(
+        make('ec2-instance', 'running', {
+          instanceType,
+          usageOperation,
+          tenancy: 'default',
+          lifecycle: 'on-demand',
+          // Also brings in the in-use public IPv4 price.
+          publicIp: '198.51.100.1'
+        })
+      )
+    }
+  }
+  for (const volumeType of ['gp2', 'gp3', 'io1', 'io2', 'st1', 'sc1', 'standard']) {
+    // Above every baseline, so the IOPS and throughput prices are included too.
+    resources.push(make('ebs-volume', 'available', { volumeType, sizeGb: 1, iops: 3001, throughputMibps: 126 }))
+  }
+  resources.push(make('elastic-ip', 'unassociated', { publicIp: '198.51.100.2', publicIpv4Pool: 'amazon' }))
+  resources.push(make('nat-gateway', 'available', { availabilityMode: 'zonal' }))
+  for (const instanceClass of ['db.t3.micro', 'db.t4g.micro']) {
+    for (const engine of ['mysql', 'postgres', 'mariadb']) {
+      for (const multiAz of [false, true]) {
+        for (const storageType of ['gp2', 'gp3']) {
+          resources.push(
+            make('rds-instance', 'available', { instanceClass, engine, multiAz, storageType, allocatedStorageGb: 1, clusterId: null })
+          )
+        }
+      }
+    }
+  }
+  for (const type of ['application', 'network', 'gateway', 'classic']) {
+    resources.push(make('load-balancer', 'active', { type, scheme: 'internal' }))
+  }
+  resources.push(
+    make('sagemaker-endpoint', 'in-service', {
+      variants: JSON.stringify([{ name: 'v', instanceType: 'ml.t2.medium', instanceCount: 1, serverless: false, shadow: false }])
+    })
+  )
+  return resources
+}
+
+function main(): void {
+  let files: string[]
+  try {
+    files = readdirSync(RAW_DIR).filter((file) => file.endsWith('.json'))
+  } catch {
+    files = []
+  }
+  if (files.length === 0) {
+    console.error(`No recording in ${RAW_DIR}. Run "npm run record-prices -- --profile <name>" first.`)
+    process.exitCode = 1
+    return
+  }
+
+  const products: Product[] = []
+  const regions = new Set<string>()
+  for (const file of files) {
+    const recording = JSON.parse(readFileSync(join(RAW_DIR, file), 'utf8')) as { filters: { regionCode: string }; products: Product[] }
+    regions.add(recording.filters.regionCode)
+    products.push(...recording.products)
+  }
+
+  /** What GetProducts would return: every filter attribute equal to its value. */
+  const answer = (query: PriceQuery) =>
+    products.filter(
+      (item) =>
+        item.serviceCode === query.serviceCode &&
+        Object.entries(query.filters).every(([field, value]) =>
+          field === 'productFamily' ? item.product.productFamily === value : item.product.attributes[field] === value
+        )
+    )
+
+  const prices: Record<string, number> = {}
+  const missing = new Set<string>()
+  for (const region of [...regions].sort()) {
+    const resources = common(region)
+    const context = planContext(resources)
+    for (const resource of resources) {
+      for (const { query } of pricePlan(resource, context).components) {
+        const key = priceQueryKey(query)
+        const found = selectUnitPrice(answer(query), query)
+        if (found) prices[key] = found.unitUsd
+        else missing.add(key)
+      }
+    }
+  }
+
+  const published = products.map((item) => item.publicationDate ?? '').sort().at(-1) ?? ''
+  const snapshot = {
+    note: 'Generated by scripts/build-bundled-prices.ts from a Price List recording. Do not edit by hand.',
+    publishedByAws: published.slice(0, 10),
+    regions: [...regions].sort(),
+    prices: Object.fromEntries(Object.entries(prices).sort(([a], [b]) => (a < b ? -1 : 1)))
+  }
+  writeFileSync(OUT_FILE, JSON.stringify(snapshot, null, 2) + '\n')
+
+  console.log(`Wrote ${Object.keys(prices).length} price(s) for ${snapshot.regions.join(', ')} to ${OUT_FILE}`)
+  if (missing.size > 0) {
+    console.log(`Not in the recording, left out (${missing.size}):`)
+    for (const key of [...missing].sort()) console.log(`  ${key}`)
+  }
+}
+
+main()

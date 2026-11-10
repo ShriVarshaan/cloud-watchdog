@@ -21,7 +21,8 @@
     "test:e2e": "electron-vite build && playwright test",
     "check": "npm run typecheck && npm run lint && npm run test",
     "record-fixtures": "node scripts/record-fixtures.ts",
-    "record-prices": "node scripts/record-prices.ts"
+    "record-prices": "node scripts/record-prices.ts",
+    "build-bundled-prices": "node scripts/build-bundled-prices.ts"
   },
   "dependencies": {
     "@aws-sdk/client-ec2": "^3.1165.0",
