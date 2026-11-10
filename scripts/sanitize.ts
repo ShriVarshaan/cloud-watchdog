@@ -13,7 +13,8 @@
 //                                  image URIs, the name part of ARNs
 //   - tags                         every value; every key except Name and aws:*
 //   - e-mail addresses
-// `$metadata` (request ids) is dropped.
+// `$metadata` (request ids) and pagination tokens are dropped. A token is an
+// opaque blob; the Free Tier API's is base64 that contains the account id.
 //
 // This is a best effort, not a guarantee: it knows the fields of the calls the
 // app makes today. READ THE SANITISED FILES BEFORE COMMITTING THEM.
@@ -69,6 +70,9 @@ const IDENTIFIER_KEYS = new Set([
 
 /** The name inside an ELBv2 ARN's `app|net|gwy/<name>/<hash>`. Type and hash are not personal. */
 const ELB_V2_NAME = /^(?:app|net|gwy)\/([^/]+)\/[0-9a-f]+$/
+
+/** Pagination tokens (lower-cased keys). Never needed in a fixture, and not safe to keep. */
+const TOKEN_KEYS = new Set(['nexttoken', 'marker', 'nextmarker', 'paginationtoken', 'continuationtoken'])
 
 const TAG_LIST_KEYS = new Set(['tags', 'taglist', 'tagset'])
 
@@ -223,7 +227,7 @@ export function createSanitizer(realAccountId: string): (value: unknown) => unkn
     if (value !== null && typeof value === 'object') {
       const copy: Record<string, unknown> = {}
       for (const [childKey, child] of Object.entries(value)) {
-        if (childKey === '$metadata') continue
+        if (childKey === '$metadata' || TOKEN_KEYS.has(childKey.toLowerCase())) continue
         copy[childKey] = walk(child, childKey.toLowerCase())
       }
       return copy

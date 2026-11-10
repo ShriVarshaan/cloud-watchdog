@@ -243,6 +243,16 @@ describe('fixture sanitiser', () => {
     expect(sanitize(useful)).toEqual(useful)
   })
 
+  it('drops pagination tokens, which are opaque blobs that can embed the account id', () => {
+    // A real GetFreeTierUsage token is base64 of serialised data that includes the account id.
+    const token = Buffer.from(`accountId=${REAL_ACCOUNT};sku=AmazonSNS`).toString('base64')
+    const out = sanitize([
+      { freeTierUsages: [{ service: 'AWS Glue' }], nextToken: token },
+      { Volumes: [], NextToken: token, Marker: token, NextMarker: token }
+    ])
+    expect(out).toEqual([{ freeTierUsages: [{ service: 'AWS Glue' }] }, { Volumes: [] }])
+  })
+
   it('removes the SDK response metadata', () => {
     expect(sanitize({ $metadata: { requestId: 'abc', attempts: 1 }, Reservations: [] })).toEqual({ Reservations: [] })
   })
