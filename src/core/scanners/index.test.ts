@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
+import { RESOURCE_KINDS } from '../../shared/types'
 import { ALL_SCANNERS } from './index'
 
 interface Policy {
@@ -35,9 +36,7 @@ describe('scanners and the read-only IAM policy', () => {
     expect(new Set(kinds).size).toBe(kinds.length)
   })
 
-  it('includes the EC2 and RDS instance scanners', () => {
-    expect(ALL_SCANNERS.map((scanner) => scanner.kind)).toEqual(
-      expect.arrayContaining(['ec2-instance', 'rds-instance'])
-    )
+  it('has a scanner for every resource kind', () => {
+    expect(ALL_SCANNERS.map((scanner) => scanner.kind).sort()).toEqual([...RESOURCE_KINDS].sort())
   })
 })
