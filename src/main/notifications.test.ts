@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { BurnRate, Flag, PricedResource, ResourceKind, ScanSummary } from '../shared/types'
-import { formatUsdPerHour, planToasts, trayTooltip } from './notifications'
+import { planToasts, trayTooltip } from './notifications'
 
 const ACCOUNT = '111122223333'
 
@@ -87,21 +87,6 @@ describe('planToasts', () => {
   it('is not urgent when a group holds nothing critical', () => {
     const flags = [1, 2, 3, 4].map(() => flag('nat-gateway', 'warn', nat.key))
     expect(planToasts(flags, [nat])[0]).toMatchObject({ urgent: false, body: '4 warnings. Open Cloud Watchdog to see them.' })
-  })
-})
-
-describe('formatUsdPerHour', () => {
-  it.each([
-    [0, '$0/h'],
-    [0.0004, '<$0.001/h'],
-    [0.0114, '$0.011/h'],
-    [0.048, '$0.048/h'],
-    [0.05, '$0.05/h'],
-    [0.42, '$0.42/h'],
-    [1.5, '$1.50/h'],
-    [12.3456, '$12.35/h']
-  ])('%s -> %s', (usd, text) => {
-    expect(formatUsdPerHour(usd)).toBe(text)
   })
 })
 

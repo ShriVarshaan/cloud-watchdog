@@ -6,6 +6,7 @@
 // (typically the first scan of a busy account) become a single toast, so the
 // user is not buried. Clicking a toast opens the main window on its resource.
 
+import { formatUsdPerHour } from '../shared/format'
 import type { Flag, PricedResource, ResourceKind, ScanSummary, Severity } from '../shared/types'
 
 export interface Toast {
@@ -72,14 +73,6 @@ export function planToasts(raised: readonly Flag[], resources: readonly PricedRe
     resourceKey: flag.resourceKey,
     urgent: flag.severity === 'critical'
   }))
-}
-
-export function formatUsdPerHour(usd: number): string {
-  if (usd === 0) return '$0/h'
-  if (usd < 0.001) return '<$0.001/h'
-  // Three decimals below 10 cents, so $0.048 does not read as $0.05; a trailing zero is dropped.
-  if (usd < 0.1) return `$${usd.toFixed(3).replace(/0$/, '')}/h`
-  return `$${usd.toFixed(2)}/h`
 }
 
 export interface TooltipState {
