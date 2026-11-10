@@ -230,6 +230,8 @@ export interface ManualSteps {
   consoleUrl: string
   /** A command to copy. The app never runs it. */
   cliCommand: string | null
+  /** What the command does and what to check first, e.g. that deleting loses data. */
+  cliNote: string | null
 }
 
 export const ACTION_KINDS = ['stop-ec2', 'stop-rds'] as const
