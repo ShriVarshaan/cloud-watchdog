@@ -241,7 +241,7 @@ Settings live in `settings.json` in the same folder, validated by zod on load. N
 
 ## 4. Milestones
 
-Rules for every milestone: start by switching model, work test-first (`test-driven-development`), finish with `verification-before-completion`, then `npm run check` (typecheck, lint, unit tests) green, commit, `git push origin main`, and **stop for review**. No force-push, no history rewriting. A Vitest setup file blocks all non-localhost network connections, so a test that reaches real AWS fails.
+Rules for every milestone: start by switching model, work test-first (`test-driven-development`), finish with `verification-before-completion`, then `npm run check` (typecheck, lint, unit tests) green, commit, `git push origin main`, and **stop for review**. **Commits are made at sensible points, not once per milestone:** one commit per logical unit (for example one scanner, one module with its tests, or one config change), each passing `npm run check` on its own, all with the milestone's prefix. The milestone's `Commit:` line is the prefix and the summary, not a count. Push at the end of the milestone. No force-push, no history rewriting. A Vitest setup file blocks all non-localhost network connections, so a test that reaches real AWS fails.
 
 ### M1. Scaffold
 **Model: Opus** — boilerplate with well-known patterns. *Switch with `/model` → Opus.*
