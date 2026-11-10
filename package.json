@@ -25,6 +25,7 @@
     "build-bundled-prices": "node scripts/build-bundled-prices.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-cloudwatch": "^3.1165.0",
     "@aws-sdk/client-ec2": "^3.1165.0",
     "@aws-sdk/client-elastic-load-balancing": "^3.1165.0",
     "@aws-sdk/client-elastic-load-balancing-v2": "^3.1165.0",
