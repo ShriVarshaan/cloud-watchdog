@@ -534,9 +534,9 @@ No start, modify, delete or terminate permission appears anywhere. A unit test f
 
 **Open questions and unverified items**
 
-1. The Service Authorization Reference page for Free Tier did not render when fetched. The action names above come from search results quoting that page and from the API reference. Re-check in M6.
+1. ~~The Service Authorization Reference page for Free Tier did not render when fetched.~~ **Answered in M6:** AWS's machine-readable service reference (`servicereference.us-east-1.amazonaws.com/v1/freetier/freetier.json`) lists `GetAccountPlanState` and `GetFreeTierUsage` under the prefix `freetier`, with no resource types and no condition keys, so `Resource: "*"` is right.
 2. What `GetAccountPlanState` returns for accounts created before 15 July 2025, and for Organization member accounts. Any error is treated as "plan unknown".
-3. Whether `GetFreeTierUsage` returns rows on a credit-plan account, and what `freeTierType` strings appear. Your recorded fixture answers this in M6.
+3. ~~Whether `GetFreeTierUsage` returns rows on a credit-plan account, and what `freeTierType` strings appear.~~ **Answered in M6:** it does. The recorded free-plan account returned three rows, all `freeTierType: "Always Free"` with `region: "global"` (Glue, CloudWatch, KMS). **Still open:** the usage types of the `12 Months Free` rows on accounts opened before 15 July 2025. The test account has none, so the allowance matching in `coverage.ts` is from AWS's documentation and errs towards "not covered".
 4. How quickly `accountPlanRemainingCredits` reflects new usage. The UI shows the fetch time and treats runway as an estimate.
 5. AWS pages disagree on credit lifetime (6 months and 12 months both appear). The app uses only the API's expiry date.
 6. Which services credits do not apply to on the paid plan. Coverage says "covered by credits" without a per-service exclusion list.
