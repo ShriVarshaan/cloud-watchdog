@@ -91,6 +91,8 @@ export interface ScanEngine {
   /** Cancels the scan in progress, if any. */
   abort(): void
   readonly inProgress: boolean
+  /** The id of the scan in progress, known as soon as run() is called. null when idle. */
+  readonly currentScanId: string | null
 }
 
 type TaskOutcome =
@@ -131,7 +133,7 @@ export function createScanEngine(options: ScanEngineOptions): ScanEngine {
     perBucketMax: options.perServiceConcurrency ?? DEFAULT_PER_SERVICE_CONCURRENCY
   })
 
-  let current: { controller: AbortController; promise: Promise<RawScan> } | null = null
+  let current: { controller: AbortController; promise: Promise<RawScan>; scanId: string } | null = null
 
   /** Runs one scanner in one region, with its own timeout. Never rejects. */
   async function runTask(scanner: Scanner, region: string, accountId: string, scanSignal: AbortSignal): Promise<TaskOutcome> {
@@ -171,8 +173,7 @@ export function createScanEngine(options: ScanEngineOptions): ScanEngine {
     }
   }
 
-  async function execute(signal: AbortSignal): Promise<RawScan> {
-    const scanId = randomUUID()
+  async function execute(scanId: string, signal: AbortSignal): Promise<RawScan> {
     const startedAt = now().toISOString()
 
     let identity: Identity
@@ -247,14 +248,15 @@ export function createScanEngine(options: ScanEngineOptions): ScanEngine {
       if (current) return current.promise
 
       const controller = new AbortController()
+      const scanId = randomUUID()
       // Rejects the moment abort() is called, without waiting for tasks to wind down.
       const aborted = new Promise<never>((_, reject) => {
         controller.signal.addEventListener('abort', () => reject(new ScanAbortedError()), { once: true })
       })
-      const promise = Promise.race([execute(controller.signal), aborted]).finally(() => {
+      const promise = Promise.race([execute(scanId, controller.signal), aborted]).finally(() => {
         if (current?.controller === controller) current = null
       })
-      current = { controller, promise }
+      current = { controller, promise, scanId }
       return promise
     },
 
@@ -264,6 +266,10 @@ export function createScanEngine(options: ScanEngineOptions): ScanEngine {
 
     get inProgress(): boolean {
       return current !== null
+    },
+
+    get currentScanId(): string | null {
+      return current?.scanId ?? null
     }
   }
 }

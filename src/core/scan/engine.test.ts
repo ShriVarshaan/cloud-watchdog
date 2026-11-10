@@ -408,6 +408,18 @@ describe('scan engine: concurrency', () => {
 })
 
 describe('scan engine: single flight', () => {
+  it('knows the id of the scan in progress from the moment it starts, and forgets it after', async () => {
+    const scanEngine = engine([fakeScanner('ec2-instance', 'ec2', oneInstancePerRegion).scanner])
+    expect(scanEngine.currentScanId).toBeNull()
+
+    const running = scanEngine.run()
+    const id = scanEngine.currentScanId
+    expect(id).toEqual(expect.any(String))
+
+    expect((await running).scanId).toBe(id)
+    expect(scanEngine.currentScanId).toBeNull()
+  })
+
   it('shares one scan between two run() calls made while it is in progress', async () => {
     let release!: () => void
     const gate = new Promise<void>((resolve) => (release = resolve))
