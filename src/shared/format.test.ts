@@ -36,6 +36,10 @@ describe('formatPrice', () => {
     expect(formatPrice({ hourlyUsd: 0.02, confidence: 'estimate', source: 'bundled', excluded: [] })).toBe('about $0.02/h')
   })
 
+  it('says "under" for a tiny estimate', () => {
+    expect(formatPrice({ hourlyUsd: 0.0009, confidence: 'estimate', source: 'price-list-api', excluded: [] })).toBe('under $0.001/h')
+  })
+
   it('shows an exact price plainly', () => {
     expect(formatPrice({ hourlyUsd: 0.048, confidence: 'exact', source: 'price-list-api', excluded: [] })).toBe('$0.048/h')
   })

@@ -26,8 +26,9 @@ export function formatUsdPerMonth(usdPerHour: number): string {
 /** A resource's rate. An unknown price is never shown as a number. */
 export function formatPrice(price: Price): string {
   if (price.hourlyUsd === null) return '—'
-  const text = formatUsdPerHour(price.hourlyUsd)
-  return price.confidence === 'estimate' ? `about ${text}` : text
+  if (price.confidence !== 'estimate') return formatUsdPerHour(price.hourlyUsd)
+  // "about <$0.001/h" reads badly.
+  return price.hourlyUsd > 0 && price.hourlyUsd < 0.001 ? 'under $0.001/h' : `about ${formatUsdPerHour(price.hourlyUsd)}`
 }
 
 export function formatRunway(runway: Runway | null): string {
