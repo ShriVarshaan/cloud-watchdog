@@ -2,13 +2,15 @@
 // against your own account. Automated tests never call AWS.
 //
 //   npm run record-fixtures -- --profile <name> [--regions eu-west-1,us-east-1]
+//   npm run record-fixtures -- --profile <name> --freetier-only
 //
 // It makes read-only calls only (the same ones the scanners make):
 //   sts:GetCallerIdentity, ec2:DescribeRegions, ec2:DescribeInstances,
 //   ec2:DescribeVolumes, ec2:DescribeAddresses, ec2:DescribeNatGateways,
 //   rds:DescribeDBInstances, elasticloadbalancing:DescribeLoadBalancers
 //   (ELBv2 and classic), sagemaker:ListEndpoints, sagemaker:DescribeEndpoint,
-//   sagemaker:DescribeEndpointConfig
+//   sagemaker:DescribeEndpointConfig, freetier:GetAccountPlanState,
+//   freetier:GetFreeTierUsage
 //
 // Output:
 //   tests/fixtures/_raw/      exact responses. Ignored by git. Never commit.
@@ -36,6 +38,7 @@ import {
   ElasticLoadBalancingV2Client,
   paginateDescribeLoadBalancers as paginateV2LoadBalancers
 } from '@aws-sdk/client-elastic-load-balancing-v2'
+import { FreeTierClient, GetAccountPlanStateCommand, paginateGetFreeTierUsage } from '@aws-sdk/client-freetier'
 import { paginateDescribeDBInstances, RDSClient } from '@aws-sdk/client-rds'
 import {
   DescribeEndpointCommand,
@@ -54,7 +57,8 @@ const SANITISED_DIR = join('tests', 'fixtures', 'recorded')
 const USAGE = `Usage: npm run record-fixtures -- --profile <name> [--regions eu-west-1,us-east-1]
 
   --profile  AWS profile to record from (required)
-  --regions  comma-separated regions; default: every region enabled for the account`
+  --regions  comma-separated regions; default: every region enabled for the account
+  --freetier-only  record only the account plan and free tier usage, no resources`
 
 async function allPages<Page>(pages: AsyncIterable<Page>): Promise<Page[]> {
   const all: Page[] = []
@@ -64,7 +68,12 @@ async function allPages<Page>(pages: AsyncIterable<Page>): Promise<Page[]> {
 
 async function main(): Promise<void> {
   const { values } = parseArgs({
-    options: { profile: { type: 'string' }, regions: { type: 'string' }, help: { type: 'boolean', short: 'h' } }
+    options: {
+      profile: { type: 'string' },
+      regions: { type: 'string' },
+      'freetier-only': { type: 'boolean' },
+      help: { type: 'boolean', short: 'h' }
+    }
   })
   if (values.help || !values.profile) {
     console.log(USAGE)
@@ -94,6 +103,32 @@ async function main(): Promise<void> {
   }
 
   save('sts-get-caller-identity', identity)
+
+  // The account's plan (free or paid), credits and expiry, and its free tier
+  // usage this month. Both live on one global endpoint. A failure is saved
+  // too: which error an account returns is what the app's fallback is built on.
+  const freeTier = new FreeTierClient(config(HOME_REGION))
+  const recordFreeTier = async (name: string, what: string, fetch: () => Promise<unknown>) => {
+    try {
+      save(name, await fetch())
+      console.log(`free tier: recorded ${what}`)
+    } catch (error) {
+      const { name: errorName, message } = error as Error
+      save(`${name}.error`, { name: errorName, message })
+      console.error(`free tier: ${what} failed: ${errorName}: ${message}`)
+    }
+  }
+  await recordFreeTier('freetier-get-account-plan-state', 'account plan state', () =>
+    freeTier.send(new GetAccountPlanStateCommand({}))
+  )
+  await recordFreeTier('freetier-get-free-tier-usage', 'free tier usage', () =>
+    allPages(paginateGetFreeTierUsage({ client: freeTier }, {}))
+  )
+  if (values['freetier-only']) {
+    console.log(`
+Wrote ${written.length} file(s) to ${SANITISED_DIR}. Read them before committing.`)
+    return
+  }
 
   const regionsResponse = await new EC2Client(config(HOME_REGION)).send(new DescribeRegionsCommand({ AllRegions: false }))
   save('ec2-describe-regions', regionsResponse)
