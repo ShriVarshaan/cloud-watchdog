@@ -36,6 +36,18 @@ export interface Repo {
   /** A public list price fetched earlier, however old. The caller decides whether it is still fresh. */
   getCachedPrice(priceKey: string): CachedPrice | null
   putCachedPrice(priceKey: string, price: { unitUsd: number; sku: string | null }, fetchedAt: string): void
+
+  /** The last CPU reading taken for a resource, whatever window it was for. */
+  getCpuReading(resourceKey: string): StoredCpuReading | null
+  putCpuReading(resourceKey: string, reading: StoredCpuReading): void
+}
+
+export interface StoredCpuReading {
+  /** Highest CPU percentage in the window. null = CloudWatch had no datapoints. */
+  maxCpu: number | null
+  datapoints: number
+  /** ISO time the measured window ended at. */
+  windowEnd: string
 }
 
 export interface CachedPrice {
@@ -360,6 +372,28 @@ export function createRepo(db: Db): Repo {
         price.unitUsd,
         price.sku,
         fetchedAt
+      )
+    },
+
+    getCpuReading(resourceKey) {
+      const row = db.get<{ window_end: string; max_cpu: number | null; datapoints: number }>(
+        'SELECT window_end, max_cpu, datapoints FROM cpu_cache WHERE resource_key = ?',
+        resourceKey
+      )
+      return row ? { maxCpu: row.max_cpu, datapoints: row.datapoints, windowEnd: row.window_end } : null
+    },
+
+    putCpuReading(resourceKey, reading) {
+      db.run(
+        `INSERT INTO cpu_cache (resource_key, window_end, max_cpu, datapoints) VALUES (?, ?, ?, ?)
+         ON CONFLICT (resource_key) DO UPDATE SET
+           window_end = excluded.window_end,
+           max_cpu = excluded.max_cpu,
+           datapoints = excluded.datapoints`,
+        resourceKey,
+        reading.windowEnd,
+        reading.maxCpu,
+        reading.datapoints
       )
     }
   }
