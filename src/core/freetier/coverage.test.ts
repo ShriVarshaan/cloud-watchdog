@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { AttrValue, PlanState, Resource, ResourceKind } from '../../shared/types'
-import { decideCoverage, planNotice } from './coverage'
+import { planNotice } from '../../shared/plan'
+import { decideCoverage } from './coverage'
 import type { FreeTierUsageRow } from './planState'
 
 function plan(over: Partial<PlanState> = {}): PlanState {

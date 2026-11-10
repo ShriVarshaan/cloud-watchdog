@@ -23,6 +23,7 @@
 // "12 Months Free" allowances that older accounts have, and which resources
 // they apply to. The ALLOWANCES table is from AWS's free tier documentation.
 
+import { CREDITS_FREE_PLAN, CREDITS_PAID_PLAN, PLAN_UNAVAILABLE } from '../../shared/plan'
 import type { Coverage, PlanState, Resource } from '../../shared/types'
 import type { FreeTierUsageRow } from './planState'
 
@@ -32,9 +33,6 @@ export interface CoverageDecision {
   message: string | null
 }
 
-const PLAN_UNAVAILABLE = 'Plan details unavailable for this account. Showing resources only.'
-const CREDITS_FREE_PLAN = 'Paid from credits. The account closes when they run out.'
-const CREDITS_PAID_PLAN = 'Paid from credits. You are charged once they run out.'
 
 interface Allowance {
   /** Matches the usage type after its "Global-" or region prefix is removed. */
@@ -115,20 +113,4 @@ export function decideCoverage(resource: Resource, plan: PlanState | null, usage
 
   if (!usage) return { coverage: 'unknown', message: null }
   return byAllowance(resource, usage)
-}
-
-/** The one message about the account as a whole, for the popover and the banner. null = nothing to say. */
-export function planNotice(plan: PlanState | null): { text: string; critical: boolean } | null {
-  if (!plan) return { text: PLAN_UNAVAILABLE, critical: false }
-  if (plan.status === 'EXPIRED') {
-    return { text: 'The account plan has expired. Nothing running is paid for by credits or the free plan any more.', critical: true }
-  }
-  const credits = plan.remainingCreditsUsd
-  if (credits !== null && credits > 0) {
-    return { text: plan.planType === 'FREE' ? CREDITS_FREE_PLAN : CREDITS_PAID_PLAN, critical: false }
-  }
-  if (plan.planType === 'FREE' && credits !== null) {
-    return { text: 'The free plan credits are used up. AWS closes the account unless it is upgraded.', critical: true }
-  }
-  return null
 }
