@@ -14,7 +14,14 @@ export function installWebContentsGuards(): void {
   })
 }
 
+/**
+ * Every permission is refused except writing sanitised text to the
+ * clipboard, which the "Copy command" button needs. Reading the clipboard
+ * stays refused.
+ */
+const ALLOWED_PERMISSION = 'clipboard-sanitized-write'
+
 export function hardenSession(session: Session): void {
-  session.setPermissionRequestHandler((_contents, _permission, callback) => callback(false))
-  session.setPermissionCheckHandler(() => false)
+  session.setPermissionRequestHandler((_contents, permission, callback) => callback(permission === ALLOWED_PERMISSION))
+  session.setPermissionCheckHandler((_contents, permission) => permission === ALLOWED_PERMISSION)
 }
