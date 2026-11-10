@@ -1,0 +1,5809 @@
+[
+ {
+  "product": {
+   "productFamily": "Storage",
+   "attributes": {
+    "maxThroughputvolume": "40 - 90 MB/sec",
+    "volumeType": "Magnetic",
+    "maxIopsvolume": "40 - 200",
+    "usagetype": "EBS:VolumeUsage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "1 TiB",
+    "maxIopsBurstPerformance": "Hundreds",
+    "storageMedia": "HDD-backed",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonEC2",
+    "volumeApiName": "standard",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": ""
+   },
+   "sku": "269VXUCZZ7E6JNXT"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "269VXUCZZ7E6JNXT.JRTCKXETXF": {
+     "priceDimensions": {
+      "269VXUCZZ7E6JNXT.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.05 per GB-month of Magnetic provisioned storage - US East (Northern Virginia)",
+       "appliesTo": [],
+       "rateCode": "269VXUCZZ7E6JNXT.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0500000000"
+       }
+      }
+     },
+     "sku": "269VXUCZZ7E6JNXT",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Provisioned IOPS-IO2",
+    "engineCode": "18",
+    "usagetype": "EU-RDS:PIOPS-Storage-IO2",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "64 TB",
+    "databaseEngine": "MariaDB",
+    "storageMedia": "SSD",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0018",
+    "minVolumeSize": "100 GB"
+   },
+   "sku": "27JZV59T5QBQR2NU"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "27JZV59T5QBQR2NU.JRTCKXETXF": {
+     "priceDimensions": {
+      "27JZV59T5QBQR2NU.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.138 per GB-Month of provisioned io2 storage for Single-AZ deployments running MariaDB",
+       "appliesTo": [],
+       "rateCode": "27JZV59T5QBQR2NU.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1380000000"
+       }
+      }
+     },
+     "sku": "27JZV59T5QBQR2NU",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "NAT Gateway",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonEC2",
+    "groupDescription": "Per hour and per Gbps charge for NAT Gateways with provisioned bandwidth",
+    "usagetype": "NatGateway-Prvd-Gbps",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "NatGateway",
+    "group": "NGW:NatGateway"
+   },
+   "sku": "2QF2GD6XUCJHFMKF"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "2QF2GD6XUCJHFMKF.JRTCKXETXF": {
+     "priceDimensions": {
+      "2QF2GD6XUCJHFMKF.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Gbps-hrs",
+       "endRange": "Inf",
+       "description": "$1.076 per Gbps-hour of NAT Gateways with Provisioned Bandwidth",
+       "appliesTo": [],
+       "rateCode": "2QF2GD6XUCJHFMKF.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "1.0760000000"
+       }
+      }
+     },
+     "sku": "2QF2GD6XUCJHFMKF",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Application",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "LoadBalancer hourly usage by Application Load Balancer",
+    "usagetype": "LoadBalancerUsage",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Application",
+    "group": "ELB:Balancing"
+   },
+   "sku": "37CUWUT8GSNQEPUV"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "37CUWUT8GSNQEPUV.JRTCKXETXF": {
+     "priceDimensions": {
+      "37CUWUT8GSNQEPUV.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.0225 per Application LoadBalancer-hour (or partial hour)",
+       "appliesTo": [],
+       "rateCode": "37CUWUT8GSNQEPUV.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0225000000"
+       }
+      }
+     },
+     "sku": "37CUWUT8GSNQEPUV",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "General Purpose",
+    "engineCode": "18",
+    "usagetype": "EU-RDS:GP2-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "MariaDB",
+    "storageMedia": "SSD",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0018",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "3A5KBE46SHMZ8ZS4"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "3A5KBE46SHMZ8ZS4.JRTCKXETXF": {
+     "priceDimensions": {
+      "3A5KBE46SHMZ8ZS4.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.127 per GB-month of provisioned gp2 storage running MariaDB",
+       "appliesTo": [],
+       "rateCode": "3A5KBE46SHMZ8ZS4.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1270000000"
+       }
+      }
+     },
+     "sku": "3A5KBE46SHMZ8ZS4",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Magnetic",
+    "engineCode": "14",
+    "usagetype": "RDS:Multi-AZ-StorageUsage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "3 TB",
+    "databaseEngine": "PostgreSQL",
+    "storageMedia": "Magnetic",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Multi-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0014",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "3FRN2H6TU88647KB"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "3FRN2H6TU88647KB.JRTCKXETXF": {
+     "priceDimensions": {
+      "3FRN2H6TU88647KB.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.2 per GB-month of provisioned magnetic storage for Multi-AZ deployments running PostgreSQL",
+       "appliesTo": [],
+       "rateCode": "3FRN2H6TU88647KB.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.2000000000"
+       }
+      }
+     },
+     "sku": "3FRN2H6TU88647KB",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Compute Instance",
+   "attributes": {
+    "enhancedNetworkingSupported": "No",
+    "intelTurboAvailable": "Yes",
+    "memory": "1 GiB",
+    "dedicatedEbsThroughput": "Up to 2085 Mbps",
+    "vcpu": "2",
+    "classicnetworkingsupport": "false",
+    "capacitystatus": "Used",
+    "locationType": "AWS Region",
+    "storage": "EBS only",
+    "instanceFamily": "General purpose",
+    "operatingSystem": "Linux",
+    "intelAvx2Available": "Yes",
+    "instanceFamilyCategory": "General Purpose",
+    "regionCode": "eu-west-1",
+    "physicalProcessor": "Intel Skylake E5 2686 v5",
+    "clockSpeed": "3.1 GHz",
+    "ecu": "NA",
+    "networkPerformance": "Up to 5 Gigabit",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "gpuMemory": "NA",
+    "dedicatedEbsThroughputDescription": "87 Mbps",
+    "vpcnetworkingsupport": "true",
+    "instanceType": "t3.micro",
+    "tenancy": "Dedicated",
+    "usagetype": "EU-DedicatedUsage:t3.micro",
+    "normalizationSizeFactor": "0.5",
+    "intelAvxAvailable": "Yes",
+    "processorFeatures": "AVX; AVX2; Intel AVX; Intel AVX2; Intel AVX512; Intel Turbo",
+    "servicecode": "AmazonEC2",
+    "licenseModel": "No License required",
+    "currentGeneration": "Yes",
+    "preInstalledSw": "NA",
+    "location": "EU (Ireland)",
+    "processorArchitecture": "64-bit",
+    "marketoption": "OnDemand",
+    "operation": "RunInstances",
+    "availabilityzone": "NA"
+   },
+   "sku": "3R7CJ383NVSVVBSW"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "3R7CJ383NVSVVBSW.JRTCKXETXF": {
+     "priceDimensions": {
+      "3R7CJ383NVSVVBSW.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.0122 per Dedicated Linux t3.micro Instance Hour",
+       "appliesTo": [],
+       "rateCode": "3R7CJ383NVSVVBSW.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0122000000"
+       }
+      }
+     },
+     "sku": "3R7CJ383NVSVVBSW",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Compute Instance",
+   "attributes": {
+    "enhancedNetworkingSupported": "No",
+    "intelTurboAvailable": "Yes",
+    "memory": "1 GiB",
+    "dedicatedEbsThroughput": "Up to 2085 Mbps",
+    "vcpu": "2",
+    "classicnetworkingsupport": "false",
+    "capacitystatus": "Used",
+    "locationType": "AWS Region",
+    "storage": "EBS only",
+    "instanceFamily": "General purpose",
+    "operatingSystem": "Windows",
+    "intelAvx2Available": "Yes",
+    "instanceFamilyCategory": "General Purpose",
+    "regionCode": "us-east-1",
+    "physicalProcessor": "Intel Skylake E5 2686 v5",
+    "clockSpeed": "3.1 GHz",
+    "ecu": "NA",
+    "networkPerformance": "Up to 5 Gigabit",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "gpuMemory": "NA",
+    "dedicatedEbsThroughputDescription": "87 Mbps",
+    "vpcnetworkingsupport": "true",
+    "instanceType": "t3.micro",
+    "tenancy": "Shared",
+    "usagetype": "BoxUsage:t3.micro",
+    "normalizationSizeFactor": "0.5",
+    "intelAvxAvailable": "Yes",
+    "processorFeatures": "AVX; AVX2; Intel AVX; Intel AVX2; Intel AVX512; Intel Turbo",
+    "servicecode": "AmazonEC2",
+    "licenseModel": "No License required",
+    "currentGeneration": "Yes",
+    "preInstalledSw": "NA",
+    "location": "US East (N. Virginia)",
+    "processorArchitecture": "64-bit",
+    "marketoption": "OnDemand",
+    "operation": "RunInstances:0002",
+    "availabilityzone": "NA"
+   },
+   "sku": "4F6W8DNQFUMHKEZF"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "4F6W8DNQFUMHKEZF.JRTCKXETXF": {
+     "priceDimensions": {
+      "4F6W8DNQFUMHKEZF.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.0196 per On Demand Windows t3.micro Instance Hour",
+       "appliesTo": [],
+       "rateCode": "4F6W8DNQFUMHKEZF.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0196000000"
+       }
+      }
+     },
+     "sku": "4F6W8DNQFUMHKEZF",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonVPC",
+    "groupDescription": "Hourly charge for In-use Public IPv4 Addresses",
+    "usagetype": "USE1-PublicIPv4:InUseAddress",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Virtual Private Cloud",
+    "operation": "",
+    "group": "VPCPublicIPv4Address"
+   },
+   "sku": "4GQUNXTFWVSGPUZK"
+  },
+  "serviceCode": "AmazonVPC",
+  "terms": {
+   "OnDemand": {
+    "4GQUNXTFWVSGPUZK.JRTCKXETXF": {
+     "priceDimensions": {
+      "4GQUNXTFWVSGPUZK.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.005 per In-use public IPv4 address per hour",
+       "appliesTo": [],
+       "rateCode": "4GQUNXTFWVSGPUZK.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0050000000"
+       }
+      }
+     },
+     "sku": "4GQUNXTFWVSGPUZK",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105181945",
+  "publicationDate": "2026-11-05T18:19:45Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Provisioned IOPS-IO2",
+    "engineCode": "18",
+    "usagetype": "RDS:PIOPS-Storage-IO2",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "64 TB",
+    "databaseEngine": "MariaDB",
+    "storageMedia": "SSD",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0018",
+    "minVolumeSize": "100 GB"
+   },
+   "sku": "4VWURZ55PV36Y8UC"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "4VWURZ55PV36Y8UC.JRTCKXETXF": {
+     "priceDimensions": {
+      "4VWURZ55PV36Y8UC.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.125 per GB-Month of provisioned io2 storage for Single-AZ deployments running MariaDB",
+       "appliesTo": [],
+       "rateCode": "4VWURZ55PV36Y8UC.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1250000000"
+       }
+      }
+     },
+     "sku": "4VWURZ55PV36Y8UC",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Gateway",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "LoadBalancer hourly usage by Gateway Load Balancer",
+    "usagetype": "LoadBalancerUsage",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Gateway",
+    "group": "ELB:Balancing"
+   },
+   "sku": "4XCKHVEY2F7FVHE3"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "4XCKHVEY2F7FVHE3.JRTCKXETXF": {
+     "priceDimensions": {
+      "4XCKHVEY2F7FVHE3.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.0125 per Gateway LoadBalancer-hour (or partial hour) US East (N. Virginia)",
+       "appliesTo": [],
+       "rateCode": "4XCKHVEY2F7FVHE3.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0125000000"
+       }
+      }
+     },
+     "sku": "4XCKHVEY2F7FVHE3",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Provisioned IOPS",
+    "engineCode": "2",
+    "usagetype": "EU-RDS:PIOPS-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "MySQL",
+    "storageMedia": "SSD",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0002",
+    "minVolumeSize": "100 GB"
+   },
+   "sku": "4ZXGNJNYFMUCG7MF"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "4ZXGNJNYFMUCG7MF.JRTCKXETXF": {
+     "priceDimensions": {
+      "4ZXGNJNYFMUCG7MF.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.138 per GB-month of provisioned io1 storage running MySQL",
+       "appliesTo": [],
+       "rateCode": "4ZXGNJNYFMUCG7MF.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1380000000"
+       }
+      }
+     },
+     "sku": "4ZXGNJNYFMUCG7MF",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Gateway",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "Used Gateway Load Balancer capacity units-hr",
+    "usagetype": "EU-LCUUsage",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Gateway",
+    "group": "ELB:Balancing"
+   },
+   "sku": "54CR7C3UHSDQ3C4E"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "54CR7C3UHSDQ3C4E.JRTCKXETXF": {
+     "priceDimensions": {
+      "54CR7C3UHSDQ3C4E.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "LCU-Hrs",
+       "endRange": "Inf",
+       "description": "$0.0040 per used Gateway load balancer capacity unit-hour (or partial hour) in EU (Ireland)",
+       "appliesTo": [],
+       "rateCode": "54CR7C3UHSDQ3C4E.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0040000000"
+       }
+      }
+     },
+     "sku": "54CR7C3UHSDQ3C4E",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Instance",
+   "attributes": {
+    "engineCode": "14",
+    "instanceTypeFamily": "T3",
+    "memory": "1 GiB",
+    "vcpu": "2",
+    "instanceType": "db.t3.micro",
+    "unbundledLicensing": "FALSE",
+    "usagetype": "EU-Multi-AZUsage:db.t3.micro",
+    "locationType": "AWS Region",
+    "storage": "EBS Only",
+    "normalizationSizeFactor": "1",
+    "instanceFamily": "General purpose",
+    "databaseEngine": "PostgreSQL",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "physicalProcessor": "Intel Skylake E5 2686 v5 (2.5 GHz)",
+    "licenseModel": "No license required",
+    "currentGeneration": "Yes",
+    "networkPerformance": "Low to Moderate",
+    "deploymentOption": "Multi-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "processorArchitecture": "64-bit",
+    "operation": "CreateDBInstance:0014"
+   },
+   "sku": "58B736Q2BZFTGU5C"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "58B736Q2BZFTGU5C.JRTCKXETXF": {
+     "priceDimensions": {
+      "58B736Q2BZFTGU5C.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "USD 0.039 per db.t3.micro Multi-AZ instance hour (or partial hour) running PostgreSQL",
+       "appliesTo": [],
+       "rateCode": "58B736Q2BZFTGU5C.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0390000000"
+       }
+      }
+     },
+     "sku": "58B736Q2BZFTGU5C",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "NAT Gateway",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonEC2",
+    "groupDescription": "Charge for per GB data processed by NatGateways",
+    "usagetype": "NatGateway-Bytes",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "NatGateway",
+    "group": "NGW:NatGateway"
+   },
+   "sku": "59S5R83GFPUAGVR5"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "59S5R83GFPUAGVR5.JRTCKXETXF": {
+     "priceDimensions": {
+      "59S5R83GFPUAGVR5.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB",
+       "endRange": "Inf",
+       "description": "$0.045 per GB Data Processed by NAT Gateways",
+       "appliesTo": [],
+       "rateCode": "59S5R83GFPUAGVR5.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0450000000"
+       }
+      }
+     },
+     "sku": "59S5R83GFPUAGVR5",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Instance",
+   "attributes": {
+    "engineCode": "18",
+    "instanceType": "db.t4g.micro",
+    "usagetype": "UnusedBox:db.t4g.micro",
+    "locationType": "AWS Region",
+    "normalizationSizeFactor": "0.5",
+    "databaseEngine": "MariaDB",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "licenseModel": "No license required",
+    "deploymentOption": "Single-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0018"
+   },
+   "sku": "5TN4BPR53TPMTG5Z"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "5TN4BPR53TPMTG5Z.JRTCKXETXF": {
+     "priceDimensions": {
+      "5TN4BPR53TPMTG5Z.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$ 0.016 per RDS db.t4g.micro Single-AZ unused capacity reservation hour (or partial hour) for MariaDB",
+       "appliesTo": [],
+       "rateCode": "5TN4BPR53TPMTG5Z.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0160000000"
+       }
+      }
+     },
+     "sku": "5TN4BPR53TPMTG5Z",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Provisioned IOPS",
+    "engineCode": "18",
+    "usagetype": "RDS:PIOPS-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "MariaDB",
+    "storageMedia": "SSD",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0018",
+    "minVolumeSize": "100 GB"
+   },
+   "sku": "6M35QYESJ7CTHYQR"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "6M35QYESJ7CTHYQR.JRTCKXETXF": {
+     "priceDimensions": {
+      "6M35QYESJ7CTHYQR.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.125 per GB-month of provisioned io1 storage running MariaDB",
+       "appliesTo": [],
+       "rateCode": "6M35QYESJ7CTHYQR.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1250000000"
+       }
+      }
+     },
+     "sku": "6M35QYESJ7CTHYQR",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Storage",
+   "attributes": {
+    "maxThroughputvolume": "250 MiB/s",
+    "volumeType": "Cold HDD",
+    "maxIopsvolume": "250 - based on 1 MiB I/O size",
+    "usagetype": "EBS:VolumeUsage.sc1",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TiB",
+    "storageMedia": "HDD-backed",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonEC2",
+    "volumeApiName": "sc1",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": ""
+   },
+   "sku": "6U5VMCFHHMTH3QW6"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "6U5VMCFHHMTH3QW6.JRTCKXETXF": {
+     "priceDimensions": {
+      "6U5VMCFHHMTH3QW6.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.015 per GB-month of Cold HDD (sc1) provisioned storage - US East (Northern Virginia)",
+       "appliesTo": [],
+       "rateCode": "6U5VMCFHHMTH3QW6.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0150000000"
+       }
+      }
+     },
+     "sku": "6U5VMCFHHMTH3QW6",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Storage",
+   "attributes": {
+    "maxThroughputvolume": "4000 MiB/s",
+    "volumeType": "Provisioned IOPS",
+    "maxIopsvolume": "256000",
+    "usagetype": "EBS:VolumeUsage.io2",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "64 TiB",
+    "storageMedia": "SSD-backed",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonEC2",
+    "volumeApiName": "io2",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": ""
+   },
+   "sku": "6V576P37PS7K7KYU"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "6V576P37PS7K7KYU.JRTCKXETXF": {
+     "priceDimensions": {
+      "6V576P37PS7K7KYU.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-month",
+       "endRange": "Inf",
+       "description": "$0.125 per GB-month of Provisioned IOPS SSD (io2)  provisioned storage - US East (Northern Virginia)",
+       "appliesTo": [],
+       "rateCode": "6V576P37PS7K7KYU.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1250000000"
+       }
+      }
+     },
+     "sku": "6V576P37PS7K7KYU",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "LoadBalancer hourly usage by Classic Load Balancer",
+    "usagetype": "LoadBalancerUsage",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing",
+    "group": "ELB:Balancing"
+   },
+   "sku": "6XT9C7FFNQ3T39YK"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "6XT9C7FFNQ3T39YK.JRTCKXETXF": {
+     "priceDimensions": {
+      "6XT9C7FFNQ3T39YK.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.025 per LoadBalancer-hour (or partial hour)",
+       "appliesTo": [],
+       "rateCode": "6XT9C7FFNQ3T39YK.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0250000000"
+       }
+      }
+     },
+     "sku": "6XT9C7FFNQ3T39YK",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Storage",
+   "attributes": {
+    "maxThroughputvolume": "1000 MiB/s",
+    "volumeType": "Provisioned IOPS",
+    "maxIopsvolume": "64000",
+    "usagetype": "EU-EBS:VolumeUsage.piops",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TiB",
+    "storageMedia": "SSD-backed",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonEC2",
+    "volumeApiName": "io1",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": ""
+   },
+   "sku": "6ZAY5SN4BUEX53BV"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "6ZAY5SN4BUEX53BV.JRTCKXETXF": {
+     "priceDimensions": {
+      "6ZAY5SN4BUEX53BV.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.138 per GB-month of Provisioned IOPS SSD (io1)  provisioned storage - EU (Ireland)",
+       "appliesTo": [],
+       "rateCode": "6ZAY5SN4BUEX53BV.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1380000000"
+       }
+      }
+     },
+     "sku": "6ZAY5SN4BUEX53BV",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Magnetic",
+    "engineCode": "2",
+    "usagetype": "EU-RDS:StorageUsage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "3 TB",
+    "databaseEngine": "MySQL",
+    "storageMedia": "Magnetic",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0002",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "72AMTRQ6CEX9QM6M"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "72AMTRQ6CEX9QM6M.JRTCKXETXF": {
+     "priceDimensions": {
+      "72AMTRQ6CEX9QM6M.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.11 per GB-month of provisioned magnetic storage running MySQL",
+       "appliesTo": [],
+       "rateCode": "72AMTRQ6CEX9QM6M.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1100000000"
+       }
+      }
+     },
+     "sku": "72AMTRQ6CEX9QM6M",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Instance",
+   "attributes": {
+    "engineCode": "2",
+    "instanceTypeFamily": "T3",
+    "memory": "1 GiB",
+    "vcpu": "2",
+    "instanceType": "db.t3.micro",
+    "unbundledLicensing": "FALSE",
+    "usagetype": "EU-InstanceUsage:db.t3.micro",
+    "locationType": "AWS Region",
+    "storage": "EBS Only",
+    "normalizationSizeFactor": "0.5",
+    "instanceFamily": "General purpose",
+    "databaseEngine": "MySQL",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "physicalProcessor": "Intel Skylake E5 2686 v5 (2.5 GHz)",
+    "licenseModel": "No license required",
+    "currentGeneration": "Yes",
+    "networkPerformance": "Low to Moderate",
+    "deploymentOption": "Single-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "processorArchitecture": "64-bit",
+    "operation": "CreateDBInstance:0002"
+   },
+   "sku": "78SCX7EMVDT6N5KV"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "78SCX7EMVDT6N5KV.JRTCKXETXF": {
+     "priceDimensions": {
+      "78SCX7EMVDT6N5KV.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "USD 0.018 per db.t3.micro Single-AZ instance hour (or partial hour) running MySQL",
+       "appliesTo": [],
+       "rateCode": "78SCX7EMVDT6N5KV.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0180000000"
+       }
+      }
+     },
+     "sku": "78SCX7EMVDT6N5KV",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "System Operation",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonEC2",
+    "provisioned": "Yes",
+    "groupDescription": "IOPS",
+    "usagetype": "EBS:VolumeP-IOPS.gp3",
+    "locationType": "AWS Region",
+    "volumeApiName": "gp3",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "",
+    "group": "EBS IOPS"
+   },
+   "sku": "7Q58NR58VQEASA4W"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "7Q58NR58VQEASA4W.JRTCKXETXF": {
+     "priceDimensions": {
+      "7Q58NR58VQEASA4W.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "IOPS-Mo",
+       "endRange": "Inf",
+       "description": "$0.005 per provisioned IOPS-month of gp3 - US East (N. Virginia)",
+       "appliesTo": [],
+       "rateCode": "7Q58NR58VQEASA4W.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0050000000"
+       }
+      }
+     },
+     "sku": "7Q58NR58VQEASA4W",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Provisioned IOPS",
+    "engineCode": "18",
+    "usagetype": "EU-RDS:PIOPS-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "MariaDB",
+    "storageMedia": "SSD",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0018",
+    "minVolumeSize": "100 GB"
+   },
+   "sku": "7S4G5C5HNVJM29NF"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "7S4G5C5HNVJM29NF.JRTCKXETXF": {
+     "priceDimensions": {
+      "7S4G5C5HNVJM29NF.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.138 per GB-month of provisioned io1 storage running MariaDB",
+       "appliesTo": [],
+       "rateCode": "7S4G5C5HNVJM29NF.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1380000000"
+       }
+      }
+     },
+     "sku": "7S4G5C5HNVJM29NF",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Compute Instance",
+   "attributes": {
+    "enhancedNetworkingSupported": "Yes",
+    "intelTurboAvailable": "Yes",
+    "memory": "16 GiB",
+    "dedicatedEbsThroughput": "3500 Mbps",
+    "vcpu": "4",
+    "classicnetworkingsupport": "false",
+    "capacitystatus": "Used",
+    "locationType": "AWS Region",
+    "storage": "125 GB NVMe SSD",
+    "instanceFamily": "GPU instance",
+    "operatingSystem": "Linux",
+    "intelAvx2Available": "Yes",
+    "instanceFamilyCategory": "Accelerated Computing",
+    "regionCode": "us-east-1",
+    "physicalProcessor": "Intel Xeon Family",
+    "clockSpeed": "2.5 GHz",
+    "ecu": "NA",
+    "networkPerformance": "Up to 25 Gigabit",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "gpuMemory": "16 GB",
+    "dedicatedEbsThroughputDescription": "3500 Mbps",
+    "vpcnetworkingsupport": "true",
+    "instanceType": "g4dn.xlarge",
+    "tenancy": "Shared",
+    "usagetype": "BoxUsage:g4dn.xlarge",
+    "normalizationSizeFactor": "1",
+    "gpu": "1",
+    "intelAvxAvailable": "Yes",
+    "processorFeatures": "Intel AVX; Intel AVX2; Intel AVX512; Intel Turbo",
+    "servicecode": "AmazonEC2",
+    "licenseModel": "No License required",
+    "currentGeneration": "Yes",
+    "preInstalledSw": "NA",
+    "location": "US East (N. Virginia)",
+    "processorArchitecture": "64-bit",
+    "marketoption": "OnDemand",
+    "operation": "RunInstances",
+    "availabilityzone": "NA"
+   },
+   "sku": "7TVXMFHQR6U7W5CV"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "7TVXMFHQR6U7W5CV.JRTCKXETXF": {
+     "priceDimensions": {
+      "7TVXMFHQR6U7W5CV.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.526 per On Demand Linux g4dn.xlarge Instance Hour",
+       "appliesTo": [],
+       "rateCode": "7TVXMFHQR6U7W5CV.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.5260000000"
+       }
+      }
+     },
+     "sku": "7TVXMFHQR6U7W5CV",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Instance",
+   "attributes": {
+    "engineCode": "18",
+    "instanceTypeFamily": "T4G",
+    "memory": "1 GiB",
+    "vcpu": "2",
+    "instanceType": "db.t4g.micro",
+    "unbundledLicensing": "FALSE",
+    "usagetype": "InstanceUsage:db.t4g.micro",
+    "locationType": "AWS Region",
+    "storage": "EBS Only",
+    "normalizationSizeFactor": "0.5",
+    "instanceFamily": "General purpose",
+    "databaseEngine": "MariaDB",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "physicalProcessor": "AWS Graviton2",
+    "licenseModel": "No license required",
+    "currentGeneration": "Yes",
+    "networkPerformance": "Up to 5 Gigabit",
+    "deploymentOption": "Single-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "processorArchitecture": "64-bit",
+    "operation": "CreateDBInstance:0018"
+   },
+   "sku": "7ZDZZQC8W6QQEW6U"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "7ZDZZQC8W6QQEW6U.JRTCKXETXF": {
+     "priceDimensions": {
+      "7ZDZZQC8W6QQEW6U.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$ 0.016 per RDS db.t4g.micro Single-AZ instance hour (or partial hour) running MariaDB",
+       "appliesTo": [],
+       "rateCode": "7ZDZZQC8W6QQEW6U.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0160000000"
+       }
+      }
+     },
+     "sku": "7ZDZZQC8W6QQEW6U",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "System Operation",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonEC2",
+    "provisioned": "Yes",
+    "groupDescription": "IOPS",
+    "usagetype": "EU-EBS:VolumeP-IOPS.io2",
+    "locationType": "AWS Region",
+    "volumeApiName": "io2",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "",
+    "group": "EBS IOPS"
+   },
+   "sku": "85KRDVUN28TUQW7Y"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "85KRDVUN28TUQW7Y.JRTCKXETXF": {
+     "priceDimensions": {
+      "85KRDVUN28TUQW7Y.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "IOPS-Mo",
+       "endRange": "Inf",
+       "description": "$0.072 per IOPS-month provisioned (io2) - EU (Ireland)",
+       "appliesTo": [],
+       "rateCode": "85KRDVUN28TUQW7Y.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0720000000"
+       }
+      }
+     },
+     "sku": "85KRDVUN28TUQW7Y",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Compute Instance",
+   "attributes": {
+    "enhancedNetworkingSupported": "No",
+    "intelTurboAvailable": "Yes",
+    "memory": "1 GiB",
+    "dedicatedEbsThroughput": "Up to 2085 Mbps",
+    "vcpu": "2",
+    "classicnetworkingsupport": "false",
+    "capacitystatus": "Used",
+    "locationType": "AWS Region",
+    "storage": "EBS only",
+    "instanceFamily": "General purpose",
+    "operatingSystem": "Windows",
+    "intelAvx2Available": "Yes",
+    "instanceFamilyCategory": "General Purpose",
+    "regionCode": "eu-west-1",
+    "physicalProcessor": "Intel Skylake E5 2686 v5",
+    "clockSpeed": "3.1 GHz",
+    "ecu": "NA",
+    "networkPerformance": "Up to 5 Gigabit",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "gpuMemory": "NA",
+    "dedicatedEbsThroughputDescription": "87 Mbps",
+    "vpcnetworkingsupport": "true",
+    "instanceType": "t3.micro",
+    "tenancy": "Shared",
+    "usagetype": "EU-BoxUsage:t3.micro",
+    "normalizationSizeFactor": "0.5",
+    "intelAvxAvailable": "Yes",
+    "processorFeatures": "AVX; AVX2; Intel AVX; Intel AVX2; Intel AVX512; Intel Turbo",
+    "servicecode": "AmazonEC2",
+    "licenseModel": "No License required",
+    "currentGeneration": "Yes",
+    "preInstalledSw": "NA",
+    "location": "EU (Ireland)",
+    "processorArchitecture": "64-bit",
+    "marketoption": "OnDemand",
+    "operation": "RunInstances:0002",
+    "availabilityzone": "NA"
+   },
+   "sku": "8E8FVAAVUXZE8FVH"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "8E8FVAAVUXZE8FVH.JRTCKXETXF": {
+     "priceDimensions": {
+      "8E8FVAAVUXZE8FVH.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.0206 per On Demand Windows t3.micro Instance Hour",
+       "appliesTo": [],
+       "rateCode": "8E8FVAAVUXZE8FVH.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0206000000"
+       }
+      }
+     },
+     "sku": "8E8FVAAVUXZE8FVH",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "ML Instance",
+   "attributes": {
+    "gpuMemory": "0",
+    "platoinstancename": "t2",
+    "memory": "4 GiB",
+    "computeType": "Standard Instances",
+    "vCpu": "2",
+    "instanceName": "ml.t2.medium",
+    "instanceType": "ml.t2.medium-Notebook",
+    "usagetype": "EU-Notebk:ml.t2.medium",
+    "locationType": "AWS Region",
+    "storage": "EBS only",
+    "platoinstancetype": "Notebook",
+    "gpu": "0",
+    "component": "Notebook",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonSageMaker",
+    "clockSpeed": "Up to 3.3 GHz",
+    "currentGeneration": "Yes",
+    "networkPerformance": "Low to Moderate",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon SageMaker",
+    "processorArchitecture": "32-bit or 64-bit",
+    "physicalCpu": "Intel Xeon Family",
+    "operation": "RunInstance",
+    "physicalGpu": "None"
+   },
+   "sku": "94BZV3K5NQVVABFB"
+  },
+  "serviceCode": "AmazonSageMaker",
+  "terms": {
+   "OnDemand": {
+    "94BZV3K5NQVVABFB.JRTCKXETXF": {
+     "priceDimensions": {
+      "94BZV3K5NQVVABFB.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.05 for Notebook Instance ml.t2.medium per hour",
+       "appliesTo": [],
+       "rateCode": "94BZV3K5NQVVABFB.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0500000000"
+       }
+      }
+     },
+     "sku": "94BZV3K5NQVVABFB",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261110041001",
+  "publicationDate": "2026-11-10T04:10:01Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "General Purpose",
+    "engineCode": "2",
+    "usagetype": "RDS:GP2-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "MySQL",
+    "storageMedia": "SSD",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0002",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "98Z3EQYU8MDZUWHX"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "98Z3EQYU8MDZUWHX.JRTCKXETXF": {
+     "priceDimensions": {
+      "98Z3EQYU8MDZUWHX.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.115 per GB-month of provisioned gp2 storage running MySQL",
+       "appliesTo": [],
+       "rateCode": "98Z3EQYU8MDZUWHX.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1150000000"
+       }
+      }
+     },
+     "sku": "98Z3EQYU8MDZUWHX",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Gateway",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "Reserved Gateway Load Balancer capacity units-hr",
+    "usagetype": "ReservedLCUUsage",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Gateway",
+    "group": "ELB:Balancing"
+   },
+   "sku": "9AHXFTCYGJPK28YN"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "9AHXFTCYGJPK28YN.JRTCKXETXF": {
+     "priceDimensions": {
+      "9AHXFTCYGJPK28YN.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "ReservedLCU-Hr",
+       "endRange": "Inf",
+       "description": "$0.004 per ReservedLCU-Hr gateway load balancer capacity unit-hour",
+       "appliesTo": [],
+       "rateCode": "9AHXFTCYGJPK28YN.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0040000000"
+       }
+      }
+     },
+     "sku": "9AHXFTCYGJPK28YN",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "NAT Gateway",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonEC2",
+    "groupDescription": "Charge for per GB data processed by NAT Gateways with provisioned bandwidth",
+    "usagetype": "EU-NatGateway-Prvd-Bytes",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "NatGateway",
+    "group": "NGW:NatGateway"
+   },
+   "sku": "9F25CQRR8AA58QZS"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "9F25CQRR8AA58QZS.JRTCKXETXF": {
+     "priceDimensions": {
+      "9F25CQRR8AA58QZS.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB",
+       "endRange": "Inf",
+       "description": "$0.00 per GB Data Processed by NAT Gateways with Provisioned Bandwidth",
+       "appliesTo": [],
+       "rateCode": "9F25CQRR8AA58QZS.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0000000000"
+       }
+      }
+     },
+     "sku": "9F25CQRR8AA58QZS",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Network",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "Reserved Network Load Balancer capacity units-hr",
+    "usagetype": "ReservedLCUUsage",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Network",
+    "group": "ELB:Balancing"
+   },
+   "sku": "AS5EPCYNHYT9UZEZ"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "AS5EPCYNHYT9UZEZ.JRTCKXETXF": {
+     "priceDimensions": {
+      "AS5EPCYNHYT9UZEZ.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "ReservedLCU-Hr",
+       "endRange": "Inf",
+       "description": "$0.006 per reserved Network load balancer capacity unit-hour",
+       "appliesTo": [],
+       "rateCode": "AS5EPCYNHYT9UZEZ.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0060000000"
+       }
+      }
+     },
+     "sku": "AS5EPCYNHYT9UZEZ",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "NAT Gateway",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonEC2",
+    "groupDescription": "Per hour and per Gbps charge for NAT Gateways with provisioned bandwidth",
+    "usagetype": "EU-NatGateway-Prvd-Gbps",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "NatGateway",
+    "group": "NGW:NatGateway"
+   },
+   "sku": "AVQ7WERG9GYTK6BD"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "AVQ7WERG9GYTK6BD.JRTCKXETXF": {
+     "priceDimensions": {
+      "AVQ7WERG9GYTK6BD.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Gbps-hrs",
+       "endRange": "Inf",
+       "description": "$1.164 per Gbps-hour of NAT Gateways with Provisioned Bandwidth",
+       "appliesTo": [],
+       "rateCode": "AVQ7WERG9GYTK6BD.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "1.1640000000"
+       }
+      }
+     },
+     "sku": "AVQ7WERG9GYTK6BD",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "System Operation",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonEC2",
+    "provisioned": "Yes",
+    "groupDescription": "IOPS",
+    "usagetype": "EBS:VolumeP-IOPS.io2.tier3",
+    "locationType": "AWS Region",
+    "volumeApiName": "io2",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "",
+    "group": "EBS IOPS Tier 3"
+   },
+   "sku": "AX8G343U7JZBRKJB"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "AX8G343U7JZBRKJB.JRTCKXETXF": {
+     "priceDimensions": {
+      "AX8G343U7JZBRKJB.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "IOPS-Mo",
+       "endRange": "Inf",
+       "description": "$0.032 per IOPS-month provisioned (io2) for over 64000 IOPS for a volume that has provisioned greater an 64000 IOPS",
+       "appliesTo": [],
+       "rateCode": "AX8G343U7JZBRKJB.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0318500000"
+       }
+      }
+     },
+     "sku": "AX8G343U7JZBRKJB",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Instance",
+   "attributes": {
+    "engineCode": "2",
+    "instanceTypeFamily": "T3",
+    "memory": "1 GiB",
+    "vcpu": "2",
+    "instanceType": "db.t3.micro",
+    "unbundledLicensing": "FALSE",
+    "usagetype": "InstanceUsage:db.t3.micro",
+    "locationType": "AWS Region",
+    "storage": "EBS Only",
+    "normalizationSizeFactor": "0.5",
+    "instanceFamily": "General purpose",
+    "databaseEngine": "MySQL",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "physicalProcessor": "Intel Skylake E5 2686 v5 (2.5 GHz)",
+    "licenseModel": "No license required",
+    "currentGeneration": "Yes",
+    "networkPerformance": "Low to Moderate",
+    "deploymentOption": "Single-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "processorArchitecture": "64-bit",
+    "operation": "CreateDBInstance:0002"
+   },
+   "sku": "AXC2TYPWXFK88MVY"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "AXC2TYPWXFK88MVY.JRTCKXETXF": {
+     "priceDimensions": {
+      "AXC2TYPWXFK88MVY.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "USD 0.017 per db.t3.micro Single-AZ instance hour (or partial hour) running MySQL",
+       "appliesTo": [],
+       "rateCode": "AXC2TYPWXFK88MVY.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0170000000"
+       }
+      }
+     },
+     "sku": "AXC2TYPWXFK88MVY",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonVPC",
+    "groupDescription": "Hourly charge for In-use Public IPv4 Addresses",
+    "usagetype": "EU-PublicIPv4:InUseAddress",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Virtual Private Cloud",
+    "operation": "",
+    "group": "VPCPublicIPv4Address"
+   },
+   "sku": "CNZ4XSXPRJXGA4ZF"
+  },
+  "serviceCode": "AmazonVPC",
+  "terms": {
+   "OnDemand": {
+    "CNZ4XSXPRJXGA4ZF.JRTCKXETXF": {
+     "priceDimensions": {
+      "CNZ4XSXPRJXGA4ZF.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.005 per In-use public IPv4 address per hour",
+       "appliesTo": [],
+       "rateCode": "CNZ4XSXPRJXGA4ZF.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0050000000"
+       }
+      }
+     },
+     "sku": "CNZ4XSXPRJXGA4ZF",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105181945",
+  "publicationDate": "2026-11-05T18:19:45Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Application",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "Reserved Application Load Balancer capacity units-hr",
+    "usagetype": "ReservedLCUUsage",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Application",
+    "group": "ELB:Balancing"
+   },
+   "sku": "CP5ZUMA7RSCUNUVK"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "CP5ZUMA7RSCUNUVK.JRTCKXETXF": {
+     "priceDimensions": {
+      "CP5ZUMA7RSCUNUVK.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "ReservedLCU-Hr",
+       "endRange": "Inf",
+       "description": "$0.008 per reserved application load balancer capacity unit-hour",
+       "appliesTo": [],
+       "rateCode": "CP5ZUMA7RSCUNUVK.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0080000000"
+       }
+      }
+     },
+     "sku": "CP5ZUMA7RSCUNUVK",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Compute Instance",
+   "attributes": {
+    "enhancedNetworkingSupported": "No",
+    "intelTurboAvailable": "Yes",
+    "memory": "1 GiB",
+    "dedicatedEbsThroughput": "Up to 2085 Mbps",
+    "vcpu": "2",
+    "classicnetworkingsupport": "false",
+    "capacitystatus": "Used",
+    "locationType": "AWS Region",
+    "storage": "EBS only",
+    "instanceFamily": "General purpose",
+    "operatingSystem": "Linux",
+    "intelAvx2Available": "Yes",
+    "instanceFamilyCategory": "General Purpose",
+    "regionCode": "us-east-1",
+    "physicalProcessor": "Intel Skylake E5 2686 v5",
+    "clockSpeed": "3.1 GHz",
+    "ecu": "NA",
+    "networkPerformance": "Up to 5 Gigabit",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "gpuMemory": "NA",
+    "dedicatedEbsThroughputDescription": "87 Mbps",
+    "vpcnetworkingsupport": "true",
+    "instanceType": "t3.micro",
+    "tenancy": "Shared",
+    "usagetype": "BoxUsage:t3.micro",
+    "normalizationSizeFactor": "0.5",
+    "intelAvxAvailable": "Yes",
+    "processorFeatures": "AVX; AVX2; Intel AVX; Intel AVX2; Intel AVX512; Intel Turbo",
+    "servicecode": "AmazonEC2",
+    "licenseModel": "No License required",
+    "currentGeneration": "Yes",
+    "preInstalledSw": "NA",
+    "location": "US East (N. Virginia)",
+    "processorArchitecture": "64-bit",
+    "marketoption": "OnDemand",
+    "operation": "RunInstances",
+    "availabilityzone": "NA"
+   },
+   "sku": "CRAJUW7BTXFMT2UJ"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "CRAJUW7BTXFMT2UJ.JRTCKXETXF": {
+     "priceDimensions": {
+      "CRAJUW7BTXFMT2UJ.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.0104 per On Demand Linux t3.micro Instance Hour",
+       "appliesTo": [],
+       "rateCode": "CRAJUW7BTXFMT2UJ.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0104000000"
+       }
+      }
+     },
+     "sku": "CRAJUW7BTXFMT2UJ",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Storage",
+   "attributes": {
+    "maxThroughputvolume": "500 MiB/s",
+    "volumeType": "Throughput Optimized HDD",
+    "maxIopsvolume": "500 - based on 1 MiB I/O size",
+    "usagetype": "EU-EBS:VolumeUsage.st1",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TiB",
+    "storageMedia": "HDD-backed",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonEC2",
+    "volumeApiName": "st1",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": ""
+   },
+   "sku": "CRDDQ58VQ7DU7373"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "CRDDQ58VQ7DU7373.JRTCKXETXF": {
+     "priceDimensions": {
+      "CRDDQ58VQ7DU7373.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.050 per GB-month of Throughput Optimized HDD (st1) provisioned storage  - EU (Ireland)",
+       "appliesTo": [],
+       "rateCode": "CRDDQ58VQ7DU7373.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0500000000"
+       }
+      }
+     },
+     "sku": "CRDDQ58VQ7DU7373",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Provisioned IOPS-IO2",
+    "engineCode": "14",
+    "usagetype": "RDS:Multi-AZ-PIOPS-Storage-IO2",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "64 TB",
+    "databaseEngine": "PostgreSQL",
+    "storageMedia": "SSD",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Multi-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0014",
+    "minVolumeSize": "100 GB"
+   },
+   "sku": "CSXV3F3G72XAA5FC"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "CSXV3F3G72XAA5FC.JRTCKXETXF": {
+     "priceDimensions": {
+      "CSXV3F3G72XAA5FC.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.25 per GB-Month of provisioned io2 storage for Multi-AZ deployments running PostgreSQL",
+       "appliesTo": [],
+       "rateCode": "CSXV3F3G72XAA5FC.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.2500000000"
+       }
+      }
+     },
+     "sku": "CSXV3F3G72XAA5FC",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Magnetic",
+    "engineCode": "18",
+    "usagetype": "RDS:StorageUsage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "3 TB",
+    "databaseEngine": "MariaDB",
+    "storageMedia": "Magnetic",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0018",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "CW738K7ZDVNC73F2"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "CW738K7ZDVNC73F2.JRTCKXETXF": {
+     "priceDimensions": {
+      "CW738K7ZDVNC73F2.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.1 per GB-month of provisioned magnetic storage running MariaDB",
+       "appliesTo": [],
+       "rateCode": "CW738K7ZDVNC73F2.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1000000000"
+       }
+      }
+     },
+     "sku": "CW738K7ZDVNC73F2",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "ML Instance",
+   "attributes": {
+    "gpuMemory": "NA",
+    "platoinstancename": "t2",
+    "memory": "4 GiB",
+    "computeType": "Standard Instances",
+    "vCpu": "2",
+    "instanceName": "ml.t2.medium",
+    "instanceType": "ml.t2.medium-AsyncInf",
+    "usagetype": "EU-AsyncInf:ml.t2.medium",
+    "locationType": "AWS Region",
+    "storage": "EBS only",
+    "platoinstancetype": "AsyncInf",
+    "gpu": "N/A",
+    "component": "AsyncInf",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonSageMaker",
+    "clockSpeed": "Up to 3.3 GHz",
+    "currentGeneration": "Yes",
+    "networkPerformance": "Low to Moderate",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon SageMaker",
+    "processorArchitecture": "32-bit or 64-bit",
+    "physicalCpu": "Intel Xeon Family",
+    "operation": "RunInstance",
+    "physicalGpu": "N/A"
+   },
+   "sku": "D6GHYV354Q9NVC29"
+  },
+  "serviceCode": "AmazonSageMaker",
+  "terms": {
+   "OnDemand": {
+    "D6GHYV354Q9NVC29.JRTCKXETXF": {
+     "priceDimensions": {
+      "D6GHYV354Q9NVC29.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.06 per AsyncInf ml.t2.medium hour in EU (Ireland)",
+       "appliesTo": [],
+       "rateCode": "D6GHYV354Q9NVC29.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0600000000"
+       }
+      }
+     },
+     "sku": "D6GHYV354Q9NVC29",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261110041001",
+  "publicationDate": "2026-11-10T04:10:01Z"
+ },
+ {
+  "product": {
+   "productFamily": "System Operation",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonEC2",
+    "provisioned": "Yes",
+    "groupDescription": "IOPS",
+    "usagetype": "EBS:VolumeP-IOPS.piops",
+    "locationType": "AWS Region",
+    "volumeApiName": "io1",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "",
+    "group": "EBS IOPS"
+   },
+   "sku": "D8RDVC722HKNR55G"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "D8RDVC722HKNR55G.JRTCKXETXF": {
+     "priceDimensions": {
+      "D8RDVC722HKNR55G.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "IOPS-Mo",
+       "endRange": "Inf",
+       "description": "$0.065 per IOPS-month provisioned - US East (Northern Virginia)",
+       "appliesTo": [],
+       "rateCode": "D8RDVC722HKNR55G.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0650000000"
+       }
+      }
+     },
+     "sku": "D8RDVC722HKNR55G",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "NAT Gateway",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonEC2",
+    "groupDescription": "Charge for per GB data processed by NatGateways",
+    "usagetype": "EU-NatGateway-Bytes",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "NatGateway",
+    "group": "NGW:NatGateway"
+   },
+   "sku": "DTH8595YVPFXV226"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "DTH8595YVPFXV226.JRTCKXETXF": {
+     "priceDimensions": {
+      "DTH8595YVPFXV226.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB",
+       "endRange": "Inf",
+       "description": "$0.048 per GB Data Processed by NAT Gateways",
+       "appliesTo": [],
+       "rateCode": "DTH8595YVPFXV226.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0480000000"
+       }
+      }
+     },
+     "sku": "DTH8595YVPFXV226",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Compute Instance",
+   "attributes": {
+    "enhancedNetworkingSupported": "No",
+    "intelTurboAvailable": "Yes",
+    "memory": "1 GiB",
+    "dedicatedEbsThroughput": "Up to 2085 Mbps",
+    "vcpu": "2",
+    "classicnetworkingsupport": "false",
+    "capacitystatus": "Used",
+    "locationType": "AWS Region",
+    "storage": "EBS only",
+    "instanceFamily": "General purpose",
+    "operatingSystem": "Linux",
+    "intelAvx2Available": "Yes",
+    "instanceFamilyCategory": "General Purpose",
+    "regionCode": "eu-west-1",
+    "physicalProcessor": "Intel Skylake E5 2686 v5",
+    "clockSpeed": "3.1 GHz",
+    "ecu": "NA",
+    "networkPerformance": "Up to 5 Gigabit",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "gpuMemory": "NA",
+    "dedicatedEbsThroughputDescription": "87 Mbps",
+    "vpcnetworkingsupport": "true",
+    "instanceType": "t3.micro",
+    "tenancy": "Shared",
+    "usagetype": "EU-BoxUsage:t3.micro",
+    "normalizationSizeFactor": "0.5",
+    "intelAvxAvailable": "Yes",
+    "processorFeatures": "AVX; AVX2; Intel AVX; Intel AVX2; Intel AVX512; Intel Turbo",
+    "servicecode": "AmazonEC2",
+    "licenseModel": "No License required",
+    "currentGeneration": "Yes",
+    "preInstalledSw": "NA",
+    "location": "EU (Ireland)",
+    "processorArchitecture": "64-bit",
+    "marketoption": "OnDemand",
+    "operation": "RunInstances",
+    "availabilityzone": "NA"
+   },
+   "sku": "DXH6X4VVFUT4EUU5"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "DXH6X4VVFUT4EUU5.JRTCKXETXF": {
+     "priceDimensions": {
+      "DXH6X4VVFUT4EUU5.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.0114 per On Demand Linux t3.micro Instance Hour",
+       "appliesTo": [],
+       "rateCode": "DXH6X4VVFUT4EUU5.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0114000000"
+       }
+      }
+     },
+     "sku": "DXH6X4VVFUT4EUU5",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Provisioned IOPS-IO2",
+    "engineCode": "2",
+    "usagetype": "RDS:PIOPS-Storage-IO2",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "64 TB",
+    "databaseEngine": "MySQL",
+    "storageMedia": "SSD",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0002",
+    "minVolumeSize": "100 GB"
+   },
+   "sku": "E7YMHKA5EVHE8E3A"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "E7YMHKA5EVHE8E3A.JRTCKXETXF": {
+     "priceDimensions": {
+      "E7YMHKA5EVHE8E3A.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.125 per GB-Month of provisioned io2 storage for Single-AZ deployments running MySQL",
+       "appliesTo": [],
+       "rateCode": "E7YMHKA5EVHE8E3A.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1250000000"
+       }
+      }
+     },
+     "sku": "E7YMHKA5EVHE8E3A",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "General Purpose-GP3",
+    "engineCode": "14",
+    "usagetype": "EU-RDS:Multi-AZ-GP3-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "PostgreSQL",
+    "storageMedia": "SSD",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Multi-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0014",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "EAU4ZF82RTWHAEHF"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "EAU4ZF82RTWHAEHF.JRTCKXETXF": {
+     "priceDimensions": {
+      "EAU4ZF82RTWHAEHF.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.254 per GB-month of provisioned GP3 storage for Multi-AZ deployments running PostgreSQL",
+       "appliesTo": [],
+       "rateCode": "EAU4ZF82RTWHAEHF.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.2540000000"
+       }
+      }
+     },
+     "sku": "EAU4ZF82RTWHAEHF",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Gateway",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "Used Gateway Load Balancer capacity units-hr",
+    "usagetype": "LCUUsage",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Gateway",
+    "group": "ELB:Balancing"
+   },
+   "sku": "EBFBY6XVZMVA2MJP"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "EBFBY6XVZMVA2MJP.JRTCKXETXF": {
+     "priceDimensions": {
+      "EBFBY6XVZMVA2MJP.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "LCU-Hrs",
+       "endRange": "Inf",
+       "description": "$0.0040 per used Gateway load balancer capacity unit-hour (or partial hour) in US East (N. Virginia)",
+       "appliesTo": [],
+       "rateCode": "EBFBY6XVZMVA2MJP.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0040000000"
+       }
+      }
+     },
+     "sku": "EBFBY6XVZMVA2MJP",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Instance",
+   "attributes": {
+    "engineCode": "2",
+    "instanceType": "db.t3.micro",
+    "usagetype": "UnusedBox:db.t3.micro",
+    "locationType": "AWS Region",
+    "normalizationSizeFactor": "0.5",
+    "databaseEngine": "MySQL",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "licenseModel": "No license required",
+    "deploymentOption": "Single-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0002"
+   },
+   "sku": "EGFWNJGSD4BHP8F8"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "EGFWNJGSD4BHP8F8.JRTCKXETXF": {
+     "priceDimensions": {
+      "EGFWNJGSD4BHP8F8.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "USD 0.017 per db.t3.micro Single-AZ unused capacity reservation hour (or partial hour) for MySQL",
+       "appliesTo": [],
+       "rateCode": "EGFWNJGSD4BHP8F8.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0170000000"
+       }
+      }
+     },
+     "sku": "EGFWNJGSD4BHP8F8",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "ML Instance",
+   "attributes": {
+    "gpuMemory": "NA",
+    "platoinstancename": "t2",
+    "memory": "4 GiB",
+    "computeType": "Standard Instances",
+    "vCpu": "2",
+    "instanceName": "ml.t2.medium",
+    "instanceType": "ml.t2.medium-AsyncInf",
+    "usagetype": "USE1-AsyncInf:ml.t2.medium",
+    "locationType": "AWS Region",
+    "storage": "EBS only",
+    "platoinstancetype": "AsyncInf",
+    "gpu": "N/A",
+    "component": "AsyncInf",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonSageMaker",
+    "clockSpeed": "Up to 3.3 GHz",
+    "currentGeneration": "Yes",
+    "networkPerformance": "Low to Moderate",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon SageMaker",
+    "processorArchitecture": "32-bit or 64-bit",
+    "physicalCpu": "Intel Xeon Family",
+    "operation": "RunInstance",
+    "physicalGpu": "N/A"
+   },
+   "sku": "EH5WN59X68SXTU4Y"
+  },
+  "serviceCode": "AmazonSageMaker",
+  "terms": {
+   "OnDemand": {
+    "EH5WN59X68SXTU4Y.JRTCKXETXF": {
+     "priceDimensions": {
+      "EH5WN59X68SXTU4Y.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.056 per AsyncInf ml.t2.medium hour in US East (N. Virginia)",
+       "appliesTo": [],
+       "rateCode": "EH5WN59X68SXTU4Y.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0560000000"
+       }
+      }
+     },
+     "sku": "EH5WN59X68SXTU4Y",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261110041001",
+  "publicationDate": "2026-11-10T04:10:01Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Application",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "Used Application Load Balancer capacity On Outposts units-hr",
+    "usagetype": "EU-Outposts-LCUUsage",
+    "locationType": "AWS Outposts",
+    "location": "EU (Ireland)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Application",
+    "group": "ELB:Balancing"
+   },
+   "sku": "ERNYNT4W2KCCUT7D"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "ERNYNT4W2KCCUT7D.JRTCKXETXF": {
+     "priceDimensions": {
+      "ERNYNT4W2KCCUT7D.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "LCU-Hrs",
+       "endRange": "Inf",
+       "description": "$0.0 per LCU-Hrs for Outposts-LCUUsage:LoadBalancing:Application in EU (Ireland)",
+       "appliesTo": [],
+       "rateCode": "ERNYNT4W2KCCUT7D.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0000000000"
+       }
+      }
+     },
+     "sku": "ERNYNT4W2KCCUT7D",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "General Purpose",
+    "engineCode": "14",
+    "usagetype": "EU-RDS:Multi-AZ-GP2-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "PostgreSQL",
+    "storageMedia": "SSD",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Multi-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0014",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "EZTPT5BFN5KAUPEW"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "EZTPT5BFN5KAUPEW.JRTCKXETXF": {
+     "priceDimensions": {
+      "EZTPT5BFN5KAUPEW.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.253 per GB-month of provisioned gp2 storage for Multi-AZ deployments running PostgreSQL",
+       "appliesTo": [],
+       "rateCode": "EZTPT5BFN5KAUPEW.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.2530000000"
+       }
+      }
+     },
+     "sku": "EZTPT5BFN5KAUPEW",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Storage",
+   "attributes": {
+    "maxThroughputvolume": "40 - 90 MB/sec",
+    "volumeType": "Magnetic",
+    "maxIopsvolume": "40 - 200",
+    "usagetype": "EU-EBS:VolumeUsage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "1 TiB",
+    "maxIopsBurstPerformance": "Hundreds",
+    "storageMedia": "HDD-backed",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonEC2",
+    "volumeApiName": "standard",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": ""
+   },
+   "sku": "FKSBP9HGX7W4MAMJ"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "FKSBP9HGX7W4MAMJ.JRTCKXETXF": {
+     "priceDimensions": {
+      "FKSBP9HGX7W4MAMJ.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.055 per GB-month of Magnetic provisioned storage - EU (Ireland)",
+       "appliesTo": [],
+       "rateCode": "FKSBP9HGX7W4MAMJ.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0550000000"
+       }
+      }
+     },
+     "sku": "FKSBP9HGX7W4MAMJ",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "ML Instance",
+   "attributes": {
+    "gpuMemory": "0",
+    "platoinstancename": "t2",
+    "memory": "4 GiB",
+    "computeType": "Standard Instances",
+    "vCpu": "2",
+    "instanceName": "ml.t2.medium",
+    "instanceType": "ml.t2.medium-Notebook",
+    "usagetype": "USE1-Notebk:ml.t2.medium",
+    "locationType": "AWS Region",
+    "storage": "EBS only",
+    "platoinstancetype": "Notebook",
+    "gpu": "0",
+    "component": "Notebook",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonSageMaker",
+    "clockSpeed": "Up to 3.3 GHz",
+    "currentGeneration": "Yes",
+    "networkPerformance": "Low to Moderate",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon SageMaker",
+    "processorArchitecture": "32-bit or 64-bit",
+    "physicalCpu": "Intel Xeon Family",
+    "operation": "RunInstance",
+    "physicalGpu": "None"
+   },
+   "sku": "FSPRF4WRZM39PQSH"
+  },
+  "serviceCode": "AmazonSageMaker",
+  "terms": {
+   "OnDemand": {
+    "FSPRF4WRZM39PQSH.JRTCKXETXF": {
+     "priceDimensions": {
+      "FSPRF4WRZM39PQSH.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.0464 for Notebook Instance ml.t2.medium per hour",
+       "appliesTo": [],
+       "rateCode": "FSPRF4WRZM39PQSH.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0464000000"
+       }
+      }
+     },
+     "sku": "FSPRF4WRZM39PQSH",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261110041001",
+  "publicationDate": "2026-11-10T04:10:01Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Magnetic",
+    "engineCode": "2",
+    "usagetype": "RDS:StorageUsage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "3 TB",
+    "databaseEngine": "MySQL",
+    "storageMedia": "Magnetic",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0002",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "FTNHJ5HCRBQ4C7ZP"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "FTNHJ5HCRBQ4C7ZP.JRTCKXETXF": {
+     "priceDimensions": {
+      "FTNHJ5HCRBQ4C7ZP.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.1 per GB-month of provisioned magnetic storage running MySQL",
+       "appliesTo": [],
+       "rateCode": "FTNHJ5HCRBQ4C7ZP.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1000000000"
+       }
+      }
+     },
+     "sku": "FTNHJ5HCRBQ4C7ZP",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "System Operation",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonEC2",
+    "provisioned": "Yes",
+    "groupDescription": "IOPS",
+    "usagetype": "EU-EBS:VolumeP-IOPS.io2.tier2",
+    "locationType": "AWS Region",
+    "volumeApiName": "io2",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "",
+    "group": "EBS IOPS Tier 2"
+   },
+   "sku": "FVSCZFYXY7RHFESB"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "FVSCZFYXY7RHFESB.JRTCKXETXF": {
+     "priceDimensions": {
+      "FVSCZFYXY7RHFESB.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "IOPS-Mo",
+       "endRange": "Inf",
+       "description": "$0.0504 per IOPS-month provisioned (io2) for 32001-64000 IOPS for a volume that has provisioned greater an 32000 IOPS",
+       "appliesTo": [],
+       "rateCode": "FVSCZFYXY7RHFESB.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0504000000"
+       }
+      }
+     },
+     "sku": "FVSCZFYXY7RHFESB",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Provisioned IOPS-IO2",
+    "engineCode": "2",
+    "usagetype": "EU-RDS:PIOPS-Storage-IO2",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "64 TB",
+    "databaseEngine": "MySQL",
+    "storageMedia": "SSD",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0002",
+    "minVolumeSize": "100 GB"
+   },
+   "sku": "GAAJT72MUJJEEHVG"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "GAAJT72MUJJEEHVG.JRTCKXETXF": {
+     "priceDimensions": {
+      "GAAJT72MUJJEEHVG.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.138 per GB-Month of provisioned io2 storage for Single-AZ deployments running MySQL",
+       "appliesTo": [],
+       "rateCode": "GAAJT72MUJJEEHVG.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1380000000"
+       }
+      }
+     },
+     "sku": "GAAJT72MUJJEEHVG",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Storage",
+   "attributes": {
+    "maxThroughputvolume": "250 MiB/s",
+    "volumeType": "General Purpose",
+    "maxIopsvolume": "16000",
+    "usagetype": "EU-EBS:VolumeUsage.gp2",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TiB",
+    "maxIopsBurstPerformance": "3000 for volumes <= 1 TiB",
+    "storageMedia": "SSD-backed",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonEC2",
+    "volumeApiName": "gp2",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": ""
+   },
+   "sku": "GDX844Q9TQAG2YZ2"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "GDX844Q9TQAG2YZ2.JRTCKXETXF": {
+     "priceDimensions": {
+      "GDX844Q9TQAG2YZ2.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.11 per GB-month of General Purpose SSD (gp2) provisioned storage - EU (Ireland)",
+       "appliesTo": [],
+       "rateCode": "GDX844Q9TQAG2YZ2.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1100000000"
+       }
+      }
+     },
+     "sku": "GDX844Q9TQAG2YZ2",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "General Purpose-GP3",
+    "engineCode": "2",
+    "usagetype": "EU-RDS:GP3-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "MySQL",
+    "storageMedia": "SSD",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0002",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "GJ49JRNN8XCT3XR7"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "GJ49JRNN8XCT3XR7.JRTCKXETXF": {
+     "priceDimensions": {
+      "GJ49JRNN8XCT3XR7.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.127 per GB-month of provisioned GP3 storage running MySQL",
+       "appliesTo": [],
+       "rateCode": "GJ49JRNN8XCT3XR7.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1270000000"
+       }
+      }
+     },
+     "sku": "GJ49JRNN8XCT3XR7",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Provisioned IOPS-IO2",
+    "engineCode": "14",
+    "usagetype": "EU-RDS:Multi-AZ-PIOPS-Storage-IO2",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "64 TB",
+    "databaseEngine": "PostgreSQL",
+    "storageMedia": "SSD",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Multi-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0014",
+    "minVolumeSize": "100 GB"
+   },
+   "sku": "GNMJARHTFMEJD9VA"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "GNMJARHTFMEJD9VA.JRTCKXETXF": {
+     "priceDimensions": {
+      "GNMJARHTFMEJD9VA.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.276 per GB-Month of provisioned io2 storage for Multi-AZ deployments running PostgreSQL",
+       "appliesTo": [],
+       "rateCode": "GNMJARHTFMEJD9VA.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.2760000000"
+       }
+      }
+     },
+     "sku": "GNMJARHTFMEJD9VA",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Gateway",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "LoadBalancer hourly usage by Gateway Load Balancer",
+    "usagetype": "EU-LoadBalancerUsage",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Gateway",
+    "group": "ELB:Balancing"
+   },
+   "sku": "GNQR4Q4U4SJZGZA5"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "GNQR4Q4U4SJZGZA5.JRTCKXETXF": {
+     "priceDimensions": {
+      "GNQR4Q4U4SJZGZA5.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.0140 per Gateway LoadBalancer-hour (or partial hour) in EU (Ireland)",
+       "appliesTo": [],
+       "rateCode": "GNQR4Q4U4SJZGZA5.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0140000000"
+       }
+      }
+     },
+     "sku": "GNQR4Q4U4SJZGZA5",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "General Purpose-GP3",
+    "engineCode": "2",
+    "usagetype": "RDS:GP3-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "MySQL",
+    "storageMedia": "SSD",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0002",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "H4R2WBBMX6VRJG4S"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "H4R2WBBMX6VRJG4S.JRTCKXETXF": {
+     "priceDimensions": {
+      "H4R2WBBMX6VRJG4S.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.115 per GB-month of provisioned GP3 storage running MySQL",
+       "appliesTo": [],
+       "rateCode": "H4R2WBBMX6VRJG4S.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1150000000"
+       }
+      }
+     },
+     "sku": "H4R2WBBMX6VRJG4S",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "System Operation",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonEC2",
+    "provisioned": "Yes",
+    "groupDescription": "IOPS",
+    "usagetype": "EU-EBS:VolumeP-IOPS.io2.tier3",
+    "locationType": "AWS Region",
+    "volumeApiName": "io2",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "",
+    "group": "EBS IOPS Tier 3"
+   },
+   "sku": "HRFNKS5RPSVR55PM"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "HRFNKS5RPSVR55PM.JRTCKXETXF": {
+     "priceDimensions": {
+      "HRFNKS5RPSVR55PM.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "IOPS-Mo",
+       "endRange": "Inf",
+       "description": "$0.0353 per IOPS-month provisioned (io2) for over 64000 IOPS for a volume that has provisioned greater an 64000 IOPS",
+       "appliesTo": [],
+       "rateCode": "HRFNKS5RPSVR55PM.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0352800000"
+       }
+      }
+     },
+     "sku": "HRFNKS5RPSVR55PM",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Compute Instance",
+   "attributes": {
+    "enhancedNetworkingSupported": "No",
+    "intelTurboAvailable": "Yes",
+    "memory": "1 GiB",
+    "dedicatedEbsThroughput": "Up to 2085 Mbps",
+    "vcpu": "2",
+    "classicnetworkingsupport": "false",
+    "capacitystatus": "Used",
+    "locationType": "AWS Region",
+    "storage": "EBS only",
+    "instanceFamily": "General purpose",
+    "operatingSystem": "Linux",
+    "intelAvx2Available": "Yes",
+    "instanceFamilyCategory": "General Purpose",
+    "regionCode": "us-east-1",
+    "physicalProcessor": "Intel Skylake E5 2686 v5",
+    "clockSpeed": "3.1 GHz",
+    "ecu": "NA",
+    "networkPerformance": "Up to 5 Gigabit",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "gpuMemory": "NA",
+    "dedicatedEbsThroughputDescription": "87 Mbps",
+    "vpcnetworkingsupport": "true",
+    "instanceType": "t3.micro",
+    "tenancy": "Dedicated",
+    "usagetype": "DedicatedUsage:t3.micro",
+    "normalizationSizeFactor": "0.5",
+    "intelAvxAvailable": "Yes",
+    "processorFeatures": "AVX; AVX2; Intel AVX; Intel AVX2; Intel AVX512; Intel Turbo",
+    "servicecode": "AmazonEC2",
+    "licenseModel": "No License required",
+    "currentGeneration": "Yes",
+    "preInstalledSw": "NA",
+    "location": "US East (N. Virginia)",
+    "processorArchitecture": "64-bit",
+    "marketoption": "OnDemand",
+    "operation": "RunInstances",
+    "availabilityzone": "NA"
+   },
+   "sku": "HUV6TY9MEJBMPQCB"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "HUV6TY9MEJBMPQCB.JRTCKXETXF": {
+     "priceDimensions": {
+      "HUV6TY9MEJBMPQCB.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.011 per Dedicated Linux t3.micro Instance Hour",
+       "appliesTo": [],
+       "rateCode": "HUV6TY9MEJBMPQCB.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0110000000"
+       }
+      }
+     },
+     "sku": "HUV6TY9MEJBMPQCB",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Network",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "Used Network Load Balancer capacity units-hr",
+    "usagetype": "EU-LCUUsage",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Network",
+    "group": "ELB:Balancing"
+   },
+   "sku": "HWQC4ZB5JT7D9CQC"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "HWQC4ZB5JT7D9CQC.JRTCKXETXF": {
+     "priceDimensions": {
+      "HWQC4ZB5JT7D9CQC.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "LCU-Hrs",
+       "endRange": "Inf",
+       "description": "$0.006 per used Network load balancer capacity unit-hour (or partial hour)",
+       "appliesTo": [],
+       "rateCode": "HWQC4ZB5JT7D9CQC.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0060000000"
+       }
+      }
+     },
+     "sku": "HWQC4ZB5JT7D9CQC",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Storage",
+   "attributes": {
+    "maxThroughputvolume": "250 MiB/s",
+    "volumeType": "General Purpose",
+    "maxIopsvolume": "16000",
+    "usagetype": "EBS:VolumeUsage.gp2",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TiB",
+    "maxIopsBurstPerformance": "3000 for volumes <= 1 TiB",
+    "storageMedia": "SSD-backed",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonEC2",
+    "volumeApiName": "gp2",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": ""
+   },
+   "sku": "HY3BZPP2B6K8MSJF"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "HY3BZPP2B6K8MSJF.JRTCKXETXF": {
+     "priceDimensions": {
+      "HY3BZPP2B6K8MSJF.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.10 per GB-month of General Purpose SSD (gp2) provisioned storage - US East (Northern Virginia)",
+       "appliesTo": [],
+       "rateCode": "HY3BZPP2B6K8MSJF.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1000000000"
+       }
+      }
+     },
+     "sku": "HY3BZPP2B6K8MSJF",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "General Purpose-GP3",
+    "engineCode": "14",
+    "usagetype": "RDS:Multi-AZ-GP3-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "PostgreSQL",
+    "storageMedia": "SSD",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Multi-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0014",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "J7S7KD4WFDNQWKNX"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "J7S7KD4WFDNQWKNX.JRTCKXETXF": {
+     "priceDimensions": {
+      "J7S7KD4WFDNQWKNX.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.23 per GB-month of provisioned GP3 storage for Multi-AZ deployments running PostgreSQL",
+       "appliesTo": [],
+       "rateCode": "J7S7KD4WFDNQWKNX.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.2300000000"
+       }
+      }
+     },
+     "sku": "J7S7KD4WFDNQWKNX",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Storage",
+   "attributes": {
+    "maxThroughputvolume": "2000 MiB/s",
+    "volumeType": "General Purpose",
+    "maxIopsvolume": "80000",
+    "usagetype": "EBS:VolumeUsage.gp3",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "64 TiB",
+    "storageMedia": "SSD-backed",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonEC2",
+    "volumeApiName": "gp3",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": ""
+   },
+   "sku": "JG3KUJMBRGHV3N8G"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "JG3KUJMBRGHV3N8G.JRTCKXETXF": {
+     "priceDimensions": {
+      "JG3KUJMBRGHV3N8G.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.08 per GB-month of General Purpose (gp3) provisioned storage - US East (N. Virginia)",
+       "appliesTo": [],
+       "rateCode": "JG3KUJMBRGHV3N8G.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0800000000"
+       }
+      }
+     },
+     "sku": "JG3KUJMBRGHV3N8G",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Network",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "Reserved Network Load Balancer capacity units-hr",
+    "usagetype": "EU-ReservedLCUUsage",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Network",
+    "group": "ELB:Balancing"
+   },
+   "sku": "JHZAC77M7RPTPDEN"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "JHZAC77M7RPTPDEN.JRTCKXETXF": {
+     "priceDimensions": {
+      "JHZAC77M7RPTPDEN.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "ReservedLCU-Hr",
+       "endRange": "Inf",
+       "description": "$0.006 per reserved Network load balancer capacity unit-hour",
+       "appliesTo": [],
+       "rateCode": "JHZAC77M7RPTPDEN.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0060000000"
+       }
+      }
+     },
+     "sku": "JHZAC77M7RPTPDEN",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Storage",
+   "attributes": {
+    "maxThroughputvolume": "1000 MiB/s",
+    "volumeType": "Provisioned IOPS",
+    "maxIopsvolume": "64000",
+    "usagetype": "EBS:VolumeUsage.piops",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TiB",
+    "storageMedia": "SSD-backed",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonEC2",
+    "volumeApiName": "io1",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": ""
+   },
+   "sku": "JR4AM7VS63CTEPMN"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "JR4AM7VS63CTEPMN.JRTCKXETXF": {
+     "priceDimensions": {
+      "JR4AM7VS63CTEPMN.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.125 per GB-month of Provisioned IOPS SSD (io1)  provisioned storage - US East (Northern Virginia)",
+       "appliesTo": [],
+       "rateCode": "JR4AM7VS63CTEPMN.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1250000000"
+       }
+      }
+     },
+     "sku": "JR4AM7VS63CTEPMN",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Instance",
+   "attributes": {
+    "engineCode": "2",
+    "instanceType": "db.t3.micro",
+    "usagetype": "EU-UnusedBox:db.t3.micro",
+    "locationType": "AWS Region",
+    "normalizationSizeFactor": "0.5",
+    "databaseEngine": "MySQL",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "licenseModel": "No license required",
+    "deploymentOption": "Single-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0002"
+   },
+   "sku": "K3YQ69THXZJKTZ6W"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "K3YQ69THXZJKTZ6W.JRTCKXETXF": {
+     "priceDimensions": {
+      "K3YQ69THXZJKTZ6W.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "USD 0.018 per db.t3.micro Single-AZ unused capacity reservation hour (or partial hour) for MySQL",
+       "appliesTo": [],
+       "rateCode": "K3YQ69THXZJKTZ6W.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0180000000"
+       }
+      }
+     },
+     "sku": "K3YQ69THXZJKTZ6W",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "System Operation",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonEC2",
+    "provisioned": "Yes",
+    "groupDescription": "IOPS",
+    "usagetype": "EBS:VolumeP-IOPS.io2.tier2",
+    "locationType": "AWS Region",
+    "volumeApiName": "io2",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "",
+    "group": "EBS IOPS Tier 2"
+   },
+   "sku": "KDKG2R3W4NMV7CHP"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "KDKG2R3W4NMV7CHP.JRTCKXETXF": {
+     "priceDimensions": {
+      "KDKG2R3W4NMV7CHP.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "IOPS-Mo",
+       "endRange": "Inf",
+       "description": "$0.0455 per IOPS-month provisioned (io2) for 32001-64000 IOPS for a volume that has provisioned greater an 32000 IOPS",
+       "appliesTo": [],
+       "rateCode": "KDKG2R3W4NMV7CHP.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0455000000"
+       }
+      }
+     },
+     "sku": "KDKG2R3W4NMV7CHP",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "NAT Gateway",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonEC2",
+    "groupDescription": "Hourly charge for NAT Gateways",
+    "usagetype": "EU-NatGateway-Hours",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "NatGateway",
+    "group": "NGW:NatGateway"
+   },
+   "sku": "KFNSSCHWD43WZK2R"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "KFNSSCHWD43WZK2R.JRTCKXETXF": {
+     "priceDimensions": {
+      "KFNSSCHWD43WZK2R.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.048 per NAT Gateway Hour",
+       "appliesTo": [],
+       "rateCode": "KFNSSCHWD43WZK2R.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0480000000"
+       }
+      }
+     },
+     "sku": "KFNSSCHWD43WZK2R",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "NAT Gateway",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonEC2",
+    "groupDescription": "Hourly charge for NAT Gateways",
+    "usagetype": "NatGateway-Hours",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "NatGateway",
+    "group": "NGW:NatGateway"
+   },
+   "sku": "M2YSHUBETB3JX4M4"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "M2YSHUBETB3JX4M4.JRTCKXETXF": {
+     "priceDimensions": {
+      "M2YSHUBETB3JX4M4.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.045 per NAT Gateway Hour",
+       "appliesTo": [],
+       "rateCode": "M2YSHUBETB3JX4M4.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0450000000"
+       }
+      }
+     },
+     "sku": "M2YSHUBETB3JX4M4",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "System Operation",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonEC2",
+    "provisioned": "Yes",
+    "groupDescription": "IOPS",
+    "usagetype": "EU-EBS:VolumeP-IOPS.piops",
+    "locationType": "AWS Region",
+    "volumeApiName": "io1",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "",
+    "group": "EBS IOPS"
+   },
+   "sku": "M4WP2RF278FEGVQY"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "M4WP2RF278FEGVQY.JRTCKXETXF": {
+     "priceDimensions": {
+      "M4WP2RF278FEGVQY.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "IOPS-Mo",
+       "endRange": "Inf",
+       "description": "$0.072 per IOPS-month provisioned - EU (Ireland)",
+       "appliesTo": [],
+       "rateCode": "M4WP2RF278FEGVQY.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0720000000"
+       }
+      }
+     },
+     "sku": "M4WP2RF278FEGVQY",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Application",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "Reserved Application Load Balancer capacity units-hr",
+    "usagetype": "EU-ReservedLCUUsage",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Application",
+    "group": "ELB:Balancing"
+   },
+   "sku": "MCG5CTS6HY3Z2T63"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "MCG5CTS6HY3Z2T63.JRTCKXETXF": {
+     "priceDimensions": {
+      "MCG5CTS6HY3Z2T63.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "ReservedLCU-Hr",
+       "endRange": "Inf",
+       "description": "$0.008 per reserved Application load balancer capacity unit-hour",
+       "appliesTo": [],
+       "rateCode": "MCG5CTS6HY3Z2T63.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0080000000"
+       }
+      }
+     },
+     "sku": "MCG5CTS6HY3Z2T63",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonVPC",
+    "groupDescription": "Hourly charge for Idle Public IPv4 Addresses",
+    "usagetype": "EU-PublicIPv4:IdleAddress",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Virtual Private Cloud",
+    "operation": "",
+    "group": "VPCPublicIPv4Address"
+   },
+   "sku": "MHVKGXCT3GPZ4RVC"
+  },
+  "serviceCode": "AmazonVPC",
+  "terms": {
+   "OnDemand": {
+    "MHVKGXCT3GPZ4RVC.JRTCKXETXF": {
+     "priceDimensions": {
+      "MHVKGXCT3GPZ4RVC.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.005 per Idle public IPv4 address per hour",
+       "appliesTo": [],
+       "rateCode": "MHVKGXCT3GPZ4RVC.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0050000000"
+       }
+      }
+     },
+     "sku": "MHVKGXCT3GPZ4RVC",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105181945",
+  "publicationDate": "2026-11-05T18:19:45Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "Data processed by Classic Load Balancer",
+    "usagetype": "DataProcessing-Bytes",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing",
+    "group": "ELB:Balancing"
+   },
+   "sku": "NZE73RYFQ8ZCZ553"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "NZE73RYFQ8ZCZ553.JRTCKXETXF": {
+     "priceDimensions": {
+      "NZE73RYFQ8ZCZ553.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB",
+       "endRange": "Inf",
+       "description": "$0.008 per GB Data Processed by the LoadBalancer",
+       "appliesTo": [],
+       "rateCode": "NZE73RYFQ8ZCZ553.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0080000000"
+       }
+      }
+     },
+     "sku": "NZE73RYFQ8ZCZ553",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Application",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "Used Application Load Balancer capacity units-hr",
+    "usagetype": "LCUUsage",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Application",
+    "group": "ELB:Balancing"
+   },
+   "sku": "P2XGEJ8N3KU52WA8"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "P2XGEJ8N3KU52WA8.JRTCKXETXF": {
+     "priceDimensions": {
+      "P2XGEJ8N3KU52WA8.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "LCU-Hrs",
+       "endRange": "Inf",
+       "description": "$0.008 per used Application load balancer capacity unit-hour (or partial hour)",
+       "appliesTo": [],
+       "rateCode": "P2XGEJ8N3KU52WA8.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0080000000"
+       }
+      }
+     },
+     "sku": "P2XGEJ8N3KU52WA8",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Provisioned IOPS",
+    "engineCode": "14",
+    "usagetype": "EU-RDS:Multi-AZ-PIOPS-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "PostgreSQL",
+    "storageMedia": "SSD",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "licenseModel": "No license required",
+    "deploymentOption": "Multi-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0014",
+    "minVolumeSize": "100 GB"
+   },
+   "sku": "P8D7QG798JDNUG53"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "P8D7QG798JDNUG53.JRTCKXETXF": {
+     "priceDimensions": {
+      "P8D7QG798JDNUG53.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.276 per GB-month of provisioned io1 storage for Multi-AZ deployments running PostgreSQL",
+       "appliesTo": [],
+       "rateCode": "P8D7QG798JDNUG53.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.2760000000"
+       }
+      }
+     },
+     "sku": "P8D7QG798JDNUG53",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Application",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "Used Application Load Balancer capacity On Outposts units-hr",
+    "usagetype": "Outposts-LCUUsage",
+    "locationType": "AWS Outposts",
+    "location": "US East (N. Virginia)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Application",
+    "group": "ELB:Balancing"
+   },
+   "sku": "P8UHXAWNGFFB3K8T"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "P8UHXAWNGFFB3K8T.JRTCKXETXF": {
+     "priceDimensions": {
+      "P8UHXAWNGFFB3K8T.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "LCU-Hrs",
+       "endRange": "Inf",
+       "description": "$0.0 per LCU-Hrs for Outposts-LCUUsage:LoadBalancing:Application in US East (N. Virginia)",
+       "appliesTo": [],
+       "rateCode": "P8UHXAWNGFFB3K8T.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0000000000"
+       }
+      }
+     },
+     "sku": "P8UHXAWNGFFB3K8T",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Instance",
+   "attributes": {
+    "engineCode": "18",
+    "instanceTypeFamily": "T4G",
+    "memory": "1 GiB",
+    "vcpu": "2",
+    "instanceType": "db.t4g.micro",
+    "unbundledLicensing": "FALSE",
+    "usagetype": "EU-InstanceUsage:db.t4g.micro",
+    "locationType": "AWS Region",
+    "storage": "EBS Only",
+    "normalizationSizeFactor": "0.5",
+    "instanceFamily": "General purpose",
+    "databaseEngine": "MariaDB",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "physicalProcessor": "AWS Graviton2",
+    "licenseModel": "No license required",
+    "currentGeneration": "Yes",
+    "networkPerformance": "Up to 5 Gigabit",
+    "deploymentOption": "Single-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "processorArchitecture": "64-bit",
+    "operation": "CreateDBInstance:0018"
+   },
+   "sku": "PAA8CB7N4ZSHXFZP"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "PAA8CB7N4ZSHXFZP.JRTCKXETXF": {
+     "priceDimensions": {
+      "PAA8CB7N4ZSHXFZP.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$ 0.017 per RDS db.t4g.micro Single-AZ instance hour (or partial hour) running MariaDB",
+       "appliesTo": [],
+       "rateCode": "PAA8CB7N4ZSHXFZP.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0170000000"
+       }
+      }
+     },
+     "sku": "PAA8CB7N4ZSHXFZP",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Compute Instance",
+   "attributes": {
+    "enhancedNetworkingSupported": "Yes",
+    "intelTurboAvailable": "Yes",
+    "memory": "16 GiB",
+    "dedicatedEbsThroughput": "3500 Mbps",
+    "vcpu": "4",
+    "classicnetworkingsupport": "false",
+    "capacitystatus": "Used",
+    "locationType": "AWS Region",
+    "storage": "125 GB NVMe SSD",
+    "instanceFamily": "GPU instance",
+    "operatingSystem": "Linux",
+    "intelAvx2Available": "Yes",
+    "instanceFamilyCategory": "Accelerated Computing",
+    "regionCode": "eu-west-1",
+    "physicalProcessor": "Intel Xeon Family",
+    "clockSpeed": "2.5 GHz",
+    "ecu": "NA",
+    "networkPerformance": "Up to 25 Gigabit",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "gpuMemory": "16 GB",
+    "dedicatedEbsThroughputDescription": "3500 Mbps",
+    "vpcnetworkingsupport": "true",
+    "instanceType": "g4dn.xlarge",
+    "tenancy": "Shared",
+    "usagetype": "EU-BoxUsage:g4dn.xlarge",
+    "normalizationSizeFactor": "1",
+    "gpu": "1",
+    "intelAvxAvailable": "Yes",
+    "processorFeatures": "Intel AVX; Intel AVX2; Intel AVX512; Intel Turbo",
+    "servicecode": "AmazonEC2",
+    "licenseModel": "No License required",
+    "currentGeneration": "Yes",
+    "preInstalledSw": "NA",
+    "location": "EU (Ireland)",
+    "processorArchitecture": "64-bit",
+    "marketoption": "OnDemand",
+    "operation": "RunInstances",
+    "availabilityzone": "NA"
+   },
+   "sku": "PEJRQD7KDD2NBFH5"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "PEJRQD7KDD2NBFH5.JRTCKXETXF": {
+     "priceDimensions": {
+      "PEJRQD7KDD2NBFH5.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.587 per On Demand Linux g4dn.xlarge Instance Hour",
+       "appliesTo": [],
+       "rateCode": "PEJRQD7KDD2NBFH5.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.5870000000"
+       }
+      }
+     },
+     "sku": "PEJRQD7KDD2NBFH5",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "NAT Gateway",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonEC2",
+    "groupDescription": "Charge for per GB data processed by NAT Gateways with provisioned bandwidth",
+    "usagetype": "NatGateway-Prvd-Bytes",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "NatGateway",
+    "group": "NGW:NatGateway"
+   },
+   "sku": "PF95WR6DG26CSW2U"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "PF95WR6DG26CSW2U.JRTCKXETXF": {
+     "priceDimensions": {
+      "PF95WR6DG26CSW2U.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB",
+       "endRange": "Inf",
+       "description": "$0.00 per GB Data Processed by NAT Gateways with Provisioned Bandwidth",
+       "appliesTo": [],
+       "rateCode": "PF95WR6DG26CSW2U.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0000000000"
+       }
+      }
+     },
+     "sku": "PF95WR6DG26CSW2U",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "LoadBalancer hourly usage by Classic Load Balancer",
+    "usagetype": "EU-LoadBalancerUsage",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing",
+    "group": "ELB:Balancing"
+   },
+   "sku": "PMVAP4E245MPBY22"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "PMVAP4E245MPBY22.JRTCKXETXF": {
+     "priceDimensions": {
+      "PMVAP4E245MPBY22.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.028 per LoadBalancer-hour (or partial hour)",
+       "appliesTo": [],
+       "rateCode": "PMVAP4E245MPBY22.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0280000000"
+       }
+      }
+     },
+     "sku": "PMVAP4E245MPBY22",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Provisioned IOPS",
+    "engineCode": "2",
+    "usagetype": "RDS:PIOPS-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "MySQL",
+    "storageMedia": "SSD",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0002",
+    "minVolumeSize": "100 GB"
+   },
+   "sku": "QBY7T7A4DFW89EFJ"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "QBY7T7A4DFW89EFJ.JRTCKXETXF": {
+     "priceDimensions": {
+      "QBY7T7A4DFW89EFJ.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.125 per GB-month of provisioned io1 storage running MySQL",
+       "appliesTo": [],
+       "rateCode": "QBY7T7A4DFW89EFJ.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1250000000"
+       }
+      }
+     },
+     "sku": "QBY7T7A4DFW89EFJ",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Gateway",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "Reserved Gateway Load Balancer capacity units-hr",
+    "usagetype": "EU-ReservedLCUUsage",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Gateway",
+    "group": "ELB:Balancing"
+   },
+   "sku": "QQHBVC2Y6Z4AY6XP"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "QQHBVC2Y6Z4AY6XP.JRTCKXETXF": {
+     "priceDimensions": {
+      "QQHBVC2Y6Z4AY6XP.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "ReservedLCU-Hr",
+       "endRange": "Inf",
+       "description": "$0.004 per ReservedLCU-Hr gateway load balancer capacity unit-hour",
+       "appliesTo": [],
+       "rateCode": "QQHBVC2Y6Z4AY6XP.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0040000000"
+       }
+      }
+     },
+     "sku": "QQHBVC2Y6Z4AY6XP",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "System Operation",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonEC2",
+    "provisioned": "Yes",
+    "groupDescription": "IOPS",
+    "usagetype": "EU-EBS:VolumeP-IOPS.gp3",
+    "locationType": "AWS Region",
+    "volumeApiName": "gp3",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "",
+    "group": "EBS IOPS"
+   },
+   "sku": "RC6HKYUDYUP35XBV"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "RC6HKYUDYUP35XBV.JRTCKXETXF": {
+     "priceDimensions": {
+      "RC6HKYUDYUP35XBV.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "IOPS-Mo",
+       "endRange": "Inf",
+       "description": "$0.0055 per provisioned IOPS-month of gp3 - EU (Ireland)",
+       "appliesTo": [],
+       "rateCode": "RC6HKYUDYUP35XBV.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0055000000"
+       }
+      }
+     },
+     "sku": "RC6HKYUDYUP35XBV",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Provisioned Throughput",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonEC2",
+    "provisioned": "Yes",
+    "groupDescription": "Charge per Provisioned mbps",
+    "usagetype": "EU-EBS:VolumeP-Throughput.gp3",
+    "locationType": "AWS Region",
+    "volumeApiName": "gp3",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "",
+    "group": "EBS Throughput"
+   },
+   "sku": "RCDVGPFWPEZE4D4N"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "RCDVGPFWPEZE4D4N.JRTCKXETXF": {
+     "priceDimensions": {
+      "RCDVGPFWPEZE4D4N.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GiBps-mo",
+       "endRange": "Inf",
+       "description": "$0.044 per provisioned MiBps-month of gp3 - EU (Ireland)",
+       "appliesTo": [],
+       "rateCode": "RCDVGPFWPEZE4D4N.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "45.0560000000"
+       }
+      }
+     },
+     "sku": "RCDVGPFWPEZE4D4N",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Provisioned Throughput",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonEC2",
+    "provisioned": "Yes",
+    "groupDescription": "Charge per Provisioned mbps",
+    "usagetype": "EBS:VolumeP-Throughput.gp3",
+    "locationType": "AWS Region",
+    "volumeApiName": "gp3",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "",
+    "group": "EBS Throughput"
+   },
+   "sku": "SQUFRQX4K92S4SBB"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "SQUFRQX4K92S4SBB.JRTCKXETXF": {
+     "priceDimensions": {
+      "SQUFRQX4K92S4SBB.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GiBps-mo",
+       "endRange": "Inf",
+       "description": "$0.04 per provisioned MiBps-month of gp3 - US East (N. Virginia)",
+       "appliesTo": [],
+       "rateCode": "SQUFRQX4K92S4SBB.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "40.9600000000"
+       }
+      }
+     },
+     "sku": "SQUFRQX4K92S4SBB",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "ML Instance",
+   "attributes": {
+    "gpuMemory": "0",
+    "platoinstancename": "t2",
+    "memory": "4 GiB",
+    "computeType": "Standard Instances",
+    "vCpu": "2",
+    "instanceName": "ml.t2.medium",
+    "instanceType": "ml.t2.medium-Hosting",
+    "usagetype": "EU-Host:ml.t2.medium",
+    "locationType": "AWS Region",
+    "storage": "EBS only",
+    "platoinstancetype": "Hosting",
+    "gpu": "0",
+    "component": "Hosting",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonSageMaker",
+    "clockSpeed": "Up to 3.3 GHz",
+    "currentGeneration": "Yes",
+    "networkPerformance": "Low to Moderate",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon SageMaker",
+    "processorArchitecture": "32-bit or 64-bit",
+    "physicalCpu": "Intel Xeon Family",
+    "operation": "RunInstance",
+    "physicalGpu": "None"
+   },
+   "sku": "STD8KWV4GXPBGZBH"
+  },
+  "serviceCode": "AmazonSageMaker",
+  "terms": {
+   "OnDemand": {
+    "STD8KWV4GXPBGZBH.JRTCKXETXF": {
+     "priceDimensions": {
+      "STD8KWV4GXPBGZBH.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.06 per Hosting ml.t2.medium hour in EU (Ireland)",
+       "appliesTo": [],
+       "rateCode": "STD8KWV4GXPBGZBH.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0600000000"
+       }
+      }
+     },
+     "sku": "STD8KWV4GXPBGZBH",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261110041001",
+  "publicationDate": "2026-11-10T04:10:01Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Provisioned IOPS",
+    "engineCode": "14",
+    "usagetype": "RDS:Multi-AZ-PIOPS-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "PostgreSQL",
+    "storageMedia": "SSD",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Multi-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0014",
+    "minVolumeSize": "100 GB"
+   },
+   "sku": "SWZXSY4GF4UFS2XN"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "SWZXSY4GF4UFS2XN.JRTCKXETXF": {
+     "priceDimensions": {
+      "SWZXSY4GF4UFS2XN.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.25 per GB-month of provisioned io1 storage for Multi-AZ deployments running PostgreSQL",
+       "appliesTo": [],
+       "rateCode": "SWZXSY4GF4UFS2XN.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.2500000000"
+       }
+      }
+     },
+     "sku": "SWZXSY4GF4UFS2XN",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Application",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "LoadBalancer hourly usage by Application Load Balancer",
+    "usagetype": "EU-LoadBalancerUsage",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Application",
+    "group": "ELB:Balancing"
+   },
+   "sku": "T29JAP5UEZ7HXAM7"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "T29JAP5UEZ7HXAM7.JRTCKXETXF": {
+     "priceDimensions": {
+      "T29JAP5UEZ7HXAM7.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.0252 per Application LoadBalancer-hour (or partial hour)",
+       "appliesTo": [],
+       "rateCode": "T29JAP5UEZ7HXAM7.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0252000000"
+       }
+      }
+     },
+     "sku": "T29JAP5UEZ7HXAM7",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Magnetic",
+    "engineCode": "14",
+    "usagetype": "EU-RDS:Multi-AZ-StorageUsage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "3 TB",
+    "databaseEngine": "PostgreSQL",
+    "storageMedia": "Magnetic",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Multi-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0014",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "T5FGE4DU6Q4XUGC9"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "T5FGE4DU6Q4XUGC9.JRTCKXETXF": {
+     "priceDimensions": {
+      "T5FGE4DU6Q4XUGC9.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.22 per GB-month of provisioned magnetic storage for Multi-AZ deployments running PostgreSQL",
+       "appliesTo": [],
+       "rateCode": "T5FGE4DU6Q4XUGC9.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.2200000000"
+       }
+      }
+     },
+     "sku": "T5FGE4DU6Q4XUGC9",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonVPC",
+    "groupDescription": "Hourly charge for Idle Public IPv4 Addresses",
+    "usagetype": "USE1-PublicIPv4:IdleAddress",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Virtual Private Cloud",
+    "operation": "",
+    "group": "VPCPublicIPv4Address"
+   },
+   "sku": "T6YDQKTMVWKNJFJ8"
+  },
+  "serviceCode": "AmazonVPC",
+  "terms": {
+   "OnDemand": {
+    "T6YDQKTMVWKNJFJ8.JRTCKXETXF": {
+     "priceDimensions": {
+      "T6YDQKTMVWKNJFJ8.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.005 per Idle public IPv4 address per hour",
+       "appliesTo": [],
+       "rateCode": "T6YDQKTMVWKNJFJ8.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0050000000"
+       }
+      }
+     },
+     "sku": "T6YDQKTMVWKNJFJ8",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105181945",
+  "publicationDate": "2026-11-05T18:19:45Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Application",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "TS hourly usage by Application Load Balancer",
+    "usagetype": "TS-LoadBalancerUsage",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Application",
+    "group": "ELB:Balancing"
+   },
+   "sku": "T953TK5KT4BSUVBU"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "T953TK5KT4BSUVBU.JRTCKXETXF": {
+     "priceDimensions": {
+      "T953TK5KT4BSUVBU.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.005 per associated Application load balancer Trust Store unit-hour ",
+       "appliesTo": [],
+       "rateCode": "T953TK5KT4BSUVBU.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0050000000"
+       }
+      }
+     },
+     "sku": "T953TK5KT4BSUVBU",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Storage",
+   "attributes": {
+    "maxThroughputvolume": "4000 MiB/s",
+    "volumeType": "Provisioned IOPS",
+    "maxIopsvolume": "256000",
+    "usagetype": "EU-EBS:VolumeUsage.io2",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "64 TiB",
+    "storageMedia": "SSD-backed",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonEC2",
+    "volumeApiName": "io2",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": ""
+   },
+   "sku": "TN2XFMNDXRZZ5CGK"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "TN2XFMNDXRZZ5CGK.JRTCKXETXF": {
+     "priceDimensions": {
+      "TN2XFMNDXRZZ5CGK.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-month",
+       "endRange": "Inf",
+       "description": "$0.138 per GB-month of Provisioned IOPS SSD (io2)  provisioned storage - EU (Ireland)",
+       "appliesTo": [],
+       "rateCode": "TN2XFMNDXRZZ5CGK.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1380000000"
+       }
+      }
+     },
+     "sku": "TN2XFMNDXRZZ5CGK",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Storage",
+   "attributes": {
+    "maxThroughputvolume": "2000 MiB/s",
+    "volumeType": "General Purpose",
+    "maxIopsvolume": "80000",
+    "usagetype": "EU-EBS:VolumeUsage.gp3",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "64 TiB",
+    "storageMedia": "SSD-backed",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonEC2",
+    "volumeApiName": "gp3",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": ""
+   },
+   "sku": "TXACT7E3PV6ZX2NM"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "TXACT7E3PV6ZX2NM.JRTCKXETXF": {
+     "priceDimensions": {
+      "TXACT7E3PV6ZX2NM.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.088 per GB-month of General Purpose (gp3) provisioned storage - EU (Ireland)",
+       "appliesTo": [],
+       "rateCode": "TXACT7E3PV6ZX2NM.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0880000000"
+       }
+      }
+     },
+     "sku": "TXACT7E3PV6ZX2NM",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Storage",
+   "attributes": {
+    "maxThroughputvolume": "250 MiB/s",
+    "volumeType": "Cold HDD",
+    "maxIopsvolume": "250 - based on 1 MiB I/O size",
+    "usagetype": "EU-EBS:VolumeUsage.sc1",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TiB",
+    "storageMedia": "HDD-backed",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonEC2",
+    "volumeApiName": "sc1",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": ""
+   },
+   "sku": "V3WN4ZRCVEMX7VPK"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "V3WN4ZRCVEMX7VPK.JRTCKXETXF": {
+     "priceDimensions": {
+      "V3WN4ZRCVEMX7VPK.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.0168 per GB-month of Cold HDD (sc1) provisioned storage - EU (Ireland)",
+       "appliesTo": [],
+       "rateCode": "V3WN4ZRCVEMX7VPK.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0168000000"
+       }
+      }
+     },
+     "sku": "V3WN4ZRCVEMX7VPK",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "General Purpose",
+    "engineCode": "2",
+    "usagetype": "EU-RDS:GP2-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "MySQL",
+    "storageMedia": "SSD",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0002",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "VYTC4NSAASCDGC5K"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "VYTC4NSAASCDGC5K.JRTCKXETXF": {
+     "priceDimensions": {
+      "VYTC4NSAASCDGC5K.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.127 per GB-month of provisioned gp2 storage running MySQL",
+       "appliesTo": [],
+       "rateCode": "VYTC4NSAASCDGC5K.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1270000000"
+       }
+      }
+     },
+     "sku": "VYTC4NSAASCDGC5K",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "ML Instance",
+   "attributes": {
+    "gpuMemory": "0",
+    "platoinstancename": "t2",
+    "memory": "4 GiB",
+    "computeType": "Standard Instances",
+    "vCpu": "2",
+    "instanceName": "ml.t2.medium",
+    "instanceType": "ml.t2.medium-Hosting",
+    "usagetype": "USE1-Host:ml.t2.medium",
+    "locationType": "AWS Region",
+    "storage": "EBS only",
+    "platoinstancetype": "Hosting",
+    "gpu": "0",
+    "component": "Hosting",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonSageMaker",
+    "clockSpeed": "Up to 3.3 GHz",
+    "currentGeneration": "Yes",
+    "networkPerformance": "Low to Moderate",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon SageMaker",
+    "processorArchitecture": "32-bit or 64-bit",
+    "physicalCpu": "Intel Xeon Family",
+    "operation": "RunInstance",
+    "physicalGpu": "None"
+   },
+   "sku": "WKHZF344J4SJSBJ7"
+  },
+  "serviceCode": "AmazonSageMaker",
+  "terms": {
+   "OnDemand": {
+    "WKHZF344J4SJSBJ7.JRTCKXETXF": {
+     "priceDimensions": {
+      "WKHZF344J4SJSBJ7.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.056 per Hosting ml.t2.medium hour in US East (N. Virginia)",
+       "appliesTo": [],
+       "rateCode": "WKHZF344J4SJSBJ7.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0560000000"
+       }
+      }
+     },
+     "sku": "WKHZF344J4SJSBJ7",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261110041001",
+  "publicationDate": "2026-11-10T04:10:01Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "Magnetic",
+    "engineCode": "18",
+    "usagetype": "EU-RDS:StorageUsage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "3 TB",
+    "databaseEngine": "MariaDB",
+    "storageMedia": "Magnetic",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0018",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "WNGD97ZXZ2S2K6HZ"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "WNGD97ZXZ2S2K6HZ.JRTCKXETXF": {
+     "priceDimensions": {
+      "WNGD97ZXZ2S2K6HZ.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.11 per GB-month of provisioned magnetic storage running MariaDB",
+       "appliesTo": [],
+       "rateCode": "WNGD97ZXZ2S2K6HZ.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1100000000"
+       }
+      }
+     },
+     "sku": "WNGD97ZXZ2S2K6HZ",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "General Purpose-GP3",
+    "engineCode": "18",
+    "usagetype": "EU-RDS:GP3-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "MariaDB",
+    "storageMedia": "SSD",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0018",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "WNTHZKKDJKR7VU3Y"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "WNTHZKKDJKR7VU3Y.JRTCKXETXF": {
+     "priceDimensions": {
+      "WNTHZKKDJKR7VU3Y.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.127 per GB-month of provisioned GP3 storage running MariaDB",
+       "appliesTo": [],
+       "rateCode": "WNTHZKKDJKR7VU3Y.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1270000000"
+       }
+      }
+     },
+     "sku": "WNTHZKKDJKR7VU3Y",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Instance",
+   "attributes": {
+    "engineCode": "14",
+    "instanceTypeFamily": "T3",
+    "memory": "1 GiB",
+    "vcpu": "2",
+    "instanceType": "db.t3.micro",
+    "unbundledLicensing": "FALSE",
+    "usagetype": "Multi-AZUsage:db.t3.micro",
+    "locationType": "AWS Region",
+    "storage": "EBS Only",
+    "normalizationSizeFactor": "1",
+    "instanceFamily": "General purpose",
+    "databaseEngine": "PostgreSQL",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "physicalProcessor": "Intel Skylake E5 2686 v5 (2.5 GHz)",
+    "licenseModel": "No license required",
+    "currentGeneration": "Yes",
+    "networkPerformance": "Low to Moderate",
+    "deploymentOption": "Multi-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "processorArchitecture": "64-bit",
+    "operation": "CreateDBInstance:0014"
+   },
+   "sku": "WPKVP35D37F3YZNJ"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "WPKVP35D37F3YZNJ.JRTCKXETXF": {
+     "priceDimensions": {
+      "WPKVP35D37F3YZNJ.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "USD 0.036 per db.t3.micro Multi-AZ instance hour (or partial hour) running PostgreSQL",
+       "appliesTo": [],
+       "rateCode": "WPKVP35D37F3YZNJ.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0360000000"
+       }
+      }
+     },
+     "sku": "WPKVP35D37F3YZNJ",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Instance",
+   "attributes": {
+    "engineCode": "18",
+    "instanceType": "db.t4g.micro",
+    "usagetype": "EU-UnusedBox:db.t4g.micro",
+    "locationType": "AWS Region",
+    "normalizationSizeFactor": "0.5",
+    "databaseEngine": "MariaDB",
+    "regionCode": "eu-west-1",
+    "servicecode": "AmazonRDS",
+    "licenseModel": "No license required",
+    "deploymentOption": "Single-AZ",
+    "location": "EU (Ireland)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0018"
+   },
+   "sku": "WSQVXT52GJJH97M9"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "WSQVXT52GJJH97M9.JRTCKXETXF": {
+     "priceDimensions": {
+      "WSQVXT52GJJH97M9.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$ 0.017 per RDS db.t4g.micro Single-AZ unused capacity reservation hour (or partial hour) for MariaDB",
+       "appliesTo": [],
+       "rateCode": "WSQVXT52GJJH97M9.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0170000000"
+       }
+      }
+     },
+     "sku": "WSQVXT52GJJH97M9",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Application",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "LoadBalancer hourly usage by Application Load Balancer on Outposts",
+    "usagetype": "EU-Outposts-LoadBalancerUsage",
+    "locationType": "AWS Outposts",
+    "location": "EU (Ireland)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Application",
+    "group": "ELB:Balancing"
+   },
+   "sku": "X2ZVYJYXHU7M3G46"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "X2ZVYJYXHU7M3G46.JRTCKXETXF": {
+     "priceDimensions": {
+      "X2ZVYJYXHU7M3G46.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.0252 per Hrs for Outposts-LoadBalancerUsage:LoadBalancing:Application in EU (Ireland)",
+       "appliesTo": [],
+       "rateCode": "X2ZVYJYXHU7M3G46.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0252000000"
+       }
+      }
+     },
+     "sku": "X2ZVYJYXHU7M3G46",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "System Operation",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonEC2",
+    "provisioned": "Yes",
+    "groupDescription": "IOPS",
+    "usagetype": "EBS:VolumeP-IOPS.io2",
+    "locationType": "AWS Region",
+    "volumeApiName": "io2",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": "",
+    "group": "EBS IOPS"
+   },
+   "sku": "X9AGQNCQXFA9Q8XZ"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "X9AGQNCQXFA9Q8XZ.JRTCKXETXF": {
+     "priceDimensions": {
+      "X9AGQNCQXFA9Q8XZ.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "IOPS-Mo",
+       "endRange": "Inf",
+       "description": "$0.065 per IOPS-month provisioned (io2) - US East (Northern Virginia)",
+       "appliesTo": [],
+       "rateCode": "X9AGQNCQXFA9Q8XZ.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0650000000"
+       }
+      }
+     },
+     "sku": "X9AGQNCQXFA9Q8XZ",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "General Purpose",
+    "engineCode": "18",
+    "usagetype": "RDS:GP2-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "MariaDB",
+    "storageMedia": "SSD",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0018",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "XPZ5SJS8EC7CBHRV"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "XPZ5SJS8EC7CBHRV.JRTCKXETXF": {
+     "priceDimensions": {
+      "XPZ5SJS8EC7CBHRV.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.115 per GB-month of provisioned gp2 storage running MariaDB",
+       "appliesTo": [],
+       "rateCode": "XPZ5SJS8EC7CBHRV.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1150000000"
+       }
+      }
+     },
+     "sku": "XPZ5SJS8EC7CBHRV",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Network",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "Used Network Load Balancer capacity units-hr",
+    "usagetype": "LCUUsage",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Network",
+    "group": "ELB:Balancing"
+   },
+   "sku": "XZ2DR556MD28P9WJ"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "XZ2DR556MD28P9WJ.JRTCKXETXF": {
+     "priceDimensions": {
+      "XZ2DR556MD28P9WJ.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "LCU-Hrs",
+       "endRange": "Inf",
+       "description": "$0.006 per used Network load balancer capacity unit-hour (or partial hour)",
+       "appliesTo": [],
+       "rateCode": "XZ2DR556MD28P9WJ.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0060000000"
+       }
+      }
+     },
+     "sku": "XZ2DR556MD28P9WJ",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Application",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "LoadBalancer hourly usage by Application Load Balancer on Outposts",
+    "usagetype": "Outposts-LoadBalancerUsage",
+    "locationType": "AWS Outposts",
+    "location": "US East (N. Virginia)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Application",
+    "group": "ELB:Balancing"
+   },
+   "sku": "Y57U68FTH7H6FZ2H"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "Y57U68FTH7H6FZ2H.JRTCKXETXF": {
+     "priceDimensions": {
+      "Y57U68FTH7H6FZ2H.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.0225 per Hrs for Outposts-LoadBalancerUsage:LoadBalancing:Application in US East (N. Virginia)",
+       "appliesTo": [],
+       "rateCode": "Y57U68FTH7H6FZ2H.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0225000000"
+       }
+      }
+     },
+     "sku": "Y57U68FTH7H6FZ2H",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Application",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "TS hourly usage by Application Load Balancer",
+    "usagetype": "EU-TS-LoadBalancerUsage",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Application",
+    "group": "ELB:Balancing"
+   },
+   "sku": "YCS3FNXJKNW68VN4"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "YCS3FNXJKNW68VN4.JRTCKXETXF": {
+     "priceDimensions": {
+      "YCS3FNXJKNW68VN4.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.0056 per associated Application load balancer Trust Store unit-hour ",
+       "appliesTo": [],
+       "rateCode": "YCS3FNXJKNW68VN4.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0056000000"
+       }
+      }
+     },
+     "sku": "YCS3FNXJKNW68VN4",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Application",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "Used Application Load Balancer capacity units-hr",
+    "usagetype": "EU-LCUUsage",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Application",
+    "group": "ELB:Balancing"
+   },
+   "sku": "YE8QE7GMG9794PDX"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "YE8QE7GMG9794PDX.JRTCKXETXF": {
+     "priceDimensions": {
+      "YE8QE7GMG9794PDX.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "LCU-Hrs",
+       "endRange": "Inf",
+       "description": "$0.008 per used Application load balancer capacity unit-hour (or partial hour)",
+       "appliesTo": [],
+       "rateCode": "YE8QE7GMG9794PDX.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0080000000"
+       }
+      }
+     },
+     "sku": "YE8QE7GMG9794PDX",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Network",
+   "attributes": {
+    "regionCode": "us-east-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "LoadBalancer hourly usage by Network Load Balancer",
+    "usagetype": "LoadBalancerUsage",
+    "locationType": "AWS Region",
+    "location": "US East (N. Virginia)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Network",
+    "group": "ELB:Balancing"
+   },
+   "sku": "YKBGGP5EBGDU9T5W"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "YKBGGP5EBGDU9T5W.JRTCKXETXF": {
+     "priceDimensions": {
+      "YKBGGP5EBGDU9T5W.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.0225 per Network LoadBalancer-hour (or partial hour)",
+       "appliesTo": [],
+       "rateCode": "YKBGGP5EBGDU9T5W.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0225000000"
+       }
+      }
+     },
+     "sku": "YKBGGP5EBGDU9T5W",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Storage",
+   "attributes": {
+    "maxThroughputvolume": "500 MiB/s",
+    "volumeType": "Throughput Optimized HDD",
+    "maxIopsvolume": "500 - based on 1 MiB I/O size",
+    "usagetype": "EBS:VolumeUsage.st1",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TiB",
+    "storageMedia": "HDD-backed",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonEC2",
+    "volumeApiName": "st1",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Elastic Compute Cloud",
+    "operation": ""
+   },
+   "sku": "YQT3C842QHBG6XCU"
+  },
+  "serviceCode": "AmazonEC2",
+  "terms": {
+   "OnDemand": {
+    "YQT3C842QHBG6XCU.JRTCKXETXF": {
+     "priceDimensions": {
+      "YQT3C842QHBG6XCU.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.045 per GB-month of Throughput Optimized HDD (st1) provisioned storage - US East (Northern Virginia)",
+       "appliesTo": [],
+       "rateCode": "YQT3C842QHBG6XCU.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0450000000"
+       }
+      }
+     },
+     "sku": "YQT3C842QHBG6XCU",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261107002852",
+  "publicationDate": "2026-11-07T00:28:52Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "Data processed by Classic Load Balancer",
+    "usagetype": "EU-DataProcessing-Bytes",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing",
+    "group": "ELB:Balancing"
+   },
+   "sku": "Z2PBQTQYT4Z8CUQF"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "Z2PBQTQYT4Z8CUQF.JRTCKXETXF": {
+     "priceDimensions": {
+      "Z2PBQTQYT4Z8CUQF.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB",
+       "endRange": "Inf",
+       "description": "$0.008 per GB Data Processed by the LoadBalancer",
+       "appliesTo": [],
+       "rateCode": "Z2PBQTQYT4Z8CUQF.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0080000000"
+       }
+      }
+     },
+     "sku": "Z2PBQTQYT4Z8CUQF",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "General Purpose",
+    "engineCode": "14",
+    "usagetype": "RDS:Multi-AZ-GP2-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "PostgreSQL",
+    "storageMedia": "SSD",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Multi-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0014",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "Z9Q8SM928PDNNACV"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "Z9Q8SM928PDNNACV.JRTCKXETXF": {
+     "priceDimensions": {
+      "Z9Q8SM928PDNNACV.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.23 per GB-month of provisioned gp2 storage for Multi-AZ deployments running PostgreSQL",
+       "appliesTo": [],
+       "rateCode": "Z9Q8SM928PDNNACV.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.2300000000"
+       }
+      }
+     },
+     "sku": "Z9Q8SM928PDNNACV",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Database Storage",
+   "attributes": {
+    "volumeType": "General Purpose-GP3",
+    "engineCode": "18",
+    "usagetype": "RDS:GP3-Storage",
+    "locationType": "AWS Region",
+    "maxVolumeSize": "16 TB",
+    "databaseEngine": "MariaDB",
+    "storageMedia": "SSD",
+    "regionCode": "us-east-1",
+    "servicecode": "AmazonRDS",
+    "deploymentOption": "Single-AZ",
+    "location": "US East (N. Virginia)",
+    "servicename": "Amazon Relational Database Service",
+    "operation": "CreateDBInstance:0018",
+    "minVolumeSize": "5 GB"
+   },
+   "sku": "ZCYAPBVPHTDQA69U"
+  },
+  "serviceCode": "AmazonRDS",
+  "terms": {
+   "OnDemand": {
+    "ZCYAPBVPHTDQA69U.JRTCKXETXF": {
+     "priceDimensions": {
+      "ZCYAPBVPHTDQA69U.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "GB-Mo",
+       "endRange": "Inf",
+       "description": "$0.115 per GB-month of provisioned GP3 storage running MariaDB",
+       "appliesTo": [],
+       "rateCode": "ZCYAPBVPHTDQA69U.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.1150000000"
+       }
+      }
+     },
+     "sku": "ZCYAPBVPHTDQA69U",
+     "effectiveDate": "2026-10-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261029070635",
+  "publicationDate": "2026-10-29T07:06:35Z"
+ },
+ {
+  "product": {
+   "productFamily": "Load Balancer-Network",
+   "attributes": {
+    "regionCode": "eu-west-1",
+    "servicecode": "AWSELB",
+    "groupDescription": "LoadBalancer hourly usage by Network Load Balancer",
+    "usagetype": "EU-LoadBalancerUsage",
+    "locationType": "AWS Region",
+    "location": "EU (Ireland)",
+    "servicename": "Elastic Load Balancing",
+    "operation": "LoadBalancing:Network",
+    "group": "ELB:Balancing"
+   },
+   "sku": "ZEBJ6Q6SEUWPQG9R"
+  },
+  "serviceCode": "AWSELB",
+  "terms": {
+   "OnDemand": {
+    "ZEBJ6Q6SEUWPQG9R.JRTCKXETXF": {
+     "priceDimensions": {
+      "ZEBJ6Q6SEUWPQG9R.JRTCKXETXF.6YS6EN2CT7": {
+       "unit": "Hrs",
+       "endRange": "Inf",
+       "description": "$0.0252 per Network LoadBalancer-hour (or partial hour)",
+       "appliesTo": [],
+       "rateCode": "ZEBJ6Q6SEUWPQG9R.JRTCKXETXF.6YS6EN2CT7",
+       "beginRange": "0",
+       "pricePerUnit": {
+        "USD": "0.0252000000"
+       }
+      }
+     },
+     "sku": "ZEBJ6Q6SEUWPQG9R",
+     "effectiveDate": "2026-11-01T00:00:00Z",
+     "offerTermCode": "JRTCKXETXF",
+     "termAttributes": {}
+    }
+   }
+  },
+  "version": "20261105220241",
+  "publicationDate": "2026-11-05T22:02:41Z"
+ }
+]
