@@ -8,7 +8,9 @@
 //   - IPv4, IPv6 and MAC addresses
 //   - host names                   they embed IP addresses and database names
 //   - names                        key pairs, database names and users, groups,
-//                                  descriptions, the name part of ARNs
+//                                  descriptions, load balancers, SageMaker
+//                                  endpoints, configs and models, container
+//                                  image URIs, the name part of ARNs
 //   - tags                         every value; every key except Name and aws:*
 //   - e-mail addresses
 // `$metadata` (request ids) is dropped.
@@ -41,7 +43,14 @@ const NAME_KEYS = new Set([
   'userid',
   'description',
   'groupdescription',
-  'dbsubnetgroupdescription'
+  'dbsubnetgroupdescription',
+  'loadbalancername',
+  'endpointname',
+  'endpointconfigname',
+  'modelname',
+  // Container image URIs name the user's ECR repository.
+  'specifiedimage',
+  'resolvedimage'
 ])
 
 /** Names under these keys also appear inside other strings (ARNs, messages), and are replaced there too. */
@@ -51,8 +60,15 @@ const IDENTIFIER_KEYS = new Set([
   'readreplicasourcedbinstanceidentifier',
   'readreplicadbinstanceidentifiers',
   'readreplicasourcedbclusteridentifier',
-  'readreplicadbclusteridentifiers'
+  'readreplicadbclusteridentifiers',
+  'loadbalancername',
+  'endpointname',
+  'endpointconfigname',
+  'modelname'
 ])
+
+/** The name inside an ELBv2 ARN's `app|net|gwy/<name>/<hash>`. Type and hash are not personal. */
+const ELB_V2_NAME = /^(?:app|net|gwy)\/([^/]+)\/[0-9a-f]+$/
 
 const TAG_LIST_KEYS = new Set(['tags', 'taglist', 'tagset'])
 
@@ -117,7 +133,9 @@ export function createSanitizer(realAccountId: string): (value: unknown) => unkn
       const resource = match[1]!
       const split = resource.search(/[/:]/)
       const rest = split === -1 ? resource : resource.slice(split + 1)
-      if (rest && !RESOURCE_ID_ONLY.test(rest)) found.push(rest)
+      const elbName = ELB_V2_NAME.exec(rest)?.[1]
+      if (elbName) found.push(elbName)
+      else if (rest && !RESOURCE_ID_ONLY.test(rest)) found.push(rest)
     }
     return found
   }

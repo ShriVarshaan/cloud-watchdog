@@ -151,6 +151,67 @@ describe('fixture sanitiser', () => {
     })
   })
 
+  it('replaces load balancer names, keeping the type and hash of an ELBv2 ARN so it still matches its name', () => {
+    const out = sanitize({
+      LoadBalancers: [
+        {
+          LoadBalancerArn:
+            'arn:aws:elasticloadbalancing:eu-west-1:482915730264:loadbalancer/app/alice-alb/50dc6c495c0c9188',
+          LoadBalancerName: 'alice-alb',
+          Type: 'application'
+        }
+      ],
+      LoadBalancerDescriptions: [{ LoadBalancerName: 'alice-classic' }]
+    }) as { LoadBalancers: Record<string, string>[]; LoadBalancerDescriptions: Record<string, string>[] }
+
+    const [v2] = out.LoadBalancers
+    expect(v2?.LoadBalancerName).toMatch(/^name-\d+$/)
+    expect(v2?.LoadBalancerArn).toBe(
+      `arn:aws:elasticloadbalancing:eu-west-1:111122223333:loadbalancer/app/${v2?.LoadBalancerName}/50dc6c495c0c9188`
+    )
+    expect(v2?.Type).toBe('application')
+    expect(out.LoadBalancerDescriptions[0]?.LoadBalancerName).toMatch(/^name-\d+$/)
+  })
+
+  it('does not treat the ELBv2 type words in an ARN as names', () => {
+    const out = sanitize({
+      Arn: 'arn:aws:elasticloadbalancing:eu-west-1:482915730264:loadbalancer/net/alice-nlb/73e2d6bc24d8a067',
+      Note: 'the app and net teams'
+    })
+    expect(out).toEqual({
+      Arn: 'arn:aws:elasticloadbalancing:eu-west-1:111122223333:loadbalancer/net/name-1/73e2d6bc24d8a067',
+      Note: 'the app and net teams'
+    })
+  })
+
+  it('replaces SageMaker endpoint, config and model names, and container image URIs', () => {
+    const out = JSON.stringify(
+      sanitize({
+        EndpointName: 'alice-llm',
+        EndpointArn: 'arn:aws:sagemaker:eu-west-1:482915730264:endpoint/alice-llm',
+        EndpointConfigName: 'alice-llm-config',
+        FailureReason: 'Endpoint alice-llm could not start',
+        ProductionVariants: [
+          {
+            VariantName: 'AllTraffic',
+            ModelName: 'alice-model',
+            InstanceType: 'ml.g5.xlarge',
+            DeployedImages: [
+              {
+                SpecifiedImage: '482915730264.dkr.ecr.eu-west-1.amazonaws.com/alice-repo:latest',
+                ResolvedImage: '482915730264.dkr.ecr.eu-west-1.amazonaws.com/alice-repo@sha256:abc'
+              }
+            ]
+          }
+        ]
+      })
+    )
+    expect(out).not.toMatch(/alice|482915730264/)
+    // What pricing reads, and AWS's own default variant name, survive.
+    expect(out).toContain('"InstanceType":"ml.g5.xlarge"')
+    expect(out).toContain('"VariantName":"AllTraffic"')
+  })
+
   it('replaces MAC addresses, IPv6 addresses and e-mail addresses', () => {
     expect(
       sanitize({
