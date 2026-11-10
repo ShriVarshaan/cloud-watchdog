@@ -20,7 +20,6 @@ import {
   type IpcOutput,
   type IpcResult
 } from '../shared/ipc'
-import { DEFAULT_SETTINGS } from '../shared/types'
 import { ipcSchemas } from './ipcSchemas'
 
 export type IpcHandler<C extends IpcChannel> = (input: IpcInput<C>) => Promise<IpcResult<IpcOutput<C>>>
@@ -82,32 +81,5 @@ export function registerIpcHandlers(ipc: IpcMainLike, options: IpcOptions): void
         return fail('internal', 'Something went wrong inside Cloud Watchdog.')
       }
     })
-  }
-}
-
-export interface StubDependencies {
-  listProfiles(): Promise<string[]>
-}
-
-/**
- * The handlers until the scan pipeline is wired in (M8). Read-only calls
- * answer with an empty but valid state; everything that would call AWS or
- * change something refuses.
- */
-export function createStubHandlers(deps: StubDependencies): IpcHandlers {
-  const notYet = async () => fail('not-implemented', 'This feature is not available yet.')
-  return {
-    'app:getState': async () =>
-      ok({ identity: null, settings: DEFAULT_SETTINGS, lastScan: null, scanInProgress: false }),
-    'profiles:list': async () => ok(await deps.listProfiles()),
-    'profiles:select': notYet,
-    'scan:run': notYet,
-    'scan:getLatest': async () => ok(null),
-    'flags:dismiss': notYet,
-    'settings:update': notYet,
-    'resource:manualSteps': notYet,
-    'resource:openConsole': notYet,
-    'actions:preview': notYet,
-    'actions:execute': notYet
   }
 }

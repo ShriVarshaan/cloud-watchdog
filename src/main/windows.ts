@@ -3,6 +3,7 @@
 
 import { join } from 'node:path'
 import { app, BrowserWindow, screen, type Rectangle, type WebPreferences } from 'electron'
+import type { IpcEventChannel, IpcEvents } from '../shared/ipc'
 import { popoverPosition } from './popoverPosition'
 
 type View = 'main' | 'popover'
@@ -32,13 +33,22 @@ export function secureWebPreferences(): WebPreferences {
   }
 }
 
-function loadView(win: BrowserWindow, view: View): Promise<void> {
+/** `focus` names a resource key the page should show (after a toast is clicked). */
+function loadView(win: BrowserWindow, view: View, focus?: string): Promise<void> {
+  const query: Record<string, string> = focus ? { view, focus } : { view }
   // electron-vite sets this when running `npm run dev`.
   const devServer = process.env['ELECTRON_RENDERER_URL']
   if (devServer && !app.isPackaged) {
-    return win.loadURL(`${devServer}?view=${view}`)
+    return win.loadURL(`${devServer}?${new URLSearchParams(query).toString()}`)
   }
-  return win.loadFile(RENDERER_FILE, { query: { view } })
+  return win.loadFile(RENDERER_FILE, { query })
+}
+
+/** Sends a main -> renderer event to every open window. */
+export function broadcast<C extends IpcEventChannel>(channel: C, payload: IpcEvents[C]): void {
+  for (const win of [mainWindow, popover]) {
+    if (win && !win.isDestroyed()) win.webContents.send(channel, payload)
+  }
 }
 
 /** Lets windows really close when the app is quitting, instead of hiding. */
@@ -46,16 +56,19 @@ export function markQuitting(): void {
   quitting = true
 }
 
-export function showMainWindow(): void {
+/** Shows the main window, opened on `focusResourceKey` when one is given. */
+export function showMainWindow(focusResourceKey: string | null = null): void {
   if (!mainWindow || mainWindow.isDestroyed()) {
-    mainWindow = createMainWindow()
+    mainWindow = createMainWindow(focusResourceKey ?? undefined)
+  } else if (focusResourceKey) {
+    void loadView(mainWindow, 'main', focusResourceKey)
   }
   if (mainWindow.isMinimized()) mainWindow.restore()
   mainWindow.show()
   mainWindow.focus()
 }
 
-function createMainWindow(): BrowserWindow {
+function createMainWindow(focus?: string): BrowserWindow {
   const win = new BrowserWindow({
     width: 1100,
     height: 720,
@@ -74,7 +87,7 @@ function createMainWindow(): BrowserWindow {
       win.hide()
     }
   })
-  void loadView(win, 'main')
+  void loadView(win, 'main', focus)
   return win
 }
 

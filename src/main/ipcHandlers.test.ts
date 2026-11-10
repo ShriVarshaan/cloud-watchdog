@@ -1,8 +1,7 @@
 import type { IpcMainInvokeEvent } from 'electron'
 import { describe, expect, it, vi } from 'vitest'
 import { API_METHODS, IPC_CHANNELS, type IpcChannel, type IpcResult } from '../shared/ipc'
-import { DEFAULT_SETTINGS } from '../shared/types'
-import { createStubHandlers, fail, ok, registerIpcHandlers, type IpcHandlers } from './ipcHandlers'
+import { fail, ok, registerIpcHandlers, type IpcHandlers } from './ipcHandlers'
 
 type Listener = (event: IpcMainInvokeEvent, ...args: unknown[]) => Promise<IpcResult<unknown>>
 
@@ -140,41 +139,5 @@ describe('registerIpcHandlers', () => {
     expect(result).toMatchObject({ ok: false, error: { code: 'internal' } })
     expect(JSON.stringify(result)).not.toContain('SQLITE_CORRUPT')
     expect(onError).toHaveBeenCalledExactlyOnceWith('scan:run', boom)
-  })
-})
-
-describe('createStubHandlers', () => {
-  const stubs = () => setup(createStubHandlers({ listProfiles: async () => ['default', 'hackathon'] }))
-
-  it('answers app:getState with an empty, valid state', async () => {
-    expect(await stubs().invoke('app:getState')).toEqual({
-      ok: true,
-      value: { identity: null, settings: DEFAULT_SETTINGS, lastScan: null, scanInProgress: false }
-    })
-  })
-
-  it('answers profiles:list with profile names', async () => {
-    expect(await stubs().invoke('profiles:list')).toEqual({ ok: true, value: ['default', 'hackathon'] })
-  })
-
-  it('answers scan:getLatest with no scan', async () => {
-    expect(await stubs().invoke('scan:getLatest')).toEqual({ ok: true, value: null })
-  })
-
-  it('refuses everything that would need AWS or change something', async () => {
-    const { invoke } = stubs()
-    const calls: Array<[IpcChannel, unknown]> = [
-      ['profiles:select', { profile: 'default' }],
-      ['scan:run', undefined],
-      ['flags:dismiss', { flagId: 'f1' }],
-      ['settings:update', { startAtLogin: true }],
-      ['resource:manualSteps', { resourceKey: KEY }],
-      ['resource:openConsole', { resourceKey: KEY }],
-      ['actions:preview', { resourceKey: KEY, action: 'stop-ec2' }],
-      ['actions:execute', { token: 'a'.repeat(32) }]
-    ]
-    for (const [channel, input] of calls) {
-      expect(await invoke(channel, input)).toMatchObject({ ok: false, error: { code: 'not-implemented' } })
-    }
   })
 })

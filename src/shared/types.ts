@@ -213,6 +213,12 @@ export interface AppState {
   settings: Settings
   lastScan: ScanSummary | null
   scanInProgress: boolean
+  /**
+   * Why scans are not working right now (the last scan could not even start),
+   * in plain words. null when the last scan ran. Example: an expired sign-in,
+   * with the command that fixes it.
+   */
+  problem: { code: ScanErrorCode; message: string } | null
 }
 
 // ---------------------------------------------------------------------------
