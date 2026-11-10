@@ -5,6 +5,7 @@ import type { Scanner } from '../scan/scanner'
 import { ebsVolumes } from './ebsVolumes'
 import { ec2Instances } from './ec2Instances'
 import { elasticIps } from './elasticIps'
+import { natGateways } from './natGateways'
 import { rdsInstances } from './rdsInstances'
 
-export const ALL_SCANNERS: readonly Scanner[] = [ec2Instances, ebsVolumes, elasticIps, rdsInstances]
+export const ALL_SCANNERS: readonly Scanner[] = [ec2Instances, ebsVolumes, elasticIps, natGateways, rdsInstances]
