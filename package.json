@@ -24,7 +24,10 @@
   },
   "dependencies": {
     "@aws-sdk/client-ec2": "^3.1165.0",
+    "@aws-sdk/client-elastic-load-balancing": "^3.1165.0",
+    "@aws-sdk/client-elastic-load-balancing-v2": "^3.1165.0",
     "@aws-sdk/client-rds": "^3.1165.0",
+    "@aws-sdk/client-sagemaker": "^3.1165.0",
     "@aws-sdk/client-sts": "^3.1165.0",
     "@aws-sdk/credential-providers": "^3.1165.0",
     "react": "^19.3.1",
