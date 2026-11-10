@@ -72,10 +72,13 @@ export function createScheduler(options: SchedulerOptions): Scheduler {
       } catch {
         outcome = 'failed'
       }
+      // A scan that was running when stop() was called belongs to an earlier
+      // session. It must not touch the state of the scan that replaced it.
+      if (mine !== generation) return
       if (outcome === 'auth-expired') authFailures++
       else if (outcome === 'ok') authFailures = 0
       running = null
-      if (active && mine === generation) schedule()
+      if (active) schedule()
     })()
     return running
   }

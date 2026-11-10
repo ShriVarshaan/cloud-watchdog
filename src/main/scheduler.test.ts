@@ -190,6 +190,36 @@ describe('scheduler', () => {
     expect(scan.calls()).toBe(1)
   })
 
+  it('a scan from before a restart does not make the new scan look finished (profile switched mid-scan)', async () => {
+    // Each call is held open until the test releases it.
+    const releases: (() => void)[] = []
+    let calls = 0
+    const scheduler = createScheduler({
+      run: async () => {
+        calls++
+        await new Promise<void>((resolve) => releases.push(resolve))
+        return 'ok'
+      },
+      intervalMinutes: () => 15
+    })
+
+    scheduler.start() // scan 1, for the old profile
+    scheduler.stop()
+    scheduler.start() // scan 2, for the new profile
+    await vi.advanceTimersByTimeAsync(0)
+    expect(calls).toBe(2)
+
+    releases[0]!() // the old scan ends while the new one is still running
+    await vi.advanceTimersByTimeAsync(0)
+
+    void scheduler.runNow() // "Scan now" must join scan 2, not start a third
+    await vi.advanceTimersByTimeAsync(0)
+    expect(calls).toBe(2)
+
+    releases[1]!()
+    scheduler.stop()
+  })
+
   it('can be started again after stop, for a new profile', async () => {
     const scan = fakeScan()
     const scheduler = createScheduler({ run: scan.run, intervalMinutes: () => 15 })
