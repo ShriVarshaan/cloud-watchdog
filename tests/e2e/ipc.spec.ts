@@ -51,7 +51,8 @@ test.describe('IPC bridge', () => {
           rules: {}
         },
         lastScan: null,
-        scanInProgress: false
+        scanInProgress: false,
+        problem: null
       }
     })
   })

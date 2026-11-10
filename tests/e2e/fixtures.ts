@@ -8,17 +8,23 @@ type Fixtures = {
   mainWindow: Page
 }
 
+type Options = {
+  /** WATCHDOG_FAKE_AWS for the launched app: "demo", "freetier-denied", or undefined for none. */
+  fakeAws: string | undefined
+}
+
 // Launches the built app with a throwaway user-data folder, so tests never
 // touch a real install's settings or database. No --no-sandbox: the tests
 // must see the renderer exactly as users get it.
-export const test = base.extend<Fixtures>({
-  // eslint-disable-next-line no-empty-pattern
-  app: async ({}, use) => {
+export const test = base.extend<Fixtures & Options>({
+  fakeAws: [undefined, { option: true }],
+
+  app: async ({ fakeAws }, use) => {
     const userData = mkdtempSync(join(tmpdir(), 'cloud-watchdog-e2e-'))
-    const app = await electron.launch({
-      args: ['.'],
-      env: { ...process.env, CW_USER_DATA_DIR: userData }
-    })
+    const env: Record<string, string> = { ...(process.env as Record<string, string>), CW_USER_DATA_DIR: userData }
+    delete env['WATCHDOG_FAKE_AWS']
+    if (fakeAws) env['WATCHDOG_FAKE_AWS'] = fakeAws
+    const app = await electron.launch({ args: ['.'], env })
     await use(app)
     await app.close()
     rmSync(userData, { recursive: true, force: true })
