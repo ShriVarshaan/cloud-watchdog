@@ -5,7 +5,10 @@
 //
 // It makes read-only calls only (the same ones the scanners make):
 //   sts:GetCallerIdentity, ec2:DescribeRegions, ec2:DescribeInstances,
-//   rds:DescribeDBInstances
+//   ec2:DescribeVolumes, ec2:DescribeAddresses, ec2:DescribeNatGateways,
+//   rds:DescribeDBInstances, elasticloadbalancing:DescribeLoadBalancers
+//   (ELBv2 and classic), sagemaker:ListEndpoints, sagemaker:DescribeEndpoint,
+//   sagemaker:DescribeEndpointConfig
 //
 // Output:
 //   tests/fixtures/_raw/      exact responses. Ignored by git. Never commit.
@@ -17,8 +20,29 @@
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { parseArgs } from 'node:util'
-import { DescribeRegionsCommand, EC2Client, paginateDescribeInstances } from '@aws-sdk/client-ec2'
+import {
+  DescribeAddressesCommand,
+  DescribeRegionsCommand,
+  EC2Client,
+  paginateDescribeInstances,
+  paginateDescribeNatGateways,
+  paginateDescribeVolumes
+} from '@aws-sdk/client-ec2'
+import {
+  ElasticLoadBalancingClient,
+  paginateDescribeLoadBalancers as paginateClassicLoadBalancers
+} from '@aws-sdk/client-elastic-load-balancing'
+import {
+  ElasticLoadBalancingV2Client,
+  paginateDescribeLoadBalancers as paginateV2LoadBalancers
+} from '@aws-sdk/client-elastic-load-balancing-v2'
 import { paginateDescribeDBInstances, RDSClient } from '@aws-sdk/client-rds'
+import {
+  DescribeEndpointCommand,
+  DescribeEndpointConfigCommand,
+  paginateListEndpoints,
+  SageMakerClient
+} from '@aws-sdk/client-sagemaker'
 import { GetCallerIdentityCommand, STSClient } from '@aws-sdk/client-sts'
 import { fromNodeProviderChain } from '@aws-sdk/credential-providers'
 import { createSanitizer } from './sanitize.ts'
@@ -78,24 +102,102 @@ async function main(): Promise<void> {
     ? values.regions.split(',').map((region) => region.trim()).filter(Boolean)
     : (regionsResponse.Regions ?? []).map((region) => region.RegionName).filter((name): name is string => !!name)
 
-  for (const region of regions) {
+  /**
+   * Fetches one kind of resource in one region and saves it if there is any.
+   * A failure is reported and recording carries on with the next call.
+   */
+  const record = async <T>(
+    region: string,
+    file: string,
+    what: string,
+    fetch: () => Promise<T>,
+    count: (data: T) => number
+  ) => {
     try {
-      const pages = await allPages(paginateDescribeInstances({ client: new EC2Client(config(region)) }, {}))
-      const count = pages.reduce((n, page) => n + (page.Reservations ?? []).flatMap((r) => r.Instances ?? []).length, 0)
-      if (count > 0) save(`ec2-describe-instances.${region}`, pages)
-      console.log(`${region}: ${count} EC2 instance(s)`)
+      const data = await fetch()
+      const n = count(data)
+      if (n > 0) save(`${file}.${region}`, data)
+      console.log(`${region}: ${n} ${what}`)
     } catch (error) {
-      console.error(`${region}: ec2:DescribeInstances failed: ${(error as Error).name}: ${(error as Error).message}`)
+      console.error(`${region}: ${what} failed: ${(error as Error).name}: ${(error as Error).message}`)
     }
+  }
 
-    try {
-      const pages = await allPages(paginateDescribeDBInstances({ client: new RDSClient(config(region)) }, {}))
-      const count = pages.reduce((n, page) => n + (page.DBInstances ?? []).length, 0)
-      if (count > 0) save(`rds-describe-db-instances.${region}`, pages)
-      console.log(`${region}: ${count} RDS instance(s)`)
-    } catch (error) {
-      console.error(`${region}: rds:DescribeDBInstances failed: ${(error as Error).name}: ${(error as Error).message}`)
-    }
+  for (const region of regions) {
+    const ec2 = new EC2Client(config(region))
+
+    await record(
+      region,
+      'ec2-describe-instances',
+      'EC2 instance(s)',
+      () => allPages(paginateDescribeInstances({ client: ec2 }, {})),
+      (pages) => pages.reduce((n, page) => n + (page.Reservations ?? []).flatMap((r) => r.Instances ?? []).length, 0)
+    )
+    await record(
+      region,
+      'ec2-describe-volumes',
+      'EBS volume(s)',
+      () => allPages(paginateDescribeVolumes({ client: ec2 }, {})),
+      (pages) => pages.reduce((n, page) => n + (page.Volumes ?? []).length, 0)
+    )
+    // Not paginated: one response.
+    await record(
+      region,
+      'ec2-describe-addresses',
+      'Elastic IP(s)',
+      () => ec2.send(new DescribeAddressesCommand({})),
+      (response) => (response.Addresses ?? []).length
+    )
+    await record(
+      region,
+      'ec2-describe-nat-gateways',
+      'NAT gateway(s)',
+      () => allPages(paginateDescribeNatGateways({ client: ec2 }, {})),
+      (pages) => pages.reduce((n, page) => n + (page.NatGateways ?? []).length, 0)
+    )
+    await record(
+      region,
+      'rds-describe-db-instances',
+      'RDS instance(s)',
+      () => allPages(paginateDescribeDBInstances({ client: new RDSClient(config(region)) }, {})),
+      (pages) => pages.reduce((n, page) => n + (page.DBInstances ?? []).length, 0)
+    )
+    await record(
+      region,
+      'elbv2-describe-load-balancers',
+      'ALB/NLB/GWLB load balancer(s)',
+      () => allPages(paginateV2LoadBalancers({ client: new ElasticLoadBalancingV2Client(config(region)) }, {})),
+      (pages) => pages.reduce((n, page) => n + (page.LoadBalancers ?? []).length, 0)
+    )
+    await record(
+      region,
+      'elb-describe-load-balancers',
+      'classic load balancer(s)',
+      () => allPages(paginateClassicLoadBalancers({ client: new ElasticLoadBalancingClient(config(region)) }, {})),
+      (pages) => pages.reduce((n, page) => n + (page.LoadBalancerDescriptions ?? []).length, 0)
+    )
+    // The list, then each endpoint and each distinct config, in one file.
+    await record(
+      region,
+      'sagemaker-endpoints',
+      'SageMaker endpoint(s)',
+      async () => {
+        const sagemaker = new SageMakerClient(config(region))
+        const list = await allPages(paginateListEndpoints({ client: sagemaker }, {}))
+        const names = list.flatMap((page) => page.Endpoints ?? []).flatMap((e) => (e.EndpointName ? [e.EndpointName] : []))
+        const endpoints = []
+        for (const name of names) {
+          endpoints.push(await sagemaker.send(new DescribeEndpointCommand({ EndpointName: name })))
+        }
+        const configNames = [...new Set(endpoints.flatMap((e) => (e.EndpointConfigName ? [e.EndpointConfigName] : [])))]
+        const configs = []
+        for (const name of configNames) {
+          configs.push(await sagemaker.send(new DescribeEndpointConfigCommand({ EndpointConfigName: name })))
+        }
+        return { list, endpoints, configs }
+      },
+      (data) => data.endpoints.length
+    )
   }
 
   console.log(`\nWrote ${written.length} file(s):`)
