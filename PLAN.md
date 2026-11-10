@@ -541,7 +541,7 @@ No start, modify, delete or terminate permission appears anywhere. A unit test f
 5. AWS pages disagree on credit lifetime (6 months and 12 months both appear). The app uses only the API's expiry date.
 6. Which services credits do not apply to on the paid plan. Coverage says "covered by credits" without a per-service exclusion list.
 7. The exact Price List filter attributes for each kind (for example `operatingSystem`, `preInstalledSw`, `capacitystatus`, `tenancy`, `deploymentOption`, `licenseModel`), and current public IPv4 and Elastic IP rates. Confirmed in M5 from recorded `GetProducts` responses, not from memory.
-8. CloudWatch `GetMetricData` request pricing and whether any of it falls in a free allowance. Confirmed in M7 before the default is set to on.
+8. ~~CloudWatch `GetMetricData` request pricing and whether any of it falls in a free allowance.~~ **Answered in M7:** the CloudWatch pricing page says `GetMetricData` is excluded from the 1 million free API requests ("always charged"). It is billed per metric requested; the page's own examples use $0.01 per 1,000 metrics but it states no standalone rate. The app asks for one metric per running instance per hour (about 720 a month, under one cent each), so idle detection defaults to on and can be switched off.
 9. Resource-level ARN support for `ec2:StopInstances` and `rds:StopDBInstance` as written in the actions policy. Checked with Access Analyzer in M12; the fallback is `Resource: "*"`.
 10. What `npx skills add` creates on disk (folders, lock file) and whether it prompts. The `.gitignore` entries are adjusted after the first install.
 11. `electron-vite` compatibility with Electron 45. If the template lags, the fallback is Electron Forge with its Vite plugin.
