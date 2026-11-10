@@ -1,7 +1,7 @@
 // Main-process entry point: one instance, lives in the tray, hardened renderer.
 // The app's logic is in controller.ts; this file connects it to Electron.
 
-import { app, ipcMain, powerMonitor, session } from 'electron'
+import { app, ipcMain, powerMonitor, session, shell } from 'electron'
 import { createClientFactory } from '../core/aws/clients'
 import { listProfileNames } from '../core/aws/profiles'
 import { openDb, type Db } from '../core/store/db'
@@ -59,6 +59,7 @@ if (!app.requestSingleInstanceLock()) {
     setLoginItem: (enabled) => {
       if (app.isPackaged) app.setLoginItemSettings({ openAtLogin: enabled, args: ['--hidden'] })
     },
+    openExternal: (url) => shell.openExternal(url),
     log: (message, error) => console.error(message, error ?? '')
   })
 

@@ -24,6 +24,7 @@ let tooltips: string[]
 let loginItem: boolean[]
 let controller: Controller
 let brokenProfiles: Set<string>
+let opened: string[]
 
 const expired = () => Object.assign(new Error('The SSO session associated with this profile has expired.'), { name: 'TokenProviderError' })
 
@@ -52,6 +53,7 @@ function build(profiles = ['demo', 'other']) {
     notify: (batch) => void toasts.push(batch),
     setTooltip: (text) => void tooltips.push(text),
     setLoginItem: (enabled) => void loginItem.push(enabled),
+    openExternal: async (url) => void opened.push(url),
     log: () => {}
   })
   return controller
@@ -67,6 +69,7 @@ beforeEach(() => {
   tooltips = []
   loginItem = []
   brokenProfiles = new Set()
+  opened = []
 })
 
 afterEach(() => {
@@ -296,8 +299,43 @@ describe('settings', () => {
   })
 })
 
+describe('manual steps and the console', () => {
+  const NAT = `${FAKE_ACCOUNT_ID}:nat-gateway:eu-west-1:nat-0demo000000000001`
+
+  it('builds the console link and CLI command for a resource in the latest scan, with the profile', async () => {
+    const handlers = build().handlers
+    value(await handlers['profiles:select']({ profile: 'demo' }))
+    await scanned()
+    expect(value(await handlers['resource:manualSteps']({ resourceKey: NAT }))).toMatchObject({
+      consoleUrl: 'https://eu-west-1.console.aws.amazon.com/vpcconsole/home?region=eu-west-1#NatGatewayDetails:natGatewayId=nat-0demo000000000001',
+      cliCommand: 'aws ec2 delete-nat-gateway --nat-gateway-id nat-0demo000000000001 --region eu-west-1 --profile demo'
+    })
+  })
+
+  it('opens the console page of the resource in the browser', async () => {
+    const handlers = build().handlers
+    value(await handlers['profiles:select']({ profile: 'demo' }))
+    await scanned()
+    expect(value(await handlers['resource:openConsole']({ resourceKey: NAT }))).toBeNull()
+    expect(opened).toEqual([
+      'https://eu-west-1.console.aws.amazon.com/vpcconsole/home?region=eu-west-1#NatGatewayDetails:natGatewayId=nat-0demo000000000001'
+    ])
+  })
+
+  it.each(['resource:manualSteps', 'resource:openConsole'] as const)('%s refuses a key that is not in the latest scan', async (channel) => {
+    const handlers = build().handlers
+    value(await handlers['profiles:select']({ profile: 'demo' }))
+    await scanned()
+    expect(await handlers[channel]({ resourceKey: `${FAKE_ACCOUNT_ID}:nat-gateway:eu-west-1:nat-unknown` })).toEqual({
+      ok: false,
+      error: { code: 'not-found', message: 'That resource is not in the latest scan.' }
+    })
+    expect(opened).toEqual([])
+  })
+})
+
 describe('not built yet', () => {
-  it.each(['resource:manualSteps', 'resource:openConsole', 'actions:preview', 'actions:execute'] as const)('%s refuses', async (channel) => {
+  it.each(['actions:preview', 'actions:execute'] as const)('%s refuses', async (channel) => {
     const handlers = build().handlers as Record<string, (input: unknown) => Promise<IpcResult<unknown>>>
     expect((await handlers[channel]!({})).ok).toBe(false)
   })

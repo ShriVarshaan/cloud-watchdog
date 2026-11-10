@@ -14,6 +14,7 @@
 
 import type { IpcEventChannel, IpcEvents, IpcResult } from '../shared/ipc'
 import type { AppState, Identity, ScanErrorCode, ScanResult, Settings } from '../shared/types'
+import { buildManualSteps } from '../core/actions/manualSteps'
 import type { ClientFactory } from '../core/aws/clients'
 import { classifyAwsError } from '../core/aws/errors'
 import { getIdentity } from '../core/aws/identity'
@@ -27,6 +28,7 @@ import { previousResourcesFrom } from '../core/scan/persist'
 import { completeScan, loadLatestResult, summarize } from '../core/scan/pipeline'
 import { ALL_SCANNERS } from '../core/scanners'
 import type { Repo } from '../core/store/repo'
+import { isAllowedExternalUrl } from './externalLinks'
 import { fail, ok, type IpcHandlers } from './ipcHandlers'
 import { planToasts, trayTooltip, type Toast } from './notifications'
 import { createScheduler, type ScanOutcome, type Scheduler } from './scheduler'
@@ -42,6 +44,8 @@ export interface ControllerDeps {
   notify(toasts: Toast[]): void
   setTooltip(text: string): void
   setLoginItem(enabled: boolean): void
+  /** Opens a web page in the user's browser. Called only with URLs that pass isAllowedExternalUrl. */
+  openExternal(url: string): Promise<void>
   log(message: string, error?: unknown): void
   now?: () => Date
 }
@@ -198,6 +202,12 @@ export function createController(deps: ControllerDeps): Controller {
     if (intervalChanged) scheduler.reschedule()
   }
 
+  /** A resource of the latest scan, looked up by the key the UI sent. */
+  function findResource(resourceKey: string) {
+    return latest?.resources.find((resource) => resource.key === resourceKey) ?? null
+  }
+  const NOT_IN_SCAN = 'That resource is not in the latest scan.'
+
   const notYet = async (): Promise<IpcResult<never>> => fail('not-implemented', 'This feature is not available yet.')
 
   const handlers: IpcHandlers = {
@@ -257,9 +267,23 @@ export function createController(deps: ControllerDeps): Controller {
       return ok(settings)
     },
 
-    // Built in M9 (manual steps and console links) and M10 (actions).
-    'resource:manualSteps': notYet,
-    'resource:openConsole': notYet,
+    'resource:manualSteps': async ({ resourceKey }) => {
+      const resource = findResource(resourceKey)
+      if (!resource) return fail('not-found', NOT_IN_SCAN)
+      return ok(buildManualSteps(resource, session?.profile ?? settings.profile))
+    },
+
+    'resource:openConsole': async ({ resourceKey }) => {
+      const resource = findResource(resourceKey)
+      if (!resource) return fail('not-found', NOT_IN_SCAN)
+      const { consoleUrl } = buildManualSteps(resource, null)
+      // main built the URL, but it is checked again right before it leaves the app.
+      if (!isAllowedExternalUrl(consoleUrl)) return fail('internal', 'That link cannot be opened.')
+      await deps.openExternal(consoleUrl)
+      return ok(null)
+    },
+
+    // Built in M10.
     'actions:preview': notYet,
     'actions:execute': notYet
   }
