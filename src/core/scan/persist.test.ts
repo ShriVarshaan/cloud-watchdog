@@ -5,13 +5,13 @@ import { DescribeRegionsCommand, EC2Client } from '@aws-sdk/client-ec2'
 import { GetCallerIdentityCommand, STSClient } from '@aws-sdk/client-sts'
 import { mockClient } from 'aws-sdk-client-mock'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { resourceKey, type Resource } from '../../shared/types'
+import { resourceKey, type Resource, type ScanResult } from '../../shared/types'
 import { createClientFactory } from '../aws/clients'
 import { openDb, type Db } from '../store/db'
 import { migrate } from '../store/migrations'
 import { createRepo, type Repo } from '../store/repo'
 import { createScanEngine, type RawScan } from './engine'
-import { previousResourcesFrom, toUnpricedScanResult } from './persist'
+import { previousResourcesFrom } from './persist'
 import type { Scanner } from './scanner'
 
 const ACCOUNT = '111122223333'
@@ -52,54 +52,21 @@ function instance(region: string, id: string): Resource {
   }
 }
 
-describe('toUnpricedScanResult', () => {
-  const raw: RawScan = {
-    scanId: 'scan-1',
-    startedAt: '2026-11-10T09:00:00.000Z',
-    finishedAt: '2026-11-10T09:00:05.000Z',
-    identity: { accountId: ACCOUNT, arn: `arn:aws:iam::${ACCOUNT}:user/watchdog`, profile: 'hackathon' },
-    resources: [
-      { ...instance('eu-west-1', 'i-1'), stale: false },
-      { ...instance('us-east-1', 'i-2'), stale: true }
-    ],
-    errors: [{ scanner: 'ec2-instance', region: 'us-east-1', code: 'throttled', message: 'slow down' }]
+/** Saves a raw scan the simplest way the store accepts: every price unknown. */
+function unpriced(raw: RawScan): ScanResult {
+  return {
+    ...raw,
+    resources: raw.resources.map((resource) => ({
+      ...resource,
+      price: { hourlyUsd: null, confidence: 'unknown' as const, source: 'none' as const, excluded: [] },
+      coverage: 'unknown' as const
+    })),
+    flags: [],
+    burn: { exactUsdPerHour: 0, estimateUsdPerHour: 0, unknownCount: raw.resources.length },
+    plan: null,
+    runway: null
   }
-
-  it('gives every resource an unknown price and unknown coverage, never a number', () => {
-    const result = toUnpricedScanResult(raw)
-    expect(result.resources).toEqual([
-      {
-        ...instance('eu-west-1', 'i-1'),
-        stale: false,
-        price: { hourlyUsd: null, confidence: 'unknown', source: 'none', excluded: [] },
-        coverage: 'unknown'
-      },
-      {
-        ...instance('us-east-1', 'i-2'),
-        stale: true,
-        price: { hourlyUsd: null, confidence: 'unknown', source: 'none', excluded: [] },
-        coverage: 'unknown'
-      }
-    ])
-  })
-
-  it('reports a burn rate of zero known dollars with every resource unpriced', () => {
-    expect(toUnpricedScanResult(raw).burn).toEqual({ exactUsdPerHour: 0, estimateUsdPerHour: 0, unknownCount: 2 })
-  })
-
-  it('keeps the scan id, times, identity and errors, and has no flags, plan or runway yet', () => {
-    expect(toUnpricedScanResult(raw)).toMatchObject({
-      scanId: 'scan-1',
-      startedAt: '2026-11-10T09:00:00.000Z',
-      finishedAt: '2026-11-10T09:00:05.000Z',
-      identity: raw.identity,
-      errors: raw.errors,
-      flags: [],
-      plan: null,
-      runway: null
-    })
-  })
-})
+}
 
 describe('scan, save, scan again', () => {
   it('a region that fails in the second scan keeps its saved resources, marked stale', async () => {
@@ -125,7 +92,7 @@ describe('scan, save, scan again', () => {
       now: () => new Date(times.shift() ?? '2026-11-10T10:00:00.000Z')
     })
 
-    repo.saveScan(toUnpricedScanResult(await engine.run()))
+    repo.saveScan(unpriced(await engine.run()))
     expect(repo.getLatestScan(ACCOUNT)?.resources.map((r) => [r.id, r.stale])).toEqual([
       ['i-ireland', false],
       ['i-virginia', false]
@@ -133,7 +100,7 @@ describe('scan, save, scan again', () => {
 
     irelandFails = true
     virginiaDeleted = true
-    repo.saveScan(toUnpricedScanResult(await engine.run()))
+    repo.saveScan(unpriced(await engine.run()))
 
     const latest = repo.getLatestScan(ACCOUNT)
     // Ireland: not looked at, kept as it was. Virginia: looked at, really gone.
@@ -152,7 +119,7 @@ describe('scan, save, scan again', () => {
     expect(repo.getResourceTimes(instance('eu-west-1', 'i-ireland').key)?.lastSeenAt).toBe('2026-11-10T09:00:00.000Z')
 
     irelandFails = false
-    repo.saveScan(toUnpricedScanResult(await engine.run()))
+    repo.saveScan(unpriced(await engine.run()))
     expect(repo.getLatestScan(ACCOUNT)?.resources.map((r) => [r.id, r.stale])).toEqual([['i-ireland', false]])
   })
 
