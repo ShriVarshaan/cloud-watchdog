@@ -10,13 +10,9 @@
 import { EC2Client, paginateDescribeInstances, type Instance } from '@aws-sdk/client-ec2'
 import { resourceKey, type Resource } from '../../shared/types'
 import type { ScanContext, Scanner } from '../scan/scanner'
+import { nameFromTags, tagValue } from './tags'
 
 const ASG_TAG = 'aws:autoscaling:groupName'
-
-function tag(instance: Instance, key: string): string | null {
-  const value = instance.Tags?.find((entry) => entry.Key === key)?.Value
-  return value ? value : null
-}
 
 function toResource(instance: Instance, ctx: ScanContext): Resource | null {
   const id = instance.InstanceId
@@ -24,13 +20,12 @@ function toResource(instance: Instance, ctx: ScanContext): Resource | null {
   // A terminated instance stays listed for about an hour. It costs nothing.
   if (!id || state === 'terminated') return null
 
-  const name = tag(instance, 'Name')
   return {
     key: resourceKey(ctx.accountId, 'ec2-instance', ctx.region, id),
     kind: 'ec2-instance',
     region: ctx.region,
     id,
-    ...(name ? { name } : {}),
+    ...nameFromTags(instance.Tags),
     state: state ?? 'unknown',
     // The time of the latest start, not of creation: it is what "running for N hours" needs.
     ...(instance.LaunchTime ? { createdAt: instance.LaunchTime.toISOString() } : {}),
@@ -44,7 +39,7 @@ function toResource(instance: Instance, ctx: ScanContext): Resource | null {
       lifecycle: instance.InstanceLifecycle ?? 'on-demand',
       publicIp: instance.PublicIpAddress ?? null,
       rootDeviceType: instance.RootDeviceType ?? null,
-      autoScalingGroup: tag(instance, ASG_TAG)
+      autoScalingGroup: tagValue(instance.Tags, ASG_TAG)
     }
   }
 }
