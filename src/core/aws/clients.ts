@@ -7,6 +7,7 @@
 // - Every client retries with `adaptive` mode, which slows down when AWS
 //   starts throttling, up to 5 attempts.
 
+import type { STSClientConfig } from '@aws-sdk/client-sts'
 import { fromNodeProviderChain } from '@aws-sdk/credential-providers'
 
 /** Global calls (STS, DescribeRegions) go here. Always enabled in every account. */
@@ -30,7 +31,11 @@ export interface ClientConfig {
   credentials: CredentialProvider
   retryMode: 'adaptive'
   maxAttempts: number
+  requestHandler?: RequestHandler
 }
+
+/** The SDK's HTTP layer. Only tests supply one. */
+export type RequestHandler = NonNullable<STSClientConfig['requestHandler']>
 
 interface AwsClient {
   destroy(): void
@@ -51,6 +56,8 @@ export interface ClientFactoryOptions {
   profile: string
   /** Replaces the profile's credential chain. For tests. */
   credentials?: CredentialProvider
+  /** Replaces the HTTP layer, keeping signing and retries real. For tests. */
+  requestHandler?: RequestHandler
 }
 
 export function createClientFactory(options: ClientFactoryOptions): ClientFactory {
@@ -68,7 +75,13 @@ export function createClientFactory(options: ClientFactoryOptions): ClientFactor
       }
       let client = byRegion.get(region)
       if (!client) {
-        client = new service({ region, credentials, retryMode: 'adaptive', maxAttempts: MAX_ATTEMPTS })
+        client = new service({
+          region,
+          credentials,
+          retryMode: 'adaptive',
+          maxAttempts: MAX_ATTEMPTS,
+          ...(options.requestHandler ? { requestHandler: options.requestHandler } : {})
+        })
         byRegion.set(region, client)
       }
       return client as T

@@ -19,10 +19,12 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "electron-vite build && playwright test",
-    "check": "npm run typecheck && npm run lint && npm run test"
+    "check": "npm run typecheck && npm run lint && npm run test",
+    "record-fixtures": "node scripts/record-fixtures.ts"
   },
   "dependencies": {
     "@aws-sdk/client-ec2": "^3.1165.0",
+    "@aws-sdk/client-rds": "^3.1165.0",
     "@aws-sdk/client-sts": "^3.1165.0",
     "@aws-sdk/credential-providers": "^3.1165.0",
     "react": "^19.3.1",

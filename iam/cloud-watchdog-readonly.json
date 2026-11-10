@@ -1,0 +1,40 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ScanResources",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeRegions",
+        "ec2:DescribeInstances",
+        "ec2:DescribeVolumes",
+        "ec2:DescribeAddresses",
+        "ec2:DescribeNatGateways",
+        "rds:DescribeDBInstances",
+        "elasticloadbalancing:DescribeLoadBalancers",
+        "sagemaker:ListEndpoints",
+        "sagemaker:DescribeEndpoint",
+        "sagemaker:DescribeEndpointConfig"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "IdleDetection",
+      "Effect": "Allow",
+      "Action": ["cloudwatch:GetMetricData"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "PlanAndFreeTier",
+      "Effect": "Allow",
+      "Action": ["freetier:GetAccountPlanState", "freetier:GetFreeTierUsage"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "PublicPriceList",
+      "Effect": "Allow",
+      "Action": ["pricing:GetProducts"],
+      "Resource": "*"
+    }
+  ]
+}

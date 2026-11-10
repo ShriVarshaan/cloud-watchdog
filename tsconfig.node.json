@@ -3,7 +3,8 @@
   "compilerOptions": {
     "composite": true,
     "lib": ["ES2023"],
-    "types": ["node"]
+    "types": ["node"],
+    "allowImportingTsExtensions": true
   },
   "include": [
     "src/main/**/*",
@@ -11,6 +12,7 @@
     "src/core/**/*",
     "src/shared/**/*",
     "tests/**/*",
+    "scripts/**/*",
     "electron.vite.config.ts",
     "vitest.config.ts",
     "eslint.config.js"
