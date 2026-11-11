@@ -1,10 +1,12 @@
 // The two windows: the main window (resource list) and the tray popover.
 // Both load the same renderer bundle; `?view=` picks which screen to show.
 
+import { release } from 'node:os'
 import { join } from 'node:path'
-import { app, BrowserWindow, screen, type Rectangle, type WebPreferences } from 'electron'
+import { app, BrowserWindow, nativeTheme, screen, type Rectangle, type WebPreferences } from 'electron'
 import type { IpcEventChannel, IpcEvents } from '../shared/ipc'
 import { popoverPosition } from './popoverPosition'
+import { supportsMica, titleBarOverlay, windowBackground } from './windowChrome'
 
 type View = 'main' | 'popover'
 
@@ -33,9 +35,14 @@ export function secureWebPreferences(): WebPreferences {
   }
 }
 
+/** Whether the main window is drawn on Mica. The page makes its sidebar transparent when it is. */
+const mica = supportsMica(process.platform, release())
+
 /** `focus` names a resource key the page should show (after a toast is clicked). */
 function loadView(win: BrowserWindow, view: View, focus?: string): Promise<void> {
-  const query: Record<string, string> = focus ? { view, focus } : { view }
+  const query: Record<string, string> = { view }
+  if (focus) query['focus'] = focus
+  if (view === 'main' && mica) query['material'] = 'mica'
   // electron-vite sets this when running `npm run dev`.
   const devServer = process.env['ELECTRON_RENDERER_URL']
   if (devServer && !app.isPackaged) {
@@ -82,9 +89,22 @@ function createMainWindow(focus?: string): BrowserWindow {
     show: false,
     title: 'Cloud Watchdog',
     autoHideMenuBar: true,
+    // The page draws its own toolbar; Windows keeps drawing the window buttons over it.
+    titleBarStyle: 'hidden',
+    titleBarOverlay: titleBarOverlay(nativeTheme.shouldUseDarkColors),
+    backgroundColor: windowBackground(nativeTheme.shouldUseDarkColors, mica),
+    ...(mica ? { backgroundMaterial: 'mica' as const } : {}),
     webPreferences: secureWebPreferences()
   })
   win.once('ready-to-show', () => win.show())
+  // Follow the switch between light and dark mode.
+  const followTheme = () => {
+    if (win.isDestroyed()) return
+    win.setTitleBarOverlay(titleBarOverlay(nativeTheme.shouldUseDarkColors))
+    if (!mica) win.setBackgroundColor(windowBackground(nativeTheme.shouldUseDarkColors, false))
+  }
+  nativeTheme.on('updated', followTheme)
+  win.on('closed', () => nativeTheme.off('updated', followTheme))
   // Closing the window hides it; the app keeps watching from the tray.
   win.on('close', (event) => {
     if (!quitting) {
@@ -126,6 +146,7 @@ function createPopover(): BrowserWindow {
     skipTaskbar: true,
     alwaysOnTop: true,
     title: 'Cloud Watchdog',
+    backgroundColor: windowBackground(nativeTheme.shouldUseDarkColors, false),
     webPreferences: secureWebPreferences()
   })
   win.on('blur', () => {

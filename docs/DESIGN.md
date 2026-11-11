@@ -124,8 +124,9 @@ Text is left aligned everywhere except the popover hero, which is centred.
 - On Windows 11 (build 22621 or later) the window uses the Mica material and
   the sidebar is transparent over it. On Windows 10 the sidebar is a solid
   grey. The main process tells the page which one through `?material=mica`.
-- The popover stays an opaque, frameless window with rounded corners drawn in
-  CSS: Mica does not apply to frameless windows reliably.
+- The popover stays an opaque, frameless window. Mica does not apply to
+  frameless windows reliably, and a transparent window would be needed to draw
+  rounded corners in CSS, so its corners are left to Windows.
 
 ## Deliberate deviations from the M13 plan
 

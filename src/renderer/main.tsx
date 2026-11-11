@@ -11,6 +11,9 @@ const params = new URLSearchParams(window.location.search)
 const view = params.get('view')
 const root = document.getElementById('root')
 if (!root) throw new Error('Missing #root element')
+// Set by the main process on Windows 11, where the window is drawn on Mica.
+// The sidebar is then left transparent so the material shows through.
+if (params.get('material') === 'mica') document.documentElement.dataset['material'] = 'mica'
 
 createRoot(root).render(
   <StrictMode>{view === 'popover' ? <Popover /> : <MainWindow focusKey={params.get('focus')} />}</StrictMode>

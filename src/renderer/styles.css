@@ -427,6 +427,27 @@ input[type='checkbox'][role='switch']:checked::before {
   font-weight: 600;
 }
 
+/* Window chrome ------------------------------------------------------------
+   The main window has no Windows title bar (src/main/windowChrome.ts). The
+   toolbar is the drag region, and leaves room on the right for the window
+   buttons Windows draws over it. */
+
+:root {
+  --toolbar-height: 48px;
+  --window-buttons: calc(100vw - env(titlebar-area-x, 0px) - env(titlebar-area-width, 100vw));
+}
+
+.main-header {
+  min-block-size: var(--toolbar-height);
+  padding-inline-end: var(--window-buttons);
+  -webkit-app-region: drag;
+  user-select: none;
+}
+
+.main-header :is(button, input, select, a) {
+  -webkit-app-region: no-drag;
+}
+
 /* Summary figures and the runway gauge -------------------------------------- */
 
 .summary {
