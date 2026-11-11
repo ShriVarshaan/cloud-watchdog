@@ -413,6 +413,7 @@ Rules for every milestone: start by switching model, work test-first (`test-driv
 - **Review:** `docs/DESIGN.md`, `src/renderer/styles.css`, `src/renderer/main-window/MainWindow.tsx`, `src/renderer/popover/Popover.tsx`.
 - **Commit:** one per step above, e.g. `feat(ui): Apple-style design tokens and materials`
 - **Placement:** build it before M11 so the README screenshots show the final look.
+- **Status:** built on 2026-11-11. What was verified, what was changed from this plan, and what is still unverified: `docs/DESIGN.md`, section Result.
 
 ---
 

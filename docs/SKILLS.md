@@ -39,7 +39,7 @@ Or restore from the lock file: `npx skills experimental_install`.
 | M8 Main wiring | electron, electron-skills, playwright-best-practices |
 | M9 UI | frontend-design, web-design-guidelines, accessibility, vercel-react-best-practices, vercel-composition-patterns, playwright-best-practices |
 | M10 Actions | test-driven-development, electron-skills, requesting-code-review |
-| M13 Apple-style redesign | frontend-design, hig-* (foundations, platforms, patterns, inputs, components-layout, -content, -controls, -menus, -dialogs, -search, -status), web-design-guidelines, accessibility, playwright-best-practices, verification-before-completion |
+| M13 Apple-style redesign | frontend-design, hig-foundations, hig-platforms, hig-components-layout, hig-components-controls, hig-components-menus, web-design-guidelines |
 | M11 Packaging | electron |
 | M12 Final review | requesting-code-review, improve-codebase-architecture, verification-before-completion |
 
@@ -67,6 +67,11 @@ with `accessibility` in the same command).
   and behaviour, and translates the result to CSS. `hig-technologies`,
   `hig-components-system` and `hig-project-context` are deliberately not
   installed: they cover Apple frameworks, widgets and native project setup.
+- M13 read only the `hig-*` references it needed (typography, materials,
+  sidebars, lists and tables, toggles, segmented controls, gauges, buttons,
+  menus, writing). `hig-patterns`, `hig-inputs`, `hig-components-content`,
+  `-dialogs`, `-search` and `-status` are installed but were not used; the
+  axe test stands in for the `accessibility` skill's audit.
 - Apple's guideline text and the SF Pro and SF Symbols assets are Apple's. The
   skills only guide the design; nothing from Apple is copied into the app
   (PLAN.md open questions 13 and 14).

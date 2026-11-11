@@ -38,7 +38,7 @@ rarely. So:
 | A tab view, not a segmented control, for switching views (segmented-controls.md) | The sidebar keeps tab semantics (`role="tablist"`, vertical). |
 | A push button that opens another window ends with an ellipsis (`hig-components-menus`, buttons.md) | "Switch On Stopping…", "Stop Instance…", "Open in AWS Console…": each opens a native dialog or the browser. |
 | Never give a destructive action the default (primary) style (buttons.md) | The Stop button is red text on a neutral fill, not the blue default button. |
-| Title-style capitalisation for buttons, tabs and sidebar items on macOS (`hig-foundations`, writing.md) | Buttons and navigation labels. Body text stays sentence case. |
+| Choose a capitalisation style and apply it consistently (`hig-foundations`, writing.md); title-style for menu items (`hig-components-menus`, menus.md) and for buttons (`web-design-guidelines`) | Title style for buttons, sidebar items and segment labels, as macOS does. Headings and body text stay sentence case, as before M13. |
 | Gauges: change the fill colour across significant parts of the range; labels describe the current value (`hig-components-controls`, gauges.md) | The runway ring: green, then orange under 14 days, red under 7, with the days as text. |
 | Motion communicates, and has a Reduce Motion alternative (`hig-foundations`, motion.md) | Inspector and preview fade and rise; with reduced motion they only fade. Nothing moves on its own. |
 | Increase Contrast support (`hig-foundations`, accessibility.md) | `prefers-contrast: more` darkens secondary text and separators; Windows high contrast (`forced-colors`) drops translucency and tints and uses system colours. |
@@ -146,3 +146,37 @@ Text is left aligned everywhere except the popover hero, which is centred.
 - **Stopping stays a button, not a switch.** A switch implies the change
   happens the moment it flips; this one goes through a native confirmation
   naming the extra IAM policy, so it is a push button with an ellipsis.
+
+## Result (built 2026-11-11)
+
+| | |
+|---|---|
+| `npm run check` | passes, 1038 unit tests (84 of them contrast checks, new) |
+| `npm run test:e2e` | passes, 30 tests (2 new: axe in light and dark mode) |
+| axe-core, WCAG 2.2 AA, serious or critical | none, on the first run, resources, inspector, scan problems, settings and popover, in both themes |
+| Contrast | every text colour, pill and the selected row at 4.5:1 or more, the switch and focus ring at 3:1, on every surface, in both themes (`tests/unit/contrast.test.ts`) |
+| Tests changed to fit the new markup | two, each explained in its commit: one regex made case-insensitive (title-case sidebar labels), and the popover stand-in viewport made 600px tall to match the window |
+
+**Found by the review and fixed:** the Apple status colours as given fell
+just short of 4.5:1 as text and in pills; the selected row's tint did the same
+to secondary text; the table wrapped and clipped beside the inspector; and
+collapsing the sidebar hid the account, which is why the account is now the
+toolbar subtitle.
+
+**Changes beyond the plan's file list.** `src/main/windows.ts` also changed
+two sizes: the main window opens at 1280 × 780 (was 1100 × 720) so the
+full sidebar, table and inspector fit, and the popover is 360 × 600 (was
+480 tall) so it never scrolls. Plan steps 6 (controls) and 7 (motion) were
+built inside the step 4 commit, together with the markup they style.
+
+**Not verified, and why:**
+
+- **Mica and the hidden title bar on a real window.** Every run used
+  Playwright page screenshots, which show the page only, not the window
+  frame, the material behind a transparent sidebar or the native window
+  buttons. The space reserved for those buttons does appear in the
+  screenshots, so the overlay is there; how Mica looks has not been seen.
+  To check: `npm run dev` on Windows 11, in light and dark mode.
+- **Windows high contrast** (`forced-colors`) and **Increase Contrast**
+  (`prefers-contrast: more`): the styles exist but were not rendered.
+- **150% display scaling**: the screenshots are at 100% only.
