@@ -6,6 +6,7 @@
 //   4. work out the credit runway                 freetier/runway.ts
 //   5. read CPU, if the idle rule is on           rules/idle.ts
 //   6. run the rules and update the flags         rules/engine.ts, flagLifecycle.ts
+//      (with the databases the app stopped, for the restart rule)
 //   7. save the scan and prune old history
 //
 // None of the steps can fail the scan: each one degrades and adds a
@@ -73,6 +74,7 @@ export async function completeScan(raw: RawScan, deps: PipelineDeps, signal: Abo
     runway,
     settings: deps.rules,
     cpu: cpuReport?.readings ?? null,
+    stops: new Map(repo.listDatabaseStops(accountId).map((stop) => [stop.resourceKey, stop])),
     now
   })
 

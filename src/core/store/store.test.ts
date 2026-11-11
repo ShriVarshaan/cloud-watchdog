@@ -345,3 +345,46 @@ describe('action log', () => {
     expect(repo.listActionLog('999999999999')).toEqual([])
   })
 })
+
+describe('databases the app stopped', () => {
+  const DB = `${ACCOUNT}:rds-instance:eu-west-1:shop-db`
+  const database = (state: string): PricedResource => resource('shop-db', { key: DB, kind: 'rds-instance', state })
+  const stop = (at: string, over: Partial<{ result: 'stopped' | 'failed' | 'cancelled'; action: string; resourceKey: string; accountId: string }> = {}) =>
+    repo.addActionLog({ at, accountId: ACCOUNT, resourceKey: DB, action: 'stop-rds', preState: 'available', result: 'stopped', error: null, ...over })
+
+  it('is empty when nothing was stopped', () => {
+    expect(repo.listDatabaseStops(ACCOUNT)).toEqual([])
+  })
+
+  it('gives the latest stop of each database that AWS accepted, and nothing else', () => {
+    stop('2026-11-01T10:00:00.000Z')
+    stop('2026-11-03T10:00:00.000Z')
+    stop('2026-11-04T10:00:00.000Z', { result: 'failed' })
+    stop('2026-11-05T10:00:00.000Z', { result: 'cancelled' })
+    stop('2026-11-06T10:00:00.000Z', { action: 'stop-ec2', resourceKey: `${ACCOUNT}:ec2-instance:eu-west-1:i-1` })
+    stop('2026-11-07T10:00:00.000Z', { accountId: '999999999999', resourceKey: '999999999999:rds-instance:eu-west-1:other' })
+
+    expect(repo.listDatabaseStops(ACCOUNT)).toEqual([
+      { resourceKey: DB, stoppedAt: '2026-11-03T10:00:00.000Z', firstRunningAt: null, lastStoppedAt: null }
+    ])
+  })
+
+  it('adds when scans after the stop first saw it running and last saw it stopped', () => {
+    repo.saveScan(scan('before', '2026-11-03T09:00:00.000Z', [database('available')]))
+    stop('2026-11-03T10:00:00.000Z')
+    repo.saveScan(scan('s1', '2026-11-03T10:05:00.000Z', [database('stopping')]))
+    repo.saveScan(scan('s2', '2026-11-04T10:00:00.000Z', [database('stopped')]))
+    repo.saveScan(scan('s3', '2026-11-09T10:00:00.000Z', [database('stopped')]))
+    repo.saveScan(scan('s4', '2026-11-10T11:00:00.000Z', [database('available')]))
+    repo.saveScan(scan('s5', '2026-11-10T12:00:00.000Z', [database('available')]))
+
+    expect(repo.listDatabaseStops(ACCOUNT)).toEqual([
+      {
+        resourceKey: DB,
+        stoppedAt: '2026-11-03T10:00:00.000Z',
+        firstRunningAt: '2026-11-10T11:00:00.000Z',
+        lastStoppedAt: '2026-11-09T10:00:00.000Z'
+      }
+    ])
+  })
+})

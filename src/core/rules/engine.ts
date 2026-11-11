@@ -12,8 +12,11 @@
 // throttled call would resolve flags, or raise new ones from old data.
 
 import type { PlanState, Resource, RuleSetting, Runway, Severity } from '../../shared/types'
+import type { DatabaseStop } from '../store/repo'
 import type { CpuReading } from './idle'
 import { ruleEnabled, ruleParams, RULES, type RuleContext } from './rules'
+
+const NO_STOPS: ReadonlyMap<string, DatabaseStop> = new Map()
 
 export interface FlagDraft {
   ruleId: string
@@ -33,6 +36,8 @@ export interface RuleInput {
   settings: Readonly<Record<string, RuleSetting>>
   /** CPU readings by resource key, or null when CloudWatch was not read. */
   cpu: ReadonlyMap<string, CpuReading> | null
+  /** Databases this app stopped, by resource key. Left out = none. */
+  stops?: ReadonlyMap<string, DatabaseStop>
   now: Date
 }
 
@@ -58,7 +63,8 @@ export function evaluateRules(input: RuleInput): RuleOutcome {
       params: ruleParams(input.settings, rule.id),
       cpu: input.cpu,
       plan: input.plan,
-      runway: input.runway
+      runway: input.runway,
+      stops: input.stops ?? NO_STOPS
     }
 
     const record = (resourceKey: string | null, verdict: ReturnType<typeof rule.evaluate>) => {

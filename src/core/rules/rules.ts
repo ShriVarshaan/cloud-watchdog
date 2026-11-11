@@ -14,6 +14,7 @@
 // thresholds, come from settings (see `ruleParams`); every rule is on by default.
 
 import type { PlanState, Resource, RuleSetting, Runway, Severity } from '../../shared/types'
+import type { DatabaseStop } from '../store/repo'
 import type { CpuReading } from './idle'
 
 export type Verdict = { message: string } | null | 'undecided'
@@ -27,6 +28,8 @@ export interface RuleContext {
   /** null = the plan could not be read. */
   plan: PlanState | null
   runway: Runway | null
+  /** Databases this app stopped, by resource key. */
+  stops: ReadonlyMap<string, DatabaseStop>
 }
 
 interface RuleBase {
@@ -46,6 +49,8 @@ export interface AccountRule extends RuleBase {
 export type Rule = ResourceRule | AccountRule
 
 const HOUR_MS = 3_600_000
+/** AWS starts a stopped RDS database again after this long. */
+const AUTO_RESTART_MS = 7 * 24 * HOUR_MS
 
 /** The things that bill by the hour while they are up, and the state in which they do. */
 const RUNNING_STATE: Partial<Record<Resource['kind'], string>> = {
@@ -161,6 +166,30 @@ export const RULES: readonly Rule[] = [
       if (resource.kind === 'ec2-instance') return { message: 'Stopped, but its volumes still bill for storage.' }
       if (resource.kind === 'rds-instance') return { message: 'Stopped, but its storage and backups still bill.' }
       return null
+    }
+  },
+  {
+    // AWS starts a stopped database again after 7 days, and it bills again
+    // from then. Only databases this app stopped are tracked, and only a
+    // start that falls where AWS's own would: one the user made earlier is theirs.
+    id: 'rds-restarted',
+    scope: 'resource',
+    severity: 'warn',
+    params: {},
+    evaluate(resource, { now, stops }) {
+      if (resource.kind !== 'rds-instance' || resource.state !== 'available') return null
+      const stop = stops.get(resource.key)
+      if (!stop) return null
+
+      const stoppedAt = Date.parse(stop.stoppedAt)
+      // No earlier scan saw it running: this scan is the first.
+      const runningSince = stop.firstRunningAt ? Date.parse(stop.firstRunningAt) : now.getTime()
+      if (runningSince - stoppedAt < AUTO_RESTART_MS - HOUR_MS) return null
+      // Stopped again after that start, so what runs now is a later start.
+      if (stop.lastStoppedAt && Date.parse(stop.lastStoppedAt) > runningSince) return null
+      return {
+        message: `Running again. Cloud Watchdog stopped it on ${stop.stoppedAt.slice(0, 10)}, and AWS starts a stopped database by itself after 7 days.`
+      }
     }
   },
   {

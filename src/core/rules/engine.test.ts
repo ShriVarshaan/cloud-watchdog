@@ -268,6 +268,7 @@ describe('the engine', () => {
       'low-runway',
       'nat-gateway',
       'plan-expired',
+      'rds-restarted',
       'stopped-storage',
       'unassociated-ip',
       'unattached-volume'
@@ -294,5 +295,70 @@ describe('ruleParams', () => {
 
   it('ignores parameters the rule does not have', () => {
     expect(ruleParams(settings({ banana: 3 }), 'idle-cpu')).toEqual({ windowHours: 6, maxCpuPercent: 2 })
+  })
+})
+
+describe('rds-restarted', () => {
+  const DAY = 24
+  const database = (state = 'available') => make('rds-instance', state, {}, { createdAt: hoursAgo(1) })
+  /** The app stopped the database `stoppedHoursAgo` ago; scans since then saw it as given. */
+  function history(key: string, stoppedHoursAgo: number, seen: { runningHoursAgo?: number; stoppedHoursAgo?: number } = {}) {
+    return new Map([
+      [
+        key,
+        {
+          resourceKey: key,
+          stoppedAt: hoursAgo(stoppedHoursAgo),
+          firstRunningAt: seen.runningHoursAgo === undefined ? null : hoursAgo(seen.runningHoursAgo),
+          lastStoppedAt: seen.stoppedHoursAgo === undefined ? null : hoursAgo(seen.stoppedHoursAgo)
+        }
+      ]
+    ])
+  }
+
+  it('flags a database that is running again 7 days after the app stopped it, with the date of the stop', () => {
+    const db = database()
+    // Stopped on 2 November at noon; last seen stopped an hour ago; this scan is the first to see it running.
+    const [flag] = only('rds-restarted', [db], { stops: history(db.key, 8 * DAY, { stoppedHoursAgo: 1 }) })
+    expect(flag).toMatchObject({
+      severity: 'warn',
+      message: 'Running again. Cloud Watchdog stopped it on 2026-11-02, and AWS starts a stopped database by itself after 7 days.'
+    })
+  })
+
+  it('keeps the flag while it keeps running', () => {
+    const db = database()
+    const stops = history(db.key, 10 * DAY, { runningHoursAgo: 3 * DAY, stoppedHoursAgo: 3 * DAY + 1 })
+    expect(only('rds-restarted', [db], { stops })).toHaveLength(1)
+  })
+
+  it('says nothing about a database the user started again before the 7 days were up', () => {
+    const db = database()
+    expect(only('rds-restarted', [db], { stops: history(db.key, 2 * DAY) })).toEqual([])
+    // Still running a week later: it was first seen running on day 2, so AWS did not start it.
+    expect(only('rds-restarted', [db], { stops: history(db.key, 9 * DAY, { runningHoursAgo: 7 * DAY }) })).toEqual([])
+  })
+
+  it('allows for a restart a little short of the full 7 days', () => {
+    const db = database()
+    expect(only('rds-restarted', [db], { stops: history(db.key, 7 * DAY - 0.5) })).toHaveLength(1)
+    expect(only('rds-restarted', [db], { stops: history(db.key, 7 * DAY - 2) })).toEqual([])
+  })
+
+  it('says nothing while the database is still stopped, however long ago', () => {
+    const db = database('stopped')
+    expect(only('rds-restarted', [db], { stops: history(db.key, 8 * DAY, { stoppedHoursAgo: 1 }) })).toEqual([])
+  })
+
+  it('says nothing once it was stopped again and started again: that is a different run', () => {
+    const db = database()
+    const stops = history(db.key, 20 * DAY, { runningHoursAgo: 13 * DAY, stoppedHoursAgo: 2 * DAY })
+    expect(only('rds-restarted', [db], { stops })).toEqual([])
+  })
+
+  it('says nothing about a database the app never stopped', () => {
+    expect(only('rds-restarted', [database()])).toEqual([])
+    const other = database()
+    expect(only('rds-restarted', [database()], { stops: history(other.key, 8 * DAY) })).toEqual([])
   })
 })

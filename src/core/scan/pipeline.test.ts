@@ -203,6 +203,21 @@ describe('completeScan', () => {
     expect(repo.getLatestScan(ACCOUNT)).toBeNull()
     expect(repo.listFlags(ACCOUNT)).toEqual([])
   })
+
+  it('warns when a database the app stopped 8 days ago is running again', async () => {
+    const database = make('rds-instance', 'shop-db', 'available', { instanceClass: 'db.t3.micro', engine: 'postgres' })
+    repo.addActionLog({
+      at: '2026-11-02T12:00:00.000Z',
+      accountId: ACCOUNT,
+      resourceKey: database.key,
+      action: 'stop-rds',
+      preState: 'available',
+      result: 'stopped',
+      error: null
+    })
+    const { raised } = await completeScan(raw([database]), deps(), signal)
+    expect(raised.filter((flag) => flag.ruleId === 'rds-restarted')).toMatchObject([{ resourceKey: database.key, severity: 'warn' }])
+  })
 })
 
 describe('loadLatestResult', () => {

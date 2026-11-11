@@ -46,6 +46,18 @@ export interface Repo {
   finishActionLog(id: number, result: ActionLogResult, error: string | null): void
   /** Every attempt for an account, oldest first. */
   listActionLog(accountId: string): ActionLogEntry[]
+  /** The latest accepted stop of each database the app stopped, with how scans have seen it since. */
+  listDatabaseStops(accountId: string): DatabaseStop[]
+}
+
+/** A database the app stopped, for the rule that notices AWS starting it again after 7 days. */
+export interface DatabaseStop {
+  resourceKey: string
+  stoppedAt: string
+  /** Start time of the first scan after the stop that saw it available. null = none yet. */
+  firstRunningAt: string | null
+  /** Start time of the last scan after the stop that saw it stopped. null = none. */
+  lastStoppedAt: string | null
 }
 
 /**
@@ -473,6 +485,28 @@ export function createRepo(db: Db): Repo {
           result: row.result,
           error: row.error
         }))
+    },
+
+    listDatabaseStops(accountId) {
+      const seen = `SELECT %s(s.started_at) FROM observations o JOIN scans s ON s.id = o.scan_id
+                    WHERE o.resource_key = a.resource_key AND o.state = '%s' AND s.started_at > a.at`
+      const rows = db.all<{ resource_key: string; at: string; first_running_at: string | null; last_stopped_at: string | null }>(
+        `SELECT a.resource_key, a.at,
+                (${seen.replace('%s', 'MIN').replace('%s', 'available')}) AS first_running_at,
+                (${seen.replace('%s', 'MAX').replace('%s', 'stopped')}) AS last_stopped_at
+         FROM action_log a
+         WHERE a.account_id = ? AND a.action = 'stop-rds' AND a.result = 'stopped'
+           AND a.id = (SELECT MAX(b.id) FROM action_log b
+                       WHERE b.resource_key = a.resource_key AND b.action = 'stop-rds' AND b.result = 'stopped')
+         ORDER BY a.resource_key`,
+        accountId
+      )
+      return rows.map((row) => ({
+        resourceKey: row.resource_key,
+        stoppedAt: row.at,
+        firstRunningAt: row.first_running_at,
+        lastStoppedAt: row.last_stopped_at
+      }))
     }
   }
 }

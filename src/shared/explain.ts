@@ -104,6 +104,11 @@ export const RULE_INFO: Record<string, RuleInfo> = {
     description: 'A stopped server or database whose disks still bill.',
     params: {}
   },
+  'rds-restarted': {
+    label: 'Stopped database running again',
+    description: 'A database that Cloud Watchdog stopped is running again. AWS starts a stopped database by itself after 7 days.',
+    params: {}
+  },
   'low-runway': {
     label: 'Credits running out',
     description: 'The credits or the plan end sooner than this.',
