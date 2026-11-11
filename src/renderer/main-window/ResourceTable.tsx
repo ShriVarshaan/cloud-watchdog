@@ -2,10 +2,12 @@
 // chosen with its first-cell button (Tab, Enter or a click); the arrow keys
 // move between rows.
 
+import { ChevronDown, ChevronUp } from 'lucide-react'
 import { useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import { KIND_EXPLANATIONS } from '../../shared/explain'
 import { RESOURCE_KINDS, type Flag, type PricedResource, type ResourceKind, type Severity } from '../../shared/types'
 import { CoverageBadge, PriceBadge, SeverityMark } from '../components/Badges'
+import { Icon } from '../components/Icon'
 
 type SortKey = 'name' | 'region' | 'state' | 'cost' | 'coverage' | 'warnings'
 type Sort = { key: SortKey; descending: boolean }
@@ -110,10 +112,7 @@ export function ResourceTable({
   }
 
   return (
-    <section className="resources" aria-labelledby="resources-title">
-      <h2 id="resources-title" className="visually-hidden">
-        Resources
-      </h2>
+    <section className="resources" aria-label="Resources">
       <div className="filters">
         <label>
           <span className="visually-hidden">Search resources</span>
@@ -130,72 +129,90 @@ export function ResourceTable({
             ))}
           </select>
         </label>
-        <label className="check">
-          <input type="checkbox" checked={warningsOnly} onChange={(e) => setWarningsOnly(e.target.checked)} />
-          Only with warnings
-        </label>
+        <fieldset className="segmented">
+          <legend className="visually-hidden">Show</legend>
+          <label>
+            <input type="radio" className="visually-hidden" name="warnings" checked={!warningsOnly} onChange={() => setWarningsOnly(false)} />
+            <span>All</span>
+          </label>
+          <label>
+            <input type="radio" className="visually-hidden" name="warnings" checked={warningsOnly} onChange={() => setWarningsOnly(true)} />
+            <span>With Warnings</span>
+          </label>
+        </fieldset>
       </div>
 
-      <table>
-        <caption className="visually-hidden">
-          {shown.length} of {rows.length} resources. Use the column buttons to sort.
-        </caption>
-        <thead>
-          <tr>
-            {COLUMNS.map((column) => (
-              <th
-                key={column.key}
-                scope="col"
-                aria-sort={sort.key === column.key ? (sort.descending ? 'descending' : 'ascending') : undefined}
-                className={column.key === 'cost' ? 'numeric' : undefined}
-              >
-                <button type="button" className="sort" onClick={() => sortBy(column.key)}>
-                  {column.label}
-                  <span aria-hidden="true" className="sort-arrow">
-                    {sort.key === column.key ? (sort.descending ? '↓' : '↑') : ''}
-                  </span>
-                </button>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody ref={body}>
-          {shown.map(({ resource, flags, worst }, index) => (
-            <tr key={resource.key} aria-selected={resource.key === selectedKey} data-stale={resource.stale || undefined}>
-              <th scope="row">
-                <button
-                  type="button"
-                  className="row-button"
-                  data-key={resource.key}
-                  onClick={() => onSelect(resource.key)}
-                  onKeyDown={(event) => onRowKey(event, index)}
+      <div className="table-group">
+        <table>
+          <caption className="visually-hidden">
+            {shown.length} of {rows.length} resources. Use the column buttons to sort.
+          </caption>
+          <thead>
+            <tr>
+              {COLUMNS.map((column) => (
+                <th
+                  key={column.key}
+                  scope="col"
+                  aria-sort={sort.key === column.key ? (sort.descending ? 'descending' : 'ascending') : undefined}
+                  className={column.key === 'cost' ? 'numeric' : undefined}
                 >
-                  <span className="row-name">{label(resource)}</span>
-                  <span className="row-kind">
-                    {KIND_EXPLANATIONS[resource.kind].name}
-                    {resource.name ? `, ${resource.id}` : ''}
-                  </span>
-                </button>
-              </th>
-              <td>{resource.region}</td>
-              <td>
-                {resource.state}
-                {resource.stale && <span className="stale"> (old data)</span>}
-              </td>
-              <td className="numeric">
-                <PriceBadge price={resource.price} compact />
-              </td>
-              <td>
-                <CoverageBadge coverage={resource.coverage} />
-              </td>
-              <td>{worst ? <><SeverityMark severity={worst} />{flags.length > 1 && <span className="quiet"> +{flags.length - 1}</span>}</> : null}</td>
+                  <button type="button" className="sort" onClick={() => sortBy(column.key)}>
+                    {column.label}
+                    <span className="sort-arrow">
+                      {sort.key === column.key && <Icon icon={sort.descending ? ChevronDown : ChevronUp} size={12} />}
+                    </span>
+                  </button>
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-      {shown.length === 0 && (
-        <p className="empty">{rows.length === 0 ? 'No resources found in any enabled region. Nothing is costing money.' : 'No resources match these filters.'}</p>
-      )}
+          </thead>
+          <tbody ref={body}>
+            {shown.map(({ resource, flags, worst }, index) => (
+              <tr key={resource.key} aria-selected={resource.key === selectedKey} data-stale={resource.stale || undefined}>
+                <th scope="row">
+                  <button
+                    type="button"
+                    className="row-button"
+                    data-key={resource.key}
+                    onClick={() => onSelect(resource.key)}
+                    onKeyDown={(event) => onRowKey(event, index)}
+                  >
+                    <span className="row-name">{label(resource)}</span>
+                    <span className="row-kind">
+                      {KIND_EXPLANATIONS[resource.kind].name}
+                      {resource.name ? `, ${resource.id}` : ''}
+                    </span>
+                  </button>
+                </th>
+                <td>{resource.region}</td>
+                <td>
+                  {resource.state}
+                  {resource.stale && <span className="stale"> (old data)</span>}
+                </td>
+                <td className="numeric">
+                  <PriceBadge price={resource.price} compact />
+                </td>
+                <td>
+                  <CoverageBadge coverage={resource.coverage} />
+                </td>
+                <td>
+                  {worst ? (
+                    <>
+                      <SeverityMark severity={worst} />
+                      {flags.length > 1 && <span className="quiet"> +{flags.length - 1}</span>}
+                    </>
+                  ) : null}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {shown.length === 0 && (
+          <p className="empty">
+            {rows.length === 0 ? 'No resources found in any enabled region. Nothing is costing money.' : 'No resources match these filters.'}
+          </p>
+        )}
+      </div>
     </section>
   )
 }

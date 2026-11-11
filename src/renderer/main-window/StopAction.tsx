@@ -12,9 +12,9 @@ import { useState } from 'react'
 import type { ActionKind, ActionPreview, PricedResource, ResourceKind } from '../../shared/types'
 import { api } from '../api'
 
-const STOPPABLE: Partial<Record<ResourceKind, { action: ActionKind; state: string; noun: string }>> = {
-  'ec2-instance': { action: 'stop-ec2', state: 'running', noun: 'instance' },
-  'rds-instance': { action: 'stop-rds', state: 'available', noun: 'database' }
+const STOPPABLE: Partial<Record<ResourceKind, { action: ActionKind; state: string; noun: string; title: string }>> = {
+  'ec2-instance': { action: 'stop-ec2', state: 'running', noun: 'instance', title: 'Instance' },
+  'rds-instance': { action: 'stop-rds', state: 'available', noun: 'database', title: 'Database' }
 }
 
 type Phase =
@@ -64,8 +64,8 @@ export function StopAction({ resource }: { resource: PricedResource }) {
     return (
       <>
         <p>
-          <button type="button" className="button-quiet" onClick={check} disabled={phase.step === 'checking'}>
-            {phase.step === 'checking' ? 'Checking it in AWS' : `Stop this ${kind.noun}`}
+          <button type="button" className="button-destructive" onClick={check} disabled={phase.step === 'checking'}>
+            {phase.step === 'checking' ? 'Checking in AWS' : `Stop This ${kind.title}`}
           </button>
         </p>
         {problem && <p role="alert">{problem}</p>}
@@ -101,15 +101,18 @@ export function StopAction({ resource }: { resource: PricedResource }) {
             ))}
           </ul>
           <p className="command-actions">
-            <button type="button" className="button-primary" onClick={() => stop(preview)} disabled={confirming}>
-              Stop {kind.noun}
+            {/* Destructive, so never the default (blue) button. The ellipsis says a confirmation window follows. */}
+            <button type="button" className="button-destructive" onClick={() => stop(preview)} disabled={confirming}>
+              Stop {kind.title}…
             </button>
             <button type="button" className="button-quiet" onClick={() => setPhase({ step: 'idle' })} disabled={confirming}>
               Cancel
             </button>
           </p>
           <p className="quiet" role="status">
-            {confirming ? 'Answer in the confirmation window.' : 'Cloud Watchdog asks once more before it stops anything. Use the button within a minute.'}
+            {confirming
+              ? 'Answer in the confirmation window.'
+              : 'Cloud Watchdog asks once more before it stops anything. Use the button within a minute.'}
           </p>
         </>
       )}

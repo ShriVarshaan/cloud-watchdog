@@ -60,10 +60,10 @@ export function DetailPanel({ resource, flags, canStop }: { resource: PricedReso
   const { price } = resource
   return (
     <aside className="detail" aria-labelledby="detail-title">
-      <header>
-        <p className="quiet">{kind.name}</p>
+      <header className="detail-header">
+        <p className="detail-kind">{kind.name}</p>
         <h2 id="detail-title">{resource.name ?? resource.id}</h2>
-        {resource.name && <p className="quiet">{resource.id}</p>}
+        {resource.name && <p className="detail-id quiet">{resource.id}</p>}
         <p className="quiet">
           {resource.region}, {resource.state}
         </p>
@@ -113,10 +113,10 @@ export function DetailPanel({ resource, flags, canStop }: { resource: PricedReso
                 <span>{flag.message}</span>
                 <span className="flag-actions">
                   <button type="button" className="button-quiet" onClick={() => dismiss(flag.id, 24)}>
-                    Hide for a day
+                    Hide for a Day
                   </button>
                   <button type="button" className="button-quiet" onClick={() => dismiss(flag.id)}>
-                    Hide until fixed
+                    Hide Until Fixed
                   </button>
                 </span>
               </li>
@@ -133,7 +133,7 @@ export function DetailPanel({ resource, flags, canStop }: { resource: PricedReso
           <>
             <p>
               <button type="button" className="button-primary" onClick={openConsole}>
-                Open in the AWS console
+                Open in the AWS Console…
               </button>
             </p>
             {steps.cliCommand ? (
@@ -144,7 +144,7 @@ export function DetailPanel({ resource, flags, canStop }: { resource: PricedReso
                 </pre>
                 <p className="command-actions">
                   <button type="button" className="button-quiet" onClick={() => copy(steps.cliCommand!)}>
-                    Copy command
+                    Copy Command
                   </button>
                   <span role="status">{copied ? 'Copied' : ''}</span>
                 </p>

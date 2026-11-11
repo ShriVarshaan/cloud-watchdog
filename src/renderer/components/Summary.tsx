@@ -1,12 +1,12 @@
 // The three numbers this app exists for: what is running costs per hour, how
-// long the credits last, and what the plan is. The runway gauge is the one
-// visual flourish in the app.
+// long the credits last, and what the plan is. The runway ring is the one
+// bold visual in the app (docs/DESIGN.md); in the popover it is the hero.
 
 import { formatRunway, formatUsdPerHour, formatUsdPerMonth } from '../../shared/format'
 import { planNotice } from '../../shared/plan'
 import type { BurnRate, PlanState, Runway } from '../../shared/types'
 
-/** The gauge is full at this many days or more. */
+/** The ring is full at this many days or more. */
 const GAUGE_DAYS = 90
 
 export function BurnRateFigure({ burn }: { burn: BurnRate }) {
@@ -32,21 +32,28 @@ export function BurnRateFigure({ burn }: { burn: BurnRate }) {
   )
 }
 
-export function RunwayGauge({ runway }: { runway: Runway | null }) {
+/** What the hero ring shows inside: a short number and its unit. The meter's text says the whole thing. */
+function ringText(runway: Runway): { prefix: string | null; number: string; unit: string } {
+  const days = runway.days ?? 0
+  const prefix = runway.isUpperBound ? 'at most' : null
+  if (days <= 0) return { prefix: null, number: '0', unit: 'days left' }
+  if (days < 1) return { prefix, number: '<1', unit: 'day' }
+  const whole = Math.floor(days)
+  return { prefix, number: String(whole), unit: whole === 1 ? 'day' : 'days' }
+}
+
+export function RunwayGauge({ runway, hero = false }: { runway: Runway | null; hero?: boolean }) {
   const days = runway?.days ?? null
   const fill = days === null ? null : Math.max(0, Math.min(1, days / GAUGE_DAYS))
   const level = days === null ? 'none' : days < 7 ? 'critical' : days < 14 ? 'warn' : 'ok'
   const text = formatRunway(runway)
+  const inside = hero && runway && fill !== null ? ringText(runway) : null
 
   return (
-    <div className="figure runway" data-level={level}>
-      <p className="figure-label" id="runway-label">
-        Credits last
-      </p>
-      <p className="figure-value">{runway ? text : 'Unknown'}</p>
+    <div className="figure runway" data-level={level} data-hero={hero || undefined}>
       {fill !== null && (
         <div
-          className="gauge"
+          className="ring"
           role="meter"
           aria-labelledby="runway-label"
           aria-valuemin={0}
@@ -54,20 +61,37 @@ export function RunwayGauge({ runway }: { runway: Runway | null }) {
           aria-valuenow={Math.min(days!, GAUGE_DAYS)}
           aria-valuetext={text}
         >
-          <div className="gauge-fill" style={{ inlineSize: `${fill * 100}%` }} />
+          <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+            <circle className="ring-track" cx="20" cy="20" r="17" pathLength={100} />
+            {/* A sliver stays visible at zero, so an ended runway still reads as a ring. */}
+            <circle className="ring-fill" cx="20" cy="20" r="17" pathLength={100} strokeDasharray={`${Math.max(fill * 100, 1)} 100`} />
+          </svg>
+          {inside && (
+            <span className="ring-text" aria-hidden="true">
+              {inside.prefix && <span className="ring-prefix">{inside.prefix}</span>}
+              <span className="ring-number">{inside.number}</span>
+              <span className="ring-unit">{inside.unit}</span>
+            </span>
+          )}
         </div>
       )}
-      <p className="figure-note">
-        {runway === null
-          ? 'The plan could not be read.'
-          : runway.days === null
-            ? 'No credits or end date to run out.'
-            : runway.isUpperBound
-              ? 'Some costs are not in the rate, so it may be sooner.'
-              : runway.creditDays !== null && runway.days === runway.creditDays
-                ? 'At the current rate.'
-                : 'Until the plan ends.'}
-      </p>
+      <div className="figure-text">
+        <p className="figure-label" id="runway-label">
+          Credits last
+        </p>
+        {!inside && <p className="figure-value">{runway ? text : 'Unknown'}</p>}
+        <p className="figure-note">
+          {runway === null
+            ? 'The plan could not be read.'
+            : runway.days === null
+              ? 'No credits or end date to run out.'
+              : runway.isUpperBound
+                ? 'Some costs are not in the rate, so it may be sooner.'
+                : runway.creditDays !== null && runway.days === runway.creditDays
+                  ? 'At the current rate.'
+                  : 'Until the plan ends.'}
+        </p>
+      </div>
     </div>
   )
 }

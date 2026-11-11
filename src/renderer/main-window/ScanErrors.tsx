@@ -11,7 +11,8 @@ const WHAT: Record<string, string> = {
 }
 
 const FIX: Record<ScanErrorCode, string> = {
-  'access-denied': "The profile is not allowed to make this call. Add the permissions in iam/cloud-watchdog-readonly.json to the profile's IAM user or role.",
+  'access-denied':
+    "The profile is not allowed to make this call. Add the permissions in iam/cloud-watchdog-readonly.json to the profile's IAM user or role.",
   throttled: 'AWS asked the app to slow down. The next scan tries again.',
   'region-disabled': 'This region is not switched on for the account, so there is nothing in it.',
   'auth-expired': 'The sign-in has expired. Sign in again, for example with aws sso login.',
@@ -31,17 +32,14 @@ export function ScanErrors({ errors }: { errors: readonly ScanError[] }) {
     return <p className="empty">Every part of the last scan worked.</p>
   }
   return (
-    <section aria-labelledby="errors-title">
-      <h2 id="errors-title" className="visually-hidden">
-        Scan problems
-      </h2>
-      <p>Resources in these places may be missing or show data from an earlier scan.</p>
-      <ul className="error-list">
+    <section className="scan-errors" aria-label="Scan problems">
+      <p className="quiet">Resources in these places may be missing or show data from an earlier scan.</p>
+      <ul className="group error-list">
         {errors.map((error, index) => (
-          <li key={`${error.scanner}|${error.region}|${index}`}>
+          <li key={`${error.scanner}|${error.region}|${index}`} className="group-row group-row-stacked">
             <p className="error-what">{what(error)}</p>
             <p>{FIX[error.code]}</p>
-            <p className="quiet">AWS said: {error.message}</p>
+            <p className="group-note">AWS said: {error.message}</p>
           </li>
         ))}
       </ul>

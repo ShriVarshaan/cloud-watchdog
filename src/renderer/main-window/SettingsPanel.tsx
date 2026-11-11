@@ -1,6 +1,10 @@
 // The AWS profile, how often to scan, notifications, start at login, the
 // rules, and the switch for stopping. That switch is not part of the form:
 // the main process asks in its own dialog before it turns it on.
+//
+// Laid out as grouped forms, as in macOS System Settings (docs/DESIGN.md):
+// single on/off settings are switches; rules, which have settings of their
+// own, are checkboxes; stopping is a push button because it opens a dialog.
 
 import { useState, type FormEvent } from 'react'
 import { RULE_INFO } from '../../shared/explain'
@@ -23,35 +27,39 @@ function StoppingSwitch({ settings }: { settings: Settings }) {
   }
 
   return (
-    <section aria-labelledby="settings-stopping">
-      <h2 id="settings-stopping">Stopping instances and databases</h2>
-      {settings.actionsEnabled ? (
-        <>
-          <p>
-            On for the profile {settings.profile}. Running EC2 instances and available RDS databases have a Stop button. Each stop shows what it means and
-            asks again first.
-          </p>
-          <p>
+    <section className="settings-section" aria-labelledby="settings-stopping">
+      <h3 id="settings-stopping">Stopping instances and databases</h3>
+      <div className="group">
+        {settings.actionsEnabled ? (
+          <div className="group-row">
+            <p>
+              On for the profile {settings.profile}. Running EC2 instances and available RDS databases have a Stop button. Each stop shows what it
+              means and asks again first.
+            </p>
             <button type="button" className="button-quiet" onClick={() => set(false)} disabled={waiting}>
-              Switch off stopping
+              Switch Off Stopping
             </button>
-          </p>
-        </>
-      ) : (
-        <>
-          <p>Off. Cloud Watchdog only looks at your account and changes nothing in it.</p>
-          <p>
-            Switched on, it can stop a running EC2 instance or an available RDS database when you ask it to. It never deletes anything. The profile then
-            also needs the IAM policy in iam/cloud-watchdog-actions.json.
-          </p>
-          <p>
+          </div>
+        ) : (
+          <div className="group-row">
+            <div>
+              <p>Off. Cloud Watchdog only looks at your account and changes nothing in it.</p>
+              <p className="group-note">
+                Switched on, it can stop a running EC2 instance or an available RDS database when you ask it to. It never deletes anything. The
+                profile then also needs the IAM policy in iam/cloud-watchdog-actions.json.
+              </p>
+            </div>
             <button type="button" className="button-quiet" onClick={() => set(true)} disabled={waiting}>
-              Switch on stopping
+              Switch On Stopping…
             </button>
-          </p>
-        </>
+          </div>
+        )}
+      </div>
+      {problem && (
+        <p role="alert" className="form-error">
+          {problem}
+        </p>
       )}
-      {problem && <p role="alert">{problem}</p>}
     </section>
   )
 }
@@ -89,48 +97,68 @@ export function SettingsPanel({ settings }: { settings: Settings }) {
 
   return (
     <div className="settings">
-      <section aria-labelledby="settings-profile">
-        <h2 id="settings-profile">AWS profile</h2>
-        <p>The profile from your AWS CLI setup that Cloud Watchdog signs in with. Its keys never leave the AWS configuration files.</p>
-        <ProfilePicker current={settings.profile} />
+      <section className="settings-section" aria-labelledby="settings-profile">
+        <h3 id="settings-profile">AWS profile</h3>
+        <div className="group">
+          <div className="group-row group-row-stacked">
+            <p className="group-note">
+              The profile from your AWS CLI setup that Cloud Watchdog signs in with. Its keys never leave the AWS configuration files.
+            </p>
+            <ProfilePicker current={settings.profile} />
+          </div>
+        </div>
       </section>
 
       <StoppingSwitch settings={settings} />
 
-      <form onSubmit={save} aria-labelledby="settings-scanning">
-        <h2 id="settings-scanning">Scanning and alerts</h2>
-        <label className="field">
-          <span>Scan every</span>
-          <input
-            type="number"
-            min={SCAN_INTERVAL_MINUTES.min}
-            max={SCAN_INTERVAL_MINUTES.max}
-            required
-            value={draft.scanIntervalMinutes}
-            onChange={(e) => setDraft({ ...draft, scanIntervalMinutes: e.target.valueAsNumber })}
-          />
-          <span>minutes</span>
-        </label>
-        <label className="check">
-          <input type="checkbox" checked={draft.notificationsEnabled} onChange={(e) => setDraft({ ...draft, notificationsEnabled: e.target.checked })} />
-          Show a Windows notification for each new warning
-        </label>
-        <label className="check">
-          <input type="checkbox" checked={draft.startAtLogin} onChange={(e) => setDraft({ ...draft, startAtLogin: e.target.checked })} />
-          Start Cloud Watchdog when I sign in to Windows
-        </label>
+      <form className="settings-section" onSubmit={save} aria-labelledby="settings-scanning">
+        <h3 id="settings-scanning">Scanning and alerts</h3>
+        <div className="group">
+          <label className="group-row">
+            <span>Scan every</span>
+            <span className="field">
+              <input
+                type="number"
+                min={SCAN_INTERVAL_MINUTES.min}
+                max={SCAN_INTERVAL_MINUTES.max}
+                required
+                value={draft.scanIntervalMinutes}
+                onChange={(e) => setDraft({ ...draft, scanIntervalMinutes: e.target.valueAsNumber })}
+              />
+              <span className="quiet">minutes</span>
+            </span>
+          </label>
+          <label className="group-row">
+            <span>Show a Windows notification for each new warning</span>
+            <input
+              type="checkbox"
+              role="switch"
+              checked={draft.notificationsEnabled}
+              onChange={(e) => setDraft({ ...draft, notificationsEnabled: e.target.checked })}
+            />
+          </label>
+          <label className="group-row">
+            <span>Start Cloud Watchdog when I sign in to Windows</span>
+            <input
+              type="checkbox"
+              role="switch"
+              checked={draft.startAtLogin}
+              onChange={(e) => setDraft({ ...draft, startAtLogin: e.target.checked })}
+            />
+          </label>
+        </div>
 
-        <h3>Warnings</h3>
-        <ul className="rule-list">
+        <h4>Warnings</h4>
+        <ul className="group rule-list">
           {Object.entries(RULE_INFO).map(([id, info]) => {
             const rule = draft.rules[id]!
             return (
-              <li key={id}>
+              <li key={id} className="group-row group-row-stacked">
                 <label className="check">
                   <input type="checkbox" checked={rule.enabled} onChange={(e) => setRule(id, { enabled: e.target.checked })} />
                   <span>
                     <span className="rule-name">{info.label}</span>
-                    <span className="quiet"> {info.description}</span>
+                    <span className="group-note"> {info.description}</span>
                   </span>
                 </label>
                 {Object.entries(info.params).map(([name, param]) => (
@@ -145,7 +173,7 @@ export function SettingsPanel({ settings }: { settings: Settings }) {
                       value={rule.params[name]}
                       onChange={(e) => setRule(id, { params: { ...rule.params, [name]: e.target.valueAsNumber } })}
                     />
-                    <span>{param.unit}</span>
+                    <span className="quiet">{param.unit}</span>
                   </label>
                 ))}
               </li>
@@ -154,12 +182,12 @@ export function SettingsPanel({ settings }: { settings: Settings }) {
         </ul>
 
         <p className="form-actions">
-          <button type="submit" className="button-primary">
-            Save settings
-          </button>
           <span role="status" data-tone={status?.tone}>
             {status?.text ?? ''}
           </span>
+          <button type="submit" className="button-primary">
+            Save Settings
+          </button>
         </p>
       </form>
     </div>

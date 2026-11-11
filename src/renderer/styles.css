@@ -435,11 +435,126 @@ input[type='checkbox'][role='switch']:checked::before {
 :root {
   --toolbar-height: 48px;
   --window-buttons: calc(100vw - env(titlebar-area-x, 0px) - env(titlebar-area-width, 100vw));
+  --sidebar-width: 220px;
+  --group-edge: 0 0 0 0.5px var(--separator), 0 1px 1px rgba(0, 0, 0, 0.03);
+}
+
+/* On Mica the page is see-through and only the content area paints. */
+:root[data-material='mica'] body {
+  background: transparent;
+}
+
+.main-window {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  block-size: 100vh;
+}
+
+/* Sidebar --------------------------------------------------------------------- */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 14px 10px;
+  overflow: auto;
+  background: var(--sidebar);
+  border-inline-end: 0.5px solid var(--separator);
+  -webkit-app-region: drag;
+  user-select: none;
+}
+
+:root[data-material='mica'] .sidebar {
+  background: transparent;
+}
+
+.sidebar-head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-inline: 8px;
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  font-size: 11px;
+  line-height: 14px;
+}
+
+.identity span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebar-list [role='tab'] {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-block-size: 30px;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: none;
+  text-align: start;
+  -webkit-app-region: no-drag;
+  transition: background-color var(--quick) var(--ease);
+}
+
+/* Sidebar icons take the accent colour, as on macOS. */
+.sidebar-list .icon {
+  color: var(--accent-text);
+}
+
+.sidebar-list [role='tab']:hover {
+  background: var(--fill);
+}
+
+.sidebar-list [role='tab'][aria-selected='true'] {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.sidebar-list [role='tab'][aria-selected='true'] .icon {
+  color: inherit;
+}
+
+.sidebar-count {
+  margin-inline-start: auto;
+  color: var(--secondary);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+[aria-selected='true'] .sidebar-count {
+  color: inherit;
+}
+
+/* Toolbar and content ----------------------------------------------------------- */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  block-size: 100vh;
+  background: var(--bg);
 }
 
 .main-header {
+  display: flex;
+  flex: none;
+  gap: 12px;
+  align-items: center;
   min-block-size: var(--toolbar-height);
-  padding-inline-end: var(--window-buttons);
+  padding-inline: 20px calc(var(--window-buttons) + 12px);
+  border-block-end: 0.5px solid var(--separator);
   -webkit-app-region: drag;
   user-select: none;
 }
@@ -448,45 +563,101 @@ input[type='checkbox'][role='switch']:checked::before {
   -webkit-app-region: no-drag;
 }
 
-/* Summary figures and the runway gauge -------------------------------------- */
+.toolbar-title {
+  font-size: 15px;
+}
+
+.toolbar-status {
+  margin-inline-start: auto;
+  font-size: 12px;
+}
+
+.scan-glyph {
+  display: inline-flex;
+}
+
+.scan-glyph[data-spinning] {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.content-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 24px 24px;
+  overflow: auto;
+}
+
+.tab-panel,
+.notices,
+.account-flags {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.notices,
+.account-flags {
+  gap: 8px;
+}
+
+.empty {
+  padding: 40px 16px;
+  color: var(--secondary);
+  text-align: center;
+}
+
+/* Summary and the runway ring ------------------------------------------------------ */
 
 .summary {
   display: grid;
-  grid-template-columns: 1fr 1.4fr 1fr;
-  gap: 1px;
-  border: 1px solid var(--separator);
+  grid-template-columns: 1.3fr 1fr 1fr;
   border-radius: var(--radius-group);
-  background: var(--separator);
-  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--group-edge);
+}
+
+.summary > .figure + .figure {
+  border-inline-start: 0.5px solid var(--separator);
 }
 
 .figure {
   padding: 14px 18px 16px;
-  background: var(--surface);
 }
 
 .figure-label {
   color: var(--secondary);
-  font-size: 13px;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .figure-value {
-  letter-spacing: -0.02em;
   font-size: 26px;
+  line-height: 32px;
   font-weight: 600;
+  letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
-  line-height: 1.2;
 }
 
 .figure-note {
   margin-top: 4px;
-  color: var(--secondary);
-  font-size: 13px;
   max-inline-size: 42ch;
+  color: var(--secondary);
+  font-size: 12px;
+  line-height: 16px;
 }
 
-.runway .figure-value {
-  font-size: 34px;
+.runway {
+  display: flex;
+  gap: 16px;
+  align-items: center;
 }
 
 .runway[data-level='critical'] .figure-value {
@@ -497,171 +668,125 @@ input[type='checkbox'][role='switch']:checked::before {
   color: var(--orange);
 }
 
-.gauge {
-  block-size: 10px;
-  margin-top: 8px;
-  border-radius: 5px;
-  background: var(--bg);
-  box-shadow: inset 0 0 0 1px var(--separator);
-  overflow: hidden;
+.ring {
+  position: relative;
+  flex: none;
+  inline-size: 60px;
+  block-size: 60px;
 }
 
-.gauge-fill {
+.ring svg {
+  display: block;
+  inline-size: 100%;
   block-size: 100%;
-  min-inline-size: 4px;
-  background: var(--green);
+  transform: rotate(-90deg);
 }
 
-.runway[data-level='warn'] .gauge-fill {
-  background: var(--orange);
+.ring circle {
+  fill: none;
+  stroke-width: 5;
 }
 
-.runway[data-level='critical'] .gauge-fill {
-  background: var(--red);
+.ring-track {
+  stroke: var(--fill);
 }
 
-/* Main window ----------------------------------------------------------------- */
+.ring-fill {
+  stroke: var(--green);
+  stroke-linecap: round;
+  transition: stroke-dasharray var(--slow) var(--ease);
+}
 
-.main-window {
+.runway[data-level='warn'] .ring-fill {
+  stroke: var(--orange);
+}
+
+.runway[data-level='critical'] .ring-fill {
+  stroke: var(--red);
+}
+
+.ring-text {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 18px 24px 24px;
-}
-
-.main-header {
-  display: flex;
-  gap: 16px;
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.identity {
-  display: flex;
-  flex-direction: column;
-  font-size: 13px;
-}
-
-.scan-status {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  margin-inline-start: auto;
-}
-
-.account-flags {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.tabs {
-  display: flex;
-  gap: 4px;
-  border-bottom: 1px solid var(--separator);
-}
-
-.tabs [role='tab'] {
-  padding: 8px 12px;
-  border: 0;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  background: none;
+.ring-prefix,
+.ring-unit {
   color: var(--secondary);
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 500;
 }
 
-.tabs [role='tab'][aria-selected='true'] {
-  border-bottom-color: var(--accent);
-  color: var(--label);
-  font-weight: 600;
+.ring-number {
+  font-size: 40px;
+  line-height: 44px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
 }
 
-.empty {
-  padding: 32px 0;
-  color: var(--secondary);
-}
-
-.first-run {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-inline-size: 60ch;
-  padding: 24px;
-  border-radius: var(--radius-group);
-  background: var(--surface);
-}
-
-.profile-picker {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.form-error {
-  flex-basis: 100%;
-  color: var(--red);
-}
-
-/* Resources ------------------------------------------------------------------ */
+/* Resources ---------------------------------------------------------------------- */
 
 .resources-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
+  grid-template-columns: minmax(0, 1fr) 320px;
   gap: 16px;
   align-items: start;
 }
 
-.detail-hint {
-  padding-top: 52px;
-}
-
 .filters {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .filters input[type='search'] {
-  inline-size: 18em;
+  inline-size: 16em;
+}
+
+.table-group {
+  border-radius: var(--radius-group);
+  background: var(--surface);
+  box-shadow: var(--group-edge);
+  overflow: clip;
 }
 
 table {
   inline-size: 100%;
   border-collapse: collapse;
-  background: var(--surface);
-  border-radius: var(--radius-group);
-  overflow: hidden;
+}
+
+th,
+td {
+  padding: 7px 10px;
+  text-align: start;
+  vertical-align: middle;
 }
 
 thead th {
   position: sticky;
   top: 0;
+  z-index: 1;
+  padding-block: 6px;
   background: var(--surface);
-  border-bottom: 1px solid var(--separator);
-  text-align: start;
+  border-bottom: 0.5px solid var(--separator);
   font-weight: 400;
 }
 
-th,
-td {
-  padding: 8px 10px;
-  text-align: start;
-  vertical-align: middle;
-}
-
-tbody tr + tr > * {
-  border-top: 1px solid var(--separator);
+/* Alternating rows instead of rules, as in a multicolumn macOS table. */
+tbody tr:nth-child(even) > * {
+  background: var(--surface-alt);
 }
 
 tbody tr[aria-selected='true'] > * {
   background: var(--accent-tint);
-}
-
-tbody tr[aria-selected='true'] > th {
-  box-shadow: inset 3px 0 0 var(--accent);
 }
 
 tbody tr[data-stale] td {
@@ -674,12 +799,14 @@ tbody tr[data-stale] td {
 
 .sort {
   display: inline-flex;
-  gap: 4px;
+  gap: 2px;
+  align-items: center;
   padding: 0;
   border: 0;
   background: none;
   color: var(--secondary);
-  font-size: 13px;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 th[aria-sort] .sort {
@@ -688,7 +815,8 @@ th[aria-sort] .sort {
 }
 
 .sort-arrow {
-  min-inline-size: 1ch;
+  display: inline-flex;
+  min-inline-size: 12px;
 }
 
 .row-button {
@@ -707,31 +835,41 @@ th[aria-sort] .sort {
 
 .row-kind {
   color: var(--secondary);
-  font-size: 12px;
+  font-size: 11px;
+  line-height: 14px;
 }
 
 .stale {
-  font-size: 12px;
+  font-size: 11px;
 }
 
-/* Detail panel -------------------------------------------------------------------- */
+/* Inspector ------------------------------------------------------------------------ */
 
 .detail {
+  position: sticky;
+  top: 0;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding: 18px;
+  max-block-size: calc(100vh - var(--toolbar-height) - 44px);
+  overflow: auto;
   border-radius: var(--radius-group);
   background: var(--surface);
-  position: sticky;
-  top: 12px;
-  max-block-size: calc(100vh - 24px);
-  overflow: auto;
+  box-shadow: var(--group-edge);
+  animation: rise var(--medium) var(--ease);
 }
 
-.detail h2 {
-  font-size: 18px;
-  overflow-wrap: anywhere;
+.detail > * {
+  padding: 14px 16px;
+}
+
+.detail > * + * {
+  border-top: 0.5px solid var(--separator);
+}
+
+.detail > .banner {
+  margin: 0 12px 12px;
+  padding: 10px 12px;
+  border-top: 0;
 }
 
 .detail section {
@@ -740,56 +878,94 @@ th[aria-sort] .sort {
   gap: 6px;
 }
 
-.detail ul {
+.detail-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detail-kind {
+  color: var(--secondary);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.detail h2 {
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+
+.detail-id {
+  font-size: 11px;
+}
+
+.detail h3 {
+  color: var(--secondary);
+  font-size: 12px;
+}
+
+.detail ul:not(.flag-list) {
   padding-inline-start: 18px;
   list-style: disc;
 }
 
 .detail-price {
-  font-size: 18px;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 600;
+}
+
+.detail-hint {
+  padding: 48px 16px;
+  text-align: center;
 }
 
 .command {
   margin: 0;
   padding: 10px 12px;
   border-radius: var(--radius-control);
-  background: var(--bg);
-  font-family: 'Cascadia Mono', Consolas, monospace;
-  font-size: 12px;
+  background: var(--fill);
+  font-family: 'Cascadia Mono', Consolas, ui-monospace, monospace;
+  font-size: 11.5px;
+  line-height: 16px;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
 
 .command-actions {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
 }
 
 .stop-preview {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 10px 12px;
-  border: 1px solid var(--separator);
-  border-radius: var(--radius-control);
+  gap: 8px;
+  padding: 12px;
+  border-radius: var(--radius-group);
+  background: var(--bg);
+  box-shadow: inset 0 0 0 0.5px var(--separator);
+  animation: rise var(--medium) var(--ease);
+}
+
+.stop-preview ul {
+  padding-inline-start: 18px;
+  list-style: disc;
 }
 
 .note {
   padding-inline-start: 10px;
   border-inline-start: 3px solid var(--orange);
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .flag-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-
-.detail .flag-list {
-  padding: 0;
-  list-style: none;
+  gap: 10px;
 }
 
 .flag-list li {
@@ -810,75 +986,176 @@ th[aria-sort] .sort {
   flex-basis: 100%;
 }
 
-/* Scan problems and settings ---------------------------------------------------------- */
+/* Grouped forms: scan problems and settings ----------------------------------------- */
 
-.error-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.error-list li {
-  padding: 12px 14px;
+.group {
   border-radius: var(--radius-group);
   background: var(--surface);
+  box-shadow: var(--group-edge);
+  overflow: clip;
+}
+
+.group-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  min-block-size: 40px;
+  padding: 10px 14px;
+}
+
+.group-row + .group-row {
+  border-top: 0.5px solid var(--separator);
+}
+
+.group-row-stacked {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.group-note {
+  color: var(--secondary);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.scan-errors,
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-inline-size: 680px;
+}
+
+.settings {
+  gap: 24px;
 }
 
 .error-what {
   font-weight: 600;
 }
 
-.settings {
+.settings-section {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  max-inline-size: 70ch;
+  gap: 8px;
 }
 
-.settings section,
-.settings form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 18px;
-  border-radius: var(--radius-group);
-  background: var(--surface);
+.settings-section > :is(h3, h4) {
+  padding-inline: 4px;
 }
 
-/* The profile picker is a form inside a settings card, not a card of its own. */
-.settings .profile-picker {
-  flex-direction: row;
-  align-items: center;
-  padding: 0;
-}
-
-.settings h3 {
-  margin-top: 8px;
-}
-
-.rule-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.settings h4 {
+  margin-top: 12px;
 }
 
 .rule-name {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .indent {
-  margin: 6px 0 0 24px;
+  margin: 4px 0 0 24px;
 }
 
 .form-actions {
   display: flex;
   gap: 12px;
   align-items: center;
+  justify-content: flex-end;
+  margin-top: 4px;
 }
 
-[role='status'][data-tone='error'] {
+[role='status'][data-tone='error'],
+.form-error {
   color: var(--red);
+}
+
+.form-error {
+  flex-basis: 100%;
+}
+
+.profile-picker {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* First run and loading: a centred, single-purpose welcome. ------------------------- */
+
+.welcome {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100vh;
+  background: var(--bg);
+}
+
+.welcome-toolbar {
+  flex: none;
+  block-size: var(--toolbar-height);
+  -webkit-app-region: drag;
+}
+
+.welcome-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  inline-size: min(520px, calc(100% - 32px));
+  margin: 6vh auto auto;
+  text-align: center;
+}
+
+.welcome h1 {
+  font-size: 26px;
+  line-height: 32px;
+  font-weight: 700;
+  letter-spacing: -0.022em;
+}
+
+.first-run {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.first-run .profile-picker {
+  justify-content: center;
+  margin-top: 8px;
+}
+
+/* Motion ---------------------------------------------------------------------------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Reduce Motion: things still appear, by crossfade only, and nothing spins. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before {
+    transition-duration: 0.01ms !important;
+  }
+
+  .detail,
+  .stop-preview {
+    animation-name: fade;
+  }
+
+  .scan-glyph[data-spinning] {
+    animation: none;
+  }
 }
 
 /* Popover ------------------------------------------------------------------------------- */
@@ -943,9 +1220,10 @@ th[aria-sort] .sort {
   font-size: 13px;
 }
 
-/* Narrow windows ----------------------------------------------------------------------------- */
+/* Narrow windows ------------------------------------------------------------------------ */
 
-@media (max-width: 980px) {
+/* The inspector moves under the table. */
+@media (max-width: 1080px) {
   .resources-layout {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -960,8 +1238,86 @@ th[aria-sort] .sort {
   }
 }
 
+/* The sidebar keeps only its icons; names stay as the tabs' accessible names. */
+@media (max-width: 900px) {
+  :root {
+    --sidebar-width: 56px;
+  }
+
+  .sidebar-head,
+  .sidebar-label {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .sidebar-count {
+    display: none;
+  }
+
+  .sidebar-list [role='tab'] {
+    justify-content: center;
+  }
+}
+
 @media (max-width: 820px) {
   .summary {
     grid-template-columns: 1fr;
+  }
+
+  .summary > .figure + .figure {
+    border-inline-start: 0;
+    border-top: 0.5px solid var(--separator);
+  }
+}
+
+/* Windows high contrast: no translucency or tints, system colours only. ------------------- */
+
+@media (forced-colors: active) {
+  .group,
+  .table-group,
+  .summary,
+  .detail,
+  .banner {
+    border: 1px solid CanvasText;
+  }
+
+  .ring-track {
+    stroke: GrayText;
+  }
+
+  .ring-fill {
+    stroke: Highlight;
+  }
+
+  .sidebar-list [role='tab'][aria-selected='true'] {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  input[type='checkbox'][role='switch'] {
+    forced-color-adjust: none;
+    border: 1px solid CanvasText;
+    background: Canvas;
+  }
+
+  input[type='checkbox'][role='switch']::before {
+    background: CanvasText;
+  }
+
+  input[type='checkbox'][role='switch']:checked {
+    background: Highlight;
+  }
+
+  input[type='checkbox'][role='switch']:checked::before {
+    background: HighlightText;
+  }
+
+  .segmented input:checked + span {
+    outline: 2px solid Highlight;
   }
 }

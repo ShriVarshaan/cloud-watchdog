@@ -83,7 +83,7 @@ test.describe('the UI with the demo account', () => {
     await connect(mainWindow)
     await mainWindow.getByRole('tab', { name: /Resources/ }).focus()
     await mainWindow.keyboard.press('ArrowRight')
-    await expect(mainWindow.getByRole('tab', { name: /Scan problems/ })).toBeFocused()
+    await expect(mainWindow.getByRole('tab', { name: /Scan problems/i })).toBeFocused()
     await expect(mainWindow.getByText('Every part of the last scan worked.')).toBeVisible()
     await mainWindow.keyboard.press('ArrowRight')
     await expect(mainWindow.getByRole('heading', { name: 'Scanning and alerts' })).toBeVisible()

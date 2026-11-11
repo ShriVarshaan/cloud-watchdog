@@ -56,7 +56,7 @@ export function ProfilePicker({ current, onSelected }: { current: string | null;
         </select>
       </label>
       <button type="submit" className="button-primary" disabled={busy || !choice || choice === current}>
-        {busy ? 'Signing in' : current ? 'Switch profile' : 'Use this profile'}
+        {busy ? 'Signing In' : current ? 'Switch Profile' : 'Use This Profile'}
       </button>
       {error && (
         <p role="alert" className="form-error">
@@ -71,10 +71,9 @@ export function FirstRun() {
   return (
     <section className="first-run" aria-labelledby="first-run-title">
       <h2 id="first-run-title">Choose the AWS account to watch</h2>
-      <p>
-        Cloud Watchdog uses a profile you have already set up with the AWS CLI. It reads what is running in every enabled
-        region, prices it, and warns you before forgotten resources use up your credits. It never stores your keys and never
-        changes anything in your account.
+      <p className="quiet">
+        Cloud Watchdog uses a profile you have already set up with the AWS CLI. It reads what is running in every enabled region, prices it, and warns
+        you before forgotten resources use up your credits. It never stores your keys and never changes anything in your account.
       </p>
       <ProfilePicker current={null} />
     </section>
