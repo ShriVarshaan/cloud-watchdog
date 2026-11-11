@@ -47,7 +47,7 @@ function tint(theme: Record<string, string>, name: string): { colour: string; al
   return { colour: theme[match[1]!]!, alpha: Number(match[2]) / 100 }
 }
 
-const SURFACES = ['bg', 'surface', 'surface-alt']
+const SURFACES = ['bg', 'surface', 'surface-alt', 'selection']
 const TEXT = ['label', 'secondary', 'accent-text', 'green', 'orange', 'red']
 const PILLS = ['accent', 'green', 'orange', 'red']
 
