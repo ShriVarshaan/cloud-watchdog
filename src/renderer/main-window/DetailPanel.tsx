@@ -1,5 +1,6 @@
 // One resource: what it is, why it costs money, what the rate leaves out,
-// its warnings, and what to do about it (console link, command to copy).
+// its warnings, and what to do about it (console link, command to copy, and
+// the Stop button when stopping is switched on).
 
 import { useEffect, useState } from 'react'
 import { KIND_EXPLANATIONS } from '../../shared/explain'
@@ -7,6 +8,7 @@ import { formatUsdPerMonth } from '../../shared/format'
 import type { Flag, ManualSteps, PricedResource } from '../../shared/types'
 import { api } from '../api'
 import { CONFIDENCE_EXPLANATION, CoverageBadge, PriceBadge, SeverityMark } from '../components/Badges'
+import { StopAction } from './StopAction'
 
 const COVERAGE_TEXT = {
   covered: 'Credits or the free tier pay for this right now.',
@@ -14,7 +16,7 @@ const COVERAGE_TEXT = {
   unknown: 'Not known whether credits or the free tier pay for this.'
 } as const
 
-export function DetailPanel({ resource, flags }: { resource: PricedResource; flags: Flag[] }) {
+export function DetailPanel({ resource, flags, canStop }: { resource: PricedResource; flags: Flag[]; canStop: boolean }) {
   const kind = KIND_EXPLANATIONS[resource.kind]
   const [steps, setSteps] = useState<ManualSteps | null>(null)
   const [stepsError, setStepsError] = useState<string | null>(null)
@@ -125,6 +127,7 @@ export function DetailPanel({ resource, flags }: { resource: PricedResource; fla
 
       <section aria-labelledby="detail-steps">
         <h3 id="detail-steps">What you can do</h3>
+        {canStop && <StopAction resource={resource} />}
         {stepsError && <p role="alert">{stepsError}</p>}
         {steps && (
           <>

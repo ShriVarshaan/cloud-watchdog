@@ -564,6 +564,15 @@ th[aria-sort] .sort {
   align-items: center;
 }
 
+.stop-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-small);
+}
+
 .note {
   padding-inline-start: 10px;
   border-inline-start: 3px solid var(--warn);

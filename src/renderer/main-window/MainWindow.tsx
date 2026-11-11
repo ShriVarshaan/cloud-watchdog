@@ -159,7 +159,12 @@ export function MainWindow({ focusKey = null }: { focusKey?: string | null }) {
                 <div className="resources-layout" data-has-detail={selected !== null || undefined}>
                   <ResourceTable rows={rows} selectedKey={selectedKey} onSelect={setSelectedKey} />
                   {selected ? (
-                    <DetailPanel key={selected.resource.key} resource={selected.resource} flags={selected.flags} />
+                    <DetailPanel
+                      key={selected.resource.key}
+                      resource={selected.resource}
+                      flags={selected.flags}
+                      canStop={state.settings.actionsEnabled}
+                    />
                   ) : (
                     rows.length > 0 && <p className="detail-hint quiet">Choose a resource to see what it is, what it costs and what to do about it.</p>
                   )}

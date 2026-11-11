@@ -1,4 +1,6 @@
-// The AWS profile, how often to scan, notifications, start at login, and the rules.
+// The AWS profile, how often to scan, notifications, start at login, the
+// rules, and the switch for stopping. That switch is not part of the form:
+// the main process asks in its own dialog before it turns it on.
 
 import { useState, type FormEvent } from 'react'
 import { RULE_INFO } from '../../shared/explain'
@@ -7,6 +9,52 @@ import { api } from '../api'
 import { ProfilePicker } from './FirstRun'
 
 type Draft = Pick<Settings, 'scanIntervalMinutes' | 'notificationsEnabled' | 'startAtLogin' | 'rules'>
+
+function StoppingSwitch({ settings }: { settings: Settings }) {
+  const [problem, setProblem] = useState<string | null>(null)
+  const [waiting, setWaiting] = useState(false)
+
+  async function set(enabled: boolean) {
+    setProblem(null)
+    setWaiting(true)
+    const result = await api().setActionsEnabled({ enabled })
+    setWaiting(false)
+    if (!result.ok) setProblem(result.error.message)
+  }
+
+  return (
+    <section aria-labelledby="settings-stopping">
+      <h2 id="settings-stopping">Stopping instances and databases</h2>
+      {settings.actionsEnabled ? (
+        <>
+          <p>
+            On for the profile {settings.profile}. Running EC2 instances and available RDS databases have a Stop button. Each stop shows what it means and
+            asks again first.
+          </p>
+          <p>
+            <button type="button" className="button-quiet" onClick={() => set(false)} disabled={waiting}>
+              Switch off stopping
+            </button>
+          </p>
+        </>
+      ) : (
+        <>
+          <p>Off. Cloud Watchdog only looks at your account and changes nothing in it.</p>
+          <p>
+            Switched on, it can stop a running EC2 instance or an available RDS database when you ask it to. It never deletes anything. The profile then
+            also needs the IAM policy in iam/cloud-watchdog-actions.json.
+          </p>
+          <p>
+            <button type="button" className="button-quiet" onClick={() => set(true)} disabled={waiting}>
+              Switch on stopping
+            </button>
+          </p>
+        </>
+      )}
+      {problem && <p role="alert">{problem}</p>}
+    </section>
+  )
+}
 
 function ruleDraft(settings: Settings, id: string): RuleSetting {
   const info = RULE_INFO[id]!
@@ -46,6 +94,8 @@ export function SettingsPanel({ settings }: { settings: Settings }) {
         <p>The profile from your AWS CLI setup that Cloud Watchdog signs in with. Its keys never leave the AWS configuration files.</p>
         <ProfilePicker current={settings.profile} />
       </section>
+
+      <StoppingSwitch settings={settings} />
 
       <form onSubmit={save} aria-labelledby="settings-scanning">
         <h2 id="settings-scanning">Scanning and alerts</h2>
