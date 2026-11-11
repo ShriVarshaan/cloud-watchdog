@@ -77,9 +77,12 @@ export interface IpcContract {
   'resource:openConsole': { input: { resourceKey: string }; output: null }
   'actions:preview': { input: { resourceKey: string; action: ActionKind }; output: ActionPreview }
   'actions:execute': { input: { token: string }; output: ActionResult }
+  /** Switching on shows a confirmation in the main process first. Returns the settings afterwards. */
+  'actions:setEnabled': { input: { enabled: boolean }; output: Settings }
 }
 
-export type SettingsUpdate = { [K in keyof Settings]?: Settings[K] | undefined }
+/** Everything in the settings except the switch for stopping, which has its own channel and confirmation. */
+export type SettingsUpdate = { [K in Exclude<keyof Settings, 'actionsEnabled'>]?: Settings[K] | undefined }
 
 export type IpcChannel = keyof IpcContract
 export type IpcInput<C extends IpcChannel> = IpcContract[C]['input']
@@ -97,7 +100,8 @@ export const API_METHODS = {
   getManualSteps: 'resource:manualSteps',
   openConsole: 'resource:openConsole',
   previewAction: 'actions:preview',
-  executeAction: 'actions:execute'
+  executeAction: 'actions:execute',
+  setActionsEnabled: 'actions:setEnabled'
 } as const satisfies Record<string, IpcChannel>
 
 type ApiMethods = typeof API_METHODS

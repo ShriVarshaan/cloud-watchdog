@@ -110,3 +110,14 @@ describe('fakeScenarioFrom', () => {
     expect(fakeScenarioFrom(value)).toBe(scenario)
   })
 })
+
+describe('fakeConfirmFrom', () => {
+  it('answers confirmations for the end-to-end tests only when told to', async () => {
+    const { fakeConfirmFrom } = await import('./fakeAws')
+    expect(fakeConfirmFrom('yes')).toBe(true)
+    expect(fakeConfirmFrom('no')).toBe(false)
+    expect(fakeConfirmFrom(undefined)).toBeNull()
+    expect(fakeConfirmFrom('')).toBeNull()
+    expect(fakeConfirmFrom('true')).toBeNull()
+  })
+})

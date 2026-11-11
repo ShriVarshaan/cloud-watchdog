@@ -17,6 +17,7 @@ const custom: Settings = {
   scanIntervalMinutes: 30,
   notificationsEnabled: false,
   startAtLogin: true,
+  actionsEnabled: false,
   rules: { 'long-running': { enabled: true, params: { hours: 12 } } }
 }
 
@@ -36,8 +37,20 @@ describe('loadSettings', () => {
   })
 
   it('drops fields it does not know instead of keeping them', () => {
-    writeFileSync(file(), JSON.stringify({ ...custom, actionsEnabled: true, secretAccessKey: 'nope' }))
+    writeFileSync(file(), JSON.stringify({ ...custom, secretAccessKey: 'nope' }))
     expect(loadSettings(dir).settings).toEqual(custom)
+  })
+
+  it('has stopping switched off by default, and for a file written before it existed', () => {
+    expect(loadSettings(dir).settings.actionsEnabled).toBe(false)
+    const { actionsEnabled: _absent, ...older } = custom
+    writeFileSync(file(), JSON.stringify(older))
+    expect(loadSettings(dir).settings.actionsEnabled).toBe(false)
+  })
+
+  it('remembers that stopping was switched on', () => {
+    saveSettings(dir, { ...custom, actionsEnabled: true })
+    expect(loadSettings(dir).settings.actionsEnabled).toBe(true)
   })
 
   it.each([

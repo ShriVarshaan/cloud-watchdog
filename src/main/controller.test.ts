@@ -11,6 +11,7 @@ import type { ClientFactory } from '../core/aws/clients'
 import { openDb } from '../core/store/db'
 import { migrate } from '../core/store/migrations'
 import { createRepo, type Repo } from '../core/store/repo'
+import type { ConfirmDialog } from './confirmations'
 import { createController, type Controller } from './controller'
 import { createFakeClientFactory, FAKE_ACCOUNT_ID } from './fakeAws'
 import type { Toast } from './notifications'
@@ -25,6 +26,10 @@ let loginItem: boolean[]
 let controller: Controller
 let brokenProfiles: Set<string>
 let opened: string[]
+let dialogs: ConfirmDialog[]
+/** What the user answers in a confirmation dialog. A promise keeps the dialog open. */
+let dialogAnswer: boolean | Promise<boolean>
+let actionLogOnDisk: boolean
 
 const expired = () => Object.assign(new Error('The SSO session associated with this profile has expired.'), { name: 'TokenProviderError' })
 
@@ -54,6 +59,11 @@ function build(profiles = ['demo', 'other']) {
     setTooltip: (text) => void tooltips.push(text),
     setLoginItem: (enabled) => void loginItem.push(enabled),
     openExternal: async (url) => void opened.push(url),
+    confirm: async (dialog) => {
+      dialogs.push(dialog)
+      return dialogAnswer
+    },
+    actionLogOnDisk,
     log: () => {}
   })
   return controller
@@ -70,6 +80,9 @@ beforeEach(() => {
   loginItem = []
   brokenProfiles = new Set()
   opened = []
+  dialogs = []
+  dialogAnswer = true
+  actionLogOnDisk = true
 })
 
 afterEach(() => {
@@ -101,7 +114,7 @@ describe('before a profile is chosen', () => {
     const handlers = build().handlers
     expect(value(await handlers['app:getState'](undefined))).toEqual({
       identity: null,
-      settings: { profile: null, scanIntervalMinutes: 15, notificationsEnabled: true, startAtLogin: true, rules: {} },
+      settings: { profile: null, scanIntervalMinutes: 15, notificationsEnabled: true, startAtLogin: true, actionsEnabled: false, rules: {} },
       lastScan: null,
       scanInProgress: false,
       problem: null
@@ -204,7 +217,7 @@ describe('scanning', () => {
   })
 
   it('does not notify when notifications are off', async () => {
-    saveSettings(dir, { profile: null, scanIntervalMinutes: 15, notificationsEnabled: false, startAtLogin: false, rules: {} })
+    saveSettings(dir, { profile: null, scanIntervalMinutes: 15, notificationsEnabled: false, startAtLogin: false, actionsEnabled: false, rules: {} })
     const handlers = build().handlers
     value(await handlers['profiles:select']({ profile: 'demo' }))
     await scanned()
@@ -212,14 +225,14 @@ describe('scanning', () => {
   })
 
   it('scans on start with the saved profile', async () => {
-    saveSettings(dir, { profile: 'demo', scanIntervalMinutes: 15, notificationsEnabled: true, startAtLogin: false, rules: {} })
+    saveSettings(dir, { profile: 'demo', scanIntervalMinutes: 15, notificationsEnabled: true, startAtLogin: false, actionsEnabled: false, rules: {} })
     build().start()
     const state = await scanned()
     expect(state.identity?.profile).toBe('demo')
   })
 
   it('reports a sign-in that expires later as a problem, with the fix', async () => {
-    saveSettings(dir, { profile: 'demo', scanIntervalMinutes: 15, notificationsEnabled: true, startAtLogin: false, rules: {} })
+    saveSettings(dir, { profile: 'demo', scanIntervalMinutes: 15, notificationsEnabled: true, startAtLogin: false, actionsEnabled: false, rules: {} })
     brokenProfiles.add('demo')
     build().start()
     const state = await until((s) => s.problem !== null)
@@ -291,7 +304,7 @@ describe('settings', () => {
   })
 
   it('applies the saved start-at-login setting on start', () => {
-    saveSettings(dir, { profile: null, scanIntervalMinutes: 15, notificationsEnabled: true, startAtLogin: true, rules: {} })
+    saveSettings(dir, { profile: null, scanIntervalMinutes: 15, notificationsEnabled: true, startAtLogin: true, actionsEnabled: false, rules: {} })
     build().start()
     expect(loginItem).toEqual([true])
   })
@@ -340,9 +353,206 @@ describe('manual steps and the console', () => {
   })
 })
 
-describe('not built yet', () => {
-  it.each(['actions:preview', 'actions:execute'] as const)('%s refuses', async (channel) => {
-    const handlers = build().handlers as Record<string, (input: unknown) => Promise<IpcResult<unknown>>>
-    expect((await handlers[channel]!({})).ok).toBe(false)
+const WEB = `${FAKE_ACCOUNT_ID}:ec2-instance:eu-west-1:i-0demo0000000web01`
+const GPU = `${FAKE_ACCOUNT_ID}:ec2-instance:eu-west-1:i-0demo00000train01`
+const OLD = `${FAKE_ACCOUNT_ID}:ec2-instance:eu-west-1:i-0demo0000000old01`
+
+/** A controller signed in to the demo account, with its first scan done. */
+async function signedIn() {
+  const handlers = build().handlers
+  value(await handlers['profiles:select']({ profile: 'demo' }))
+  await scanned()
+  return handlers
+}
+
+describe('switching stopping on', () => {
+  it('is off until the user switches it on', async () => {
+    const handlers = await signedIn()
+    expect(value(await handlers['app:getState'](undefined)).settings.actionsEnabled).toBe(false)
+  })
+
+  it('asks in a dialog that names the account and the extra IAM policy, then saves the choice', async () => {
+    const handlers = await signedIn()
+    expect(value(await handlers['actions:setEnabled']({ enabled: true })).actionsEnabled).toBe(true)
+
+    expect(dialogs).toHaveLength(1)
+    const text = `${dialogs[0]!.message}\n${dialogs[0]!.detail}`
+    expect(text).toContain(FAKE_ACCOUNT_ID)
+    expect(text).toContain('iam/cloud-watchdog-actions.json')
+    expect(loadSettings(dir).settings.actionsEnabled).toBe(true)
+    expect(states().at(-1)?.settings.actionsEnabled).toBe(true)
+  })
+
+  it('stays off when the user says no', async () => {
+    const handlers = await signedIn()
+    dialogAnswer = false
+    expect(await handlers['actions:setEnabled']({ enabled: true })).toMatchObject({ ok: false, error: { code: 'cancelled' } })
+    expect(loadSettings(dir).settings.actionsEnabled).toBe(false)
+  })
+
+  it('cannot be switched on before an account is chosen, and shows no dialog', async () => {
+    const handlers = build().handlers
+    expect(await handlers['actions:setEnabled']({ enabled: true })).toMatchObject({ ok: false, error: { code: 'refused' } })
+    expect(dialogs).toEqual([])
+  })
+
+  it('is switched off without a dialog', async () => {
+    const handlers = await signedIn()
+    value(await handlers['actions:setEnabled']({ enabled: true }))
+    expect(value(await handlers['actions:setEnabled']({ enabled: false })).actionsEnabled).toBe(false)
+    expect(dialogs).toHaveLength(1)
+    expect(loadSettings(dir).settings.actionsEnabled).toBe(false)
+  })
+
+  it('is switched off again when another profile is chosen', async () => {
+    const handlers = await signedIn()
+    value(await handlers['actions:setEnabled']({ enabled: true }))
+    value(await handlers['profiles:select']({ profile: 'other' }))
+    expect(loadSettings(dir).settings.actionsEnabled).toBe(false)
+  })
+
+  it('stays on when the same profile is chosen again', async () => {
+    const handlers = await signedIn()
+    value(await handlers['actions:setEnabled']({ enabled: true }))
+    value(await handlers['profiles:select']({ profile: 'demo' }))
+    expect(loadSettings(dir).settings.actionsEnabled).toBe(true)
+  })
+
+  it('cannot be switched on when the action log would not be kept on disk', async () => {
+    actionLogOnDisk = false
+    const handlers = await signedIn()
+    expect(await handlers['actions:setEnabled']({ enabled: true })).toMatchObject({ ok: false, error: { code: 'refused' } })
+    expect(dialogs).toEqual([])
+  })
+})
+
+describe('stopping an instance', () => {
+  async function ready() {
+    const handlers = await signedIn()
+    value(await handlers['actions:setEnabled']({ enabled: true }))
+    dialogs = []
+    return handlers
+  }
+  const stateOf = async (handlers: Controller['handlers'], key: string) =>
+    value(await handlers['scan:getLatest'](undefined))!.resources.find((resource) => resource.key === key)?.state
+
+  it('is refused while stopping is switched off', async () => {
+    const handlers = await signedIn()
+    expect(await handlers['actions:preview']({ resourceKey: WEB, action: 'stop-ec2' })).toMatchObject({
+      ok: false,
+      error: { code: 'refused' }
+    })
+  })
+
+  it('is refused when settings say on but the action log would not be kept on disk', async () => {
+    saveSettings(dir, { profile: 'demo', scanIntervalMinutes: 15, notificationsEnabled: true, startAtLogin: false, actionsEnabled: true, rules: {} })
+    actionLogOnDisk = false
+    const handlers = build().handlers
+    controller.start()
+    await scanned()
+    expect(await handlers['actions:preview']({ resourceKey: WEB, action: 'stop-ec2' })).toMatchObject({
+      ok: false,
+      error: { code: 'refused' }
+    })
+  })
+
+  it('previews a running instance: what it means, and a token', async () => {
+    const handlers = await ready()
+    const preview = value(await handlers['actions:preview']({ resourceKey: WEB, action: 'stop-ec2' }))
+    expect(preview).toMatchObject({ resourceKey: WEB, action: 'stop-ec2', liveState: 'running', blockers: [], token: expect.any(String) })
+    expect(preview.consequences.join(' ')).toContain('different one')
+  })
+
+  it('gives no token for an instance with instance-store disks', async () => {
+    const handlers = await ready()
+    const preview = value(await handlers['actions:preview']({ resourceKey: GPU, action: 'stop-ec2' }))
+    expect(preview.token).toBeNull()
+    expect(preview.blockers.join(' ')).toContain('instance-store')
+  })
+
+  it('gives no token for an instance that is already stopped', async () => {
+    const handlers = await ready()
+    expect(value(await handlers['actions:preview']({ resourceKey: OLD, action: 'stop-ec2' }))).toMatchObject({
+      liveState: 'stopped',
+      blockers: ['It is stopped, not running.'],
+      token: null
+    })
+  })
+
+  it('refuses a resource that is not in the latest scan', async () => {
+    const handlers = await ready()
+    expect(await handlers['actions:preview']({ resourceKey: `${FAKE_ACCOUNT_ID}:ec2-instance:eu-west-1:i-unknown`, action: 'stop-ec2' })).toEqual({
+      ok: false,
+      error: { code: 'not-found', message: 'That resource is not in the latest scan.' }
+    })
+  })
+
+  it('stops it after a confirmation that names it, records it, and scans again', async () => {
+    const handlers = await ready()
+    const { token } = value(await handlers['actions:preview']({ resourceKey: WEB, action: 'stop-ec2' }))
+    const before = value(await handlers['app:getState'](undefined)).lastScan!.scanId
+
+    expect(value(await handlers['actions:execute']({ token: token! }))).toMatchObject({ resourceKey: WEB, action: 'stop-ec2' })
+
+    expect(dialogs).toHaveLength(1)
+    const text = `${dialogs[0]!.message}\n${dialogs[0]!.detail}`
+    expect(text).toContain('hackathon-api')
+    expect(text).toContain('i-0demo0000000web01')
+    expect(text).toContain('eu-west-1')
+    expect(text).toContain(FAKE_ACCOUNT_ID)
+    expect(repo.listActionLog(FAKE_ACCOUNT_ID)).toMatchObject([{ resourceKey: WEB, action: 'stop-ec2', preState: 'running', result: 'stopped' }])
+
+    await until((state) => state.lastScan !== null && state.lastScan.scanId !== before && !state.scanInProgress)
+    expect(await stateOf(handlers, WEB)).toBe('stopped')
+  })
+
+  it('stops nothing when the user cancels', async () => {
+    const handlers = await ready()
+    const { token } = value(await handlers['actions:preview']({ resourceKey: WEB, action: 'stop-ec2' }))
+    dialogAnswer = false
+    expect(await handlers['actions:execute']({ token: token! })).toMatchObject({ ok: false, error: { code: 'cancelled' } })
+
+    expect(repo.listActionLog(FAKE_ACCOUNT_ID)).toMatchObject([{ result: 'cancelled' }])
+    value(await handlers['scan:run'](undefined))
+    await until((state) => !state.scanInProgress)
+    expect(await stateOf(handlers, WEB)).toBe('running')
+  })
+
+  it('refuses a token it did not issue, and records the attempt', async () => {
+    const handlers = await ready()
+    expect(await handlers['actions:execute']({ token: 'x'.repeat(43) })).toMatchObject({ ok: false, error: { code: 'refused' } })
+    expect(dialogs).toEqual([])
+    expect(repo.listActionLog(FAKE_ACCOUNT_ID)).toMatchObject([{ result: 'refused' }])
+  })
+
+  it('refuses a token from before the profile was chosen again', async () => {
+    const handlers = await ready()
+    const { token } = value(await handlers['actions:preview']({ resourceKey: WEB, action: 'stop-ec2' }))
+    value(await handlers['profiles:select']({ profile: 'demo' }))
+    await scanned()
+    expect(await handlers['actions:execute']({ token: token! })).toMatchObject({ ok: false, error: { code: 'refused' } })
+    expect(dialogs).toEqual([])
+  })
+
+  it('shows one confirmation at a time, and a refused second request does not spend its token', async () => {
+    const handlers = await ready()
+    const first = value(await handlers['actions:preview']({ resourceKey: WEB, action: 'stop-ec2' }))
+    const second = value(await handlers['actions:preview']({ resourceKey: WEB, action: 'stop-ec2' }))
+
+    let answer!: (agreed: boolean) => void
+    dialogAnswer = new Promise<boolean>((resolve) => (answer = resolve))
+    const open = handlers['actions:execute']({ token: first.token! })
+    await new Promise((resolve) => setTimeout(resolve, 20))
+    expect(dialogs).toHaveLength(1)
+
+    expect(await handlers['actions:execute']({ token: second.token! })).toMatchObject({ ok: false, error: { code: 'refused' } })
+    expect(await handlers['actions:setEnabled']({ enabled: false })).toMatchObject({ ok: false, error: { code: 'refused' } })
+    expect(dialogs).toHaveLength(1)
+
+    answer(false)
+    expect(await open).toMatchObject({ ok: false, error: { code: 'cancelled' } })
+
+    dialogAnswer = true
+    expect((await handlers['actions:execute']({ token: second.token! })).ok).toBe(true)
   })
 })

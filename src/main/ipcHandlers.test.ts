@@ -75,7 +75,10 @@ describe('registerIpcHandlers', () => {
     ['actions:preview', { resourceKey: KEY }],
     ['actions:execute', { token: '' }],
     ['actions:execute', { token: 'x'.repeat(1000) }],
-    ['actions:execute', { resourceKey: KEY, action: 'stop-ec2' }]
+    ['actions:execute', { resourceKey: KEY, action: 'stop-ec2' }],
+    ['actions:setEnabled', undefined],
+    ['actions:setEnabled', { enabled: 'yes' }],
+    ['actions:setEnabled', { enabled: true, confirmed: true }]
   ]
 
   it.each(malformed)('rejects malformed input on %s: %j', async (channel, input) => {
@@ -109,7 +112,8 @@ describe('registerIpcHandlers', () => {
     ['resource:manualSteps', { resourceKey: KEY }],
     ['resource:openConsole', { resourceKey: KEY }],
     ['actions:preview', { resourceKey: KEY, action: 'stop-rds' }],
-    ['actions:execute', { token: 'a'.repeat(32) }]
+    ['actions:execute', { token: 'a'.repeat(32) }],
+    ['actions:setEnabled', { enabled: true }]
   ]
 
   it.each(valid)('passes valid input on %s to the handler: %j', async (channel, input) => {

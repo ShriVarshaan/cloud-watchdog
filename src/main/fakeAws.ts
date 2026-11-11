@@ -51,6 +51,16 @@ export function fakeScenarioFrom(value: string | undefined): FakeScenario | null
   return (FAKE_SCENARIOS as readonly string[]).includes(value) ? (value as FakeScenario) : null
 }
 
+/**
+ * How confirmation dialogs are answered in the end-to-end tests, which cannot
+ * click a native dialog: "yes" or "no" in WATCHDOG_FAKE_CONFIRM. null = show
+ * the real dialog. index.ts reads this only while the pretend account is in
+ * use, so nothing in a real AWS account is ever confirmed this way.
+ */
+export function fakeConfirmFrom(value: string | undefined): boolean | null {
+  return value === 'yes' ? true : value === 'no' ? false : null
+}
+
 const HOUR_MS = 3_600_000
 
 function awsError(name: string, message: string, httpStatusCode = 403): Error {

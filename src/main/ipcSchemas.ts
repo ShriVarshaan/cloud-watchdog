@@ -26,8 +26,8 @@ const ruleSetting = z.strictObject({
   params: z.record(z.string().min(1).max(64), z.number())
 })
 
-// Note what is absent: there is no field that enables actions. That switch
-// needs its own native confirmation in the main process (M10).
+// Note what is absent: there is no field that switches stopping on. That
+// goes through actions:setEnabled, which asks in a native dialog first.
 const settingsUpdate = z.strictObject({
   profile: profileName.nullable().optional(),
   scanIntervalMinutes: z.number().int().min(SCAN_INTERVAL_MINUTES.min).max(SCAN_INTERVAL_MINUTES.max).optional(),
@@ -50,7 +50,8 @@ export const ipcSchemas = {
   'resource:manualSteps': z.strictObject({ resourceKey }),
   'resource:openConsole': z.strictObject({ resourceKey }),
   'actions:preview': z.strictObject({ resourceKey, action: z.enum(ACTION_KINDS) }),
-  'actions:execute': z.strictObject({ token: z.string().min(16).max(200) })
+  'actions:execute': z.strictObject({ token: z.string().min(16).max(200) }),
+  'actions:setEnabled': z.strictObject({ enabled: z.boolean() })
   // Fails to compile if a channel is missing or a schema's result does not
   // match the input type declared in src/shared/ipc.ts.
 } satisfies { [C in IpcChannel]: z.ZodType<IpcInput<C>> }

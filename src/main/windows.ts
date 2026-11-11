@@ -51,6 +51,11 @@ export function broadcast<C extends IpcEventChannel>(channel: C, payload: IpcEve
   }
 }
 
+/** The main window if it is open and showing, for dialogs that belong to it. */
+export function visibleMainWindow(): BrowserWindow | null {
+  return mainWindow && !mainWindow.isDestroyed() && mainWindow.isVisible() ? mainWindow : null
+}
+
 /** Lets windows really close when the app is quitting, instead of hiding. */
 export function markQuitting(): void {
   quitting = true

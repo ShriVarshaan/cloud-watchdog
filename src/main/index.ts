@@ -1,21 +1,22 @@
 // Main-process entry point: one instance, lives in the tray, hardened renderer.
 // The app's logic is in controller.ts; this file connects it to Electron.
 
-import { app, ipcMain, powerMonitor, session, shell } from 'electron'
+import { app, dialog, ipcMain, powerMonitor, session, shell, type MessageBoxOptions } from 'electron'
 import { createClientFactory } from '../core/aws/clients'
 import { listProfileNames } from '../core/aws/profiles'
 import { openDb, type Db } from '../core/store/db'
 import { migrate } from '../core/store/migrations'
 import { createRepo } from '../core/store/repo'
+import type { ConfirmDialog } from './confirmations'
 import { createController } from './controller'
-import { createFakeClientFactory, FAKE_PROFILE, fakeScenarioFrom } from './fakeAws'
+import { createFakeClientFactory, FAKE_PROFILE, fakeConfirmFrom, fakeScenarioFrom } from './fakeAws'
 import { registerIpcHandlers } from './ipcHandlers'
 import { hardenSession, installWebContentsGuards } from './security'
 import { createSenderCheck } from './senderCheck'
 import { openStore } from './store'
 import { showToasts } from './toasts'
 import { createTray, setTrayTooltip } from './tray'
-import { broadcast, markQuitting, RENDERER_FILE, showMainWindow } from './windows'
+import { broadcast, markQuitting, RENDERER_FILE, showMainWindow, visibleMainWindow } from './windows'
 
 // Tests and development can point the app at a throwaway data folder.
 // Ignored in the installed app.
@@ -41,15 +42,41 @@ if (!app.requestSingleInstanceLock()) {
 
   const userData = app.getPath('userData')
   let store: Db
+  let storeOnDisk = true
   try {
     store = openStore(userData)
   } catch (error) {
     // Without its database the app still watches the account; it just keeps
-    // no history between runs.
+    // no history between runs, and it refuses to stop anything, because the
+    // record of that would be lost.
     console.error('Could not open the local database; running without history:', error)
     store = openDb(':memory:')
     migrate(store)
+    storeOnDisk = false
   }
+
+  /**
+   * The confirmation before stopping is switched on, and before each stop.
+   * A native dialog: the page cannot draw it, read it or answer it. Cancel is
+   * the default button, and closing the dialog means Cancel.
+   */
+  async function confirm(question: ConfirmDialog): Promise<boolean> {
+    const options: MessageBoxOptions = {
+      type: 'warning',
+      title: 'Cloud Watchdog',
+      message: question.message,
+      detail: question.detail,
+      buttons: ['Cancel', question.confirmLabel],
+      defaultId: 0,
+      cancelId: 0,
+      noLink: true
+    }
+    const parent = visibleMainWindow()
+    const { response } = parent ? await dialog.showMessageBox(parent, options) : await dialog.showMessageBox(options)
+    return response === 1
+  }
+  // The end-to-end tests cannot click a native dialog. Only with the pretend account.
+  const fakeConfirm = fakeScenario ? fakeConfirmFrom(process.env['WATCHDOG_FAKE_CONFIRM']) : null
 
   const controller = createController({
     userDataDir: userData,
@@ -64,6 +91,8 @@ if (!app.requestSingleInstanceLock()) {
       if (app.isPackaged) app.setLoginItemSettings({ openAtLogin: enabled, args: ['--hidden'] })
     },
     openExternal: (url) => shell.openExternal(url),
+    confirm: (question) => (fakeConfirm === null ? confirm(question) : Promise.resolve(fakeConfirm)),
+    actionLogOnDisk: storeOnDisk,
     log: (message, error) => console.error(message, error ?? '')
   })
 

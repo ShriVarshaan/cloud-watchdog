@@ -193,6 +193,12 @@ export interface Settings {
   scanIntervalMinutes: number
   notificationsEnabled: boolean
   startAtLogin: boolean
+  /**
+   * Whether the app may stop EC2 instances and RDS databases. Off until the
+   * user agrees in a dialog shown by the main process; `settings:update`
+   * cannot change it. Switched off again when another profile is chosen.
+   */
+  actionsEnabled: boolean
   /** Overrides per rule id. A rule that is not listed uses its defaults. */
   rules: Record<string, RuleSetting>
 }
@@ -204,6 +210,7 @@ export const DEFAULT_SETTINGS: Settings = {
   scanIntervalMinutes: SCAN_INTERVAL_MINUTES.default,
   notificationsEnabled: true,
   startAtLogin: true,
+  actionsEnabled: false,
   rules: {}
 }
 

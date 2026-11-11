@@ -29,6 +29,7 @@ test.describe('IPC bridge', () => {
         'previewAction',
         'runScan',
         'selectProfile',
+        'setActionsEnabled',
         'updateSettings'
       ].sort()
     )
@@ -48,6 +49,7 @@ test.describe('IPC bridge', () => {
           scanIntervalMinutes: 15,
           notificationsEnabled: true,
           startAtLogin: true,
+          actionsEnabled: false,
           rules: {}
         },
         lastScan: null,

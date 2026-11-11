@@ -12,8 +12,10 @@
 //
 // Every change ends with one `state:changed` event and a new tray tooltip.
 
-import type { IpcEventChannel, IpcEvents, IpcResult } from '../shared/ipc'
+import type { IpcEventChannel, IpcEvents } from '../shared/ipc'
 import type { AppState, Identity, ScanErrorCode, ScanResult, Settings } from '../shared/types'
+import { ACTION_DRIVERS } from '../core/actions'
+import { createActionGuard } from '../core/actions/guard'
 import { buildManualSteps } from '../core/actions/manualSteps'
 import type { ClientFactory } from '../core/aws/clients'
 import { classifyAwsError } from '../core/aws/errors'
@@ -28,6 +30,7 @@ import { previousResourcesFrom } from '../core/scan/persist'
 import { completeScan, loadLatestResult, summarize } from '../core/scan/pipeline'
 import { ALL_SCANNERS } from '../core/scanners'
 import type { Repo } from '../core/store/repo'
+import { enableActionsConfirmation, stopConfirmation, type ConfirmDialog } from './confirmations'
 import { isAllowedExternalUrl } from './externalLinks'
 import { fail, ok, type IpcHandlers } from './ipcHandlers'
 import { planToasts, trayTooltip, type Toast } from './notifications'
@@ -46,6 +49,14 @@ export interface ControllerDeps {
   setLoginItem(enabled: boolean): void
   /** Opens a web page in the user's browser. Called only with URLs that pass isAllowedExternalUrl. */
   openExternal(url: string): Promise<void>
+  /** Shows a native confirmation dialog. Resolves to true only if the user chose the confirm button. */
+  confirm(dialog: ConfirmDialog): Promise<boolean>
+  /**
+   * false when the database could not be opened and the app runs on a
+   * temporary one. Nothing is stopped then, because the record of it would
+   * be lost when the app closes. Default true.
+   */
+  actionLogOnDisk?: boolean
   log(message: string, error?: unknown): void
   now?: () => Date
 }
@@ -89,6 +100,7 @@ function problemFor(profile: string, code: ScanErrorCode, message: string): Prob
 export function createController(deps: ControllerDeps): Controller {
   const { repo } = deps
   const now = deps.now ?? (() => new Date())
+  const actionLogOnDisk = deps.actionLogOnDisk ?? true
 
   let settings: Settings = loadSettings(deps.userDataDir).settings
   let session: Session | null = null
@@ -208,7 +220,25 @@ export function createController(deps: ControllerDeps): Controller {
   }
   const NOT_IN_SCAN = 'That resource is not in the latest scan.'
 
-  const notYet = async (): Promise<IpcResult<never>> => fail('refused', 'This feature is not available yet.')
+  // The only way anything in AWS is changed. See core/actions/guard.ts.
+  const guard = createActionGuard({
+    drivers: ACTION_DRIVERS,
+    enabled: () => settings.actionsEnabled && actionLogOnDisk,
+    log: repo,
+    now
+  })
+
+  /** One confirmation dialog at a time. A request made while one is open is refused, untouched. */
+  let confirming = false
+  const DIALOG_OPEN = 'Answer the confirmation that is already open first.'
+  async function confirmOnce(dialog: ConfirmDialog): Promise<boolean> {
+    confirming = true
+    try {
+      return await deps.confirm(dialog)
+    } finally {
+      confirming = false
+    }
+  }
 
   const handlers: IpcHandlers = {
     'app:getState': async () => ok(state()),
@@ -234,7 +264,8 @@ export function createController(deps: ControllerDeps): Controller {
       identity = who
       problem = null
       latest = loadLatestResult(repo, who.accountId, now())
-      saveAndApply({ ...settings, profile })
+      // Permission to stop things was given for one profile. It does not carry over to another.
+      saveAndApply({ ...settings, profile, actionsEnabled: settings.actionsEnabled && profile === settings.profile })
       changed()
       scheduler.start()
       return ok(who)
@@ -283,9 +314,46 @@ export function createController(deps: ControllerDeps): Controller {
       return ok(null)
     },
 
-    // Built in M10.
-    'actions:preview': notYet,
-    'actions:execute': notYet
+    'actions:preview': async ({ resourceKey, action }) => {
+      const resource = findResource(resourceKey)
+      if (!session || !resource) return fail('not-found', NOT_IN_SCAN)
+      return guard.preview(session.clients, resource, action)
+    },
+
+    'actions:execute': async ({ token }) => {
+      if (!session) return fail('refused', 'Choose an AWS profile first.')
+      if (confirming) return fail('refused', DIALOG_OPEN)
+      const result = await guard.execute(token, {
+        clients: session.clients,
+        confirm: (confirmation) => confirmOnce(stopConfirmation(confirmation)),
+        signal: session.controller.signal,
+        accountId: identity?.accountId ?? null
+      })
+      // Show the new state as soon as AWS reports it.
+      if (result.ok) void scheduler.runNow()
+      return result
+    },
+
+    'actions:setEnabled': async ({ enabled }) => {
+      if (confirming) return fail('refused', DIALOG_OPEN)
+      if (enabled && !settings.actionsEnabled) {
+        const current = session
+        if (!current || !identity) return fail('refused', 'Choose an AWS profile first, and wait until Cloud Watchdog has signed in.')
+        if (!actionLogOnDisk) {
+          return fail(
+            'refused',
+            'Cloud Watchdog could not open its database, so it could not keep a record of what it stops. Stopping stays switched off.'
+          )
+        }
+        if (!(await confirmOnce(enableActionsConfirmation(identity)))) {
+          return fail('cancelled', 'Cancelled. Stopping stays switched off.')
+        }
+        if (session !== current) return fail('refused', 'The AWS profile was changed while the confirmation was open. Stopping stays switched off.')
+      }
+      saveAndApply({ ...settings, actionsEnabled: enabled })
+      changed()
+      return ok(settings)
+    }
   }
 
   return {

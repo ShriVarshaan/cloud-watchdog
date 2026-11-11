@@ -24,6 +24,7 @@ const settingsSchema = z.object({
     .default(DEFAULT_SETTINGS.scanIntervalMinutes),
   notificationsEnabled: z.boolean().default(DEFAULT_SETTINGS.notificationsEnabled),
   startAtLogin: z.boolean().default(DEFAULT_SETTINGS.startAtLogin),
+  actionsEnabled: z.boolean().default(DEFAULT_SETTINGS.actionsEnabled),
   rules: z
     .record(z.string().min(1).max(64), z.object({ enabled: z.boolean(), params: z.record(z.string().min(1).max(64), z.number()) }))
     .default({})
