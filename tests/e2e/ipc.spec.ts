@@ -47,7 +47,7 @@ test.describe('IPC bridge', () => {
           profile: null,
           scanIntervalMinutes: 15,
           notificationsEnabled: true,
-          startAtLogin: false,
+          startAtLogin: true,
           rules: {}
         },
         lastScan: null,

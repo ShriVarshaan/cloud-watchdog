@@ -101,7 +101,7 @@ describe('before a profile is chosen', () => {
     const handlers = build().handlers
     expect(value(await handlers['app:getState'](undefined))).toEqual({
       identity: null,
-      settings: { profile: null, scanIntervalMinutes: 15, notificationsEnabled: true, startAtLogin: false, rules: {} },
+      settings: { profile: null, scanIntervalMinutes: 15, notificationsEnabled: true, startAtLogin: true, rules: {} },
       lastScan: null,
       scanInProgress: false,
       problem: null
@@ -279,9 +279,15 @@ describe('settings', () => {
 
   it('switches start at login on and off', async () => {
     const handlers = build().handlers
-    value(await handlers['settings:update']({ startAtLogin: true }))
+    // It starts on by default, so the first change is to turn it off.
     value(await handlers['settings:update']({ startAtLogin: false }))
-    expect(loginItem).toEqual([true, false])
+    value(await handlers['settings:update']({ startAtLogin: true }))
+    expect(loginItem).toEqual([false, true])
+  })
+
+  it('registers the app to start at login on a first run, when nothing is saved yet', () => {
+    build().start()
+    expect(loginItem).toEqual([true])
   })
 
   it('applies the saved start-at-login setting on start', () => {

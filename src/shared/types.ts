@@ -203,7 +203,7 @@ export const DEFAULT_SETTINGS: Settings = {
   profile: null,
   scanIntervalMinutes: SCAN_INTERVAL_MINUTES.default,
   notificationsEnabled: true,
-  startAtLogin: false,
+  startAtLogin: true,
   rules: {}
 }
 
