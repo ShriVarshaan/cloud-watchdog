@@ -10,7 +10,8 @@ import { supportsMica, titleBarOverlay, windowBackground } from './windowChrome'
 
 type View = 'main' | 'popover'
 
-const POPOVER_SIZE = { width: 360, height: 480 }
+// Tall enough for the runway ring, two figures and three warnings without scrolling.
+const POPOVER_SIZE = { width: 360, height: 560 }
 // A click on the tray icon first blurs (and hides) an open popover. Ignore
 // the click that follows, or the popover would immediately reopen.
 const REOPEN_GUARD_MS = 250

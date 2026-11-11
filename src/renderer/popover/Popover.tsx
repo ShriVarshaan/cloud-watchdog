@@ -1,5 +1,5 @@
-// The window that opens from the tray icon: the burn rate, the runway, the
-// plan, the most important warnings, and a way to scan now.
+// The window that opens from the tray icon: the runway ring as the hero, then
+// the burn rate and plan, the most important warnings, and a way to scan now.
 
 import { useState } from 'react'
 import { formatAgo } from '../../shared/format'
@@ -39,8 +39,18 @@ export function Popover() {
     if (!result.ok) setScanError(result.error.message)
   }
 
-  if (error) return <main className="popover"><p role="alert">{error}</p></main>
-  if (!state) return <main className="popover" aria-busy="true"><p>Loading</p></main>
+  if (error)
+    return (
+      <main className="popover">
+        <p role="alert">{error}</p>
+      </main>
+    )
+  if (!state)
+    return (
+      <main className="popover" aria-busy="true">
+        <p>Loading</p>
+      </main>
+    )
 
   const summary = state.lastScan
   const flags = latest ? topFlags(latest, now) : []
@@ -70,20 +80,22 @@ export function Popover() {
         <p>Open Cloud Watchdog from the tray menu and choose the AWS profile to watch.</p>
       ) : summary ? (
         <>
-          <section className="popover-figures" aria-label="Summary">
-            <BurnRateFigure burn={summary.burn} />
-            <RunwayGauge runway={summary.runway} />
-            <PlanFigure plan={summary.plan} />
+          <section className="popover-summary" aria-label="Summary">
+            <RunwayGauge runway={summary.runway} hero />
+            <div className="popover-figures">
+              <BurnRateFigure burn={summary.burn} />
+              <PlanFigure plan={summary.plan} />
+            </div>
           </section>
 
-          <section aria-labelledby="popover-flags">
+          <section className="popover-flags" aria-labelledby="popover-flags">
             <h2 id="popover-flags">Warnings</h2>
             {flags.length === 0 ? (
               <p className="quiet">Nothing needs attention.</p>
             ) : (
-              <ul className="flag-list">
+              <ul className="group flag-list">
                 {flags.map((flag) => (
-                  <li key={flag.id}>
+                  <li key={flag.id} className="group-row">
                     <SeverityMark severity={flag.severity} />
                     <span>
                       <strong>{subject(flag, latest!)}</strong> {flag.message}
@@ -105,8 +117,8 @@ export function Popover() {
         )}
         {scanError && <p role="alert">{scanError}</p>}
         {state.settings.profile && (
-          <button type="button" className="button-primary" onClick={scanNow} disabled={state.scanInProgress}>
-            {state.scanInProgress ? 'Scanning' : 'Scan now'}
+          <button type="button" className="button-primary button-large" onClick={scanNow} disabled={state.scanInProgress}>
+            {state.scanInProgress ? 'Scanning' : 'Scan Now'}
           </button>
         )}
       </footer>
