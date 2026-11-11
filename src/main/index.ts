@@ -32,7 +32,11 @@ if (!app.requestSingleInstanceLock()) {
   // Another copy is already running; it will show its window (see below).
   app.quit()
 } else {
-  app.setAppUserModelId('com.cloudwatchdog.app')
+  // Windows only shows toasts for an AppUserModelID that a Start Menu shortcut
+  // carries. The installer creates one for the app's id; a development build
+  // runs electron.exe, which has no such shortcut, so it uses the exe path,
+  // which Windows accepts without one.
+  app.setAppUserModelId(app.isPackaged ? 'com.cloudwatchdog.app' : process.execPath)
   installWebContentsGuards()
 
   const userData = app.getPath('userData')

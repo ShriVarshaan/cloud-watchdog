@@ -24,6 +24,10 @@ export function showToasts(toasts: readonly Toast[]): void {
       showMainWindow(toast.resourceKey)
     })
     notification.on('close', forget)
+    notification.on('failed', (_event, error) => {
+      forget()
+      console.error('Could not show a notification:', error)
+    })
     shown.add(notification)
     notification.show()
   }
