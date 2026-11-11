@@ -208,7 +208,7 @@ export function createController(deps: ControllerDeps): Controller {
   }
   const NOT_IN_SCAN = 'That resource is not in the latest scan.'
 
-  const notYet = async (): Promise<IpcResult<never>> => fail('not-implemented', 'This feature is not available yet.')
+  const notYet = async (): Promise<IpcResult<never>> => fail('refused', 'This feature is not available yet.')
 
   const handlers: IpcHandlers = {
     'app:getState': async () => ok(state()),

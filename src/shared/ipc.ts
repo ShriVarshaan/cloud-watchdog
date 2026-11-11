@@ -31,13 +31,16 @@ import type {
 /**
  * `forbidden`: the message did not come from the app's own window.
  * `invalid-input`: the input failed validation in the main process.
- * The ScanErrorCode values are used when a call to AWS failed (profiles:select).
+ * `refused`: the app will not do it (a stop that is blocked, an expired confirmation).
+ * `cancelled`: the user said no in a confirmation dialog.
+ * The ScanErrorCode values are used when a call to AWS failed.
  */
 export type IpcErrorCode =
   | 'forbidden'
   | 'invalid-input'
   | 'not-found'
-  | 'not-implemented'
+  | 'refused'
+  | 'cancelled'
   | 'internal'
   | ScanErrorCode
 
