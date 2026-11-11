@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { MainWindow } from './main-window/MainWindow'
 import { Popover } from './popover/Popover'
+import '@fontsource-variable/inter/opsz.css'
 import './styles.css'
 
 // The main process loads this page with ?view=main or ?view=popover, and
