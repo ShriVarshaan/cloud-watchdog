@@ -58,10 +58,17 @@ ones fail WCAG for small text.
 | `--separator` | `rgba(60,60,67,.18)` | `rgba(235,235,245,.14)` | Hairlines |
 | `--fill` | `rgba(120,120,128,.12)` | `rgba(120,120,128,.26)` | Control and badge fills |
 | `--accent` | `#0071e3` | `#0071e3` | Filled default button (white text 4.6:1) |
-| `--accent-text` | `#0066cc` | `#409cff` | Links, selection, focus ring |
-| `--green` | `#248a3d` | `#30d158` | OK / covered |
-| `--orange` | `#b25000` | `#ff9f0a` | Warning / estimate |
-| `--red` | `#d70015` | `#ff453a` | Critical / destructive |
+| `--accent-text` | `#0063c7` | `#6eb4ff` | Links, selection, focus ring |
+| `--switch-on` | `#0071e3` | `#409cff` | Switch track when on (3:1 against the surface) |
+| `--green` | `#1e7433` | `#30d158` | OK / covered |
+| `--orange` | `#a54a00` | `#ff9f0a` | Warning / estimate |
+| `--red` | `#c80014` | `#ff837c` | Critical / destructive |
+
+The status colours are Apple's, darkened (light) or lightened (dark) just
+enough that each one, and each pill (the colour on a 10 to 14% tint of
+itself), reaches 4.5:1 on the background, the surface and the alternate table
+row. `tests/unit/contrast.test.ts` reads the tokens from `styles.css` and fails
+on any pair below its WCAG level.
 
 Type: **Inter** (variable, optical sizes), bundled. Apple's SF Pro cannot be
 shipped on Windows, and Inter is the closest open font. Sizes follow the macOS

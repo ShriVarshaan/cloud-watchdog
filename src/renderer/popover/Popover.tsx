@@ -48,7 +48,7 @@ export function Popover() {
   if (!state)
     return (
       <main className="popover" aria-busy="true">
-        <p>Loading</p>
+        <p>Loading…</p>
       </main>
     )
 
@@ -63,8 +63,8 @@ export function Popover() {
         <p className="quiet" aria-live="polite">
           {state.scanInProgress
             ? progress
-              ? `Scanning, ${progress.done} of ${progress.total}`
-              : 'Scanning'
+              ? `Scanning, ${progress.done} of ${progress.total}…`
+              : 'Scanning…'
             : summary
               ? `Scanned ${formatAgo(summary.finishedAt, now)}`
               : state.settings.profile
@@ -118,7 +118,7 @@ export function Popover() {
         {scanError && <p role="alert">{scanError}</p>}
         {state.settings.profile && (
           <button type="button" className="button-primary button-large" onClick={scanNow} disabled={state.scanInProgress}>
-            {state.scanInProgress ? 'Scanning' : 'Scan Now'}
+            {state.scanInProgress ? 'Scanning…' : 'Scan Now'}
           </button>
         )}
       </footer>

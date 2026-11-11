@@ -16,14 +16,16 @@
   --fill-strong: rgba(120, 120, 128, 0.24);
   --accent: #0071e3;
   --accent-ink: #ffffff;
-  --accent-text: #0066cc;
-  --green: #248a3d;
-  --orange: #b25000;
-  --red: #d70015;
+  --accent-text: #0063c7;
+  --green: #1e7433;
+  --orange: #a54a00;
+  --red: #c80014;
+  --switch-on: var(--accent);
 
-  --accent-tint: color-mix(in srgb, var(--accent-text) 12%, transparent);
-  --green-tint: color-mix(in srgb, var(--green) 12%, transparent);
-  --orange-tint: color-mix(in srgb, var(--orange) 12%, transparent);
+  /* Tint strengths are the largest that keep the pill's own colour at 4.5:1 on every surface. */
+  --accent-tint: color-mix(in srgb, var(--accent-text) 10%, transparent);
+  --green-tint: color-mix(in srgb, var(--green) 10%, transparent);
+  --orange-tint: color-mix(in srgb, var(--orange) 10%, transparent);
   --red-tint: color-mix(in srgb, var(--red) 10%, transparent);
 
   --shadow-raised: 0 0 0 0.5px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -57,14 +59,16 @@
     --separator: rgba(235, 235, 245, 0.14);
     --fill: rgba(120, 120, 128, 0.26);
     --fill-strong: rgba(120, 120, 128, 0.4);
-    --accent-text: #409cff;
+    --accent-text: #6eb4ff;
     --green: #30d158;
     --orange: #ff9f0a;
-    --red: #ff453a;
-    --red-tint: color-mix(in srgb, var(--red) 16%, transparent);
-    --orange-tint: color-mix(in srgb, var(--orange) 16%, transparent);
-    --green-tint: color-mix(in srgb, var(--green) 16%, transparent);
-    --accent-tint: color-mix(in srgb, var(--accent-text) 18%, transparent);
+    --red: #ff837c;
+    /* The filled accent is too dark against grey for a switch track (3:1). */
+    --switch-on: #409cff;
+    --red-tint: color-mix(in srgb, var(--red) 10%, transparent);
+    --orange-tint: color-mix(in srgb, var(--orange) 14%, transparent);
+    --green-tint: color-mix(in srgb, var(--green) 14%, transparent);
+    --accent-tint: color-mix(in srgb, var(--accent-text) 12%, transparent);
 
     --shadow-raised: 0 0 0 0.5px rgba(255, 255, 255, 0.1), 0 1px 2px rgba(0, 0, 0, 0.4);
     --shadow-float: 0 0 0 0.5px rgba(255, 255, 255, 0.1), 0 6px 20px rgba(0, 0, 0, 0.35);
@@ -301,7 +305,7 @@ input[type='checkbox'][role='switch']::before {
 }
 
 input[type='checkbox'][role='switch']:checked {
-  background: var(--accent);
+  background: var(--switch-on);
 }
 
 input[type='checkbox'][role='switch']:checked::before {
@@ -807,6 +811,10 @@ tbody tr[data-stale] td {
   color: var(--secondary);
   font-size: 12px;
   font-weight: 500;
+}
+
+.sort:hover {
+  color: var(--label);
 }
 
 th[aria-sort] .sort {

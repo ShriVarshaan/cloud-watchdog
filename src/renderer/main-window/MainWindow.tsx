@@ -65,7 +65,7 @@ export function MainWindow({ focusKey = null }: { focusKey?: string | null }) {
         <div className="welcome-toolbar" />
         <div className="welcome-card">
           <h1>Cloud Watchdog</h1>
-          {error ? <p role="alert">{error}</p> : <p className="quiet">Loading</p>}
+          {error ? <p role="alert">{error}</p> : <p className="quiet">Loading…</p>}
         </div>
       </main>
     )
@@ -92,8 +92,8 @@ export function MainWindow({ focusKey = null }: { focusKey?: string | null }) {
   }
   const scanStatus = state.scanInProgress
     ? progress
-      ? `Scanning, ${progress.done} of ${progress.total}`
-      : 'Scanning'
+      ? `Scanning, ${progress.done} of ${progress.total}…`
+      : 'Scanning…'
     : summary
       ? `Scanned ${formatAgo(summary.finishedAt, now)}`
       : 'Not scanned yet'
@@ -154,7 +154,7 @@ export function MainWindow({ focusKey = null }: { focusKey?: string | null }) {
             <span className="scan-glyph" data-spinning={state.scanInProgress || undefined}>
               <Icon icon={RefreshCw} />
             </span>
-            {state.scanInProgress ? 'Scanning' : 'Scan Now'}
+            {state.scanInProgress ? 'Scanning…' : 'Scan Now'}
           </button>
         </header>
 

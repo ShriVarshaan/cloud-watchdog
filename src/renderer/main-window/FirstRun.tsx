@@ -33,7 +33,7 @@ export function ProfilePicker({ current, onSelected }: { current: string | null;
     else setError(result.error.message)
   }
 
-  if (profiles === null) return error ? <p role="alert">{error}</p> : <p aria-busy="true">Reading AWS profiles</p>
+  if (profiles === null) return error ? <p role="alert">{error}</p> : <p aria-busy="true">Reading AWS profiles…</p>
   if (profiles.length === 0) {
     return (
       <div className="banner" data-tone="info">
@@ -56,7 +56,7 @@ export function ProfilePicker({ current, onSelected }: { current: string | null;
         </select>
       </label>
       <button type="submit" className="button-primary" disabled={busy || !choice || choice === current}>
-        {busy ? 'Signing In' : current ? 'Switch Profile' : 'Use This Profile'}
+        {busy ? 'Signing In…' : current ? 'Switch Profile' : 'Use This Profile'}
       </button>
       {error && (
         <p role="alert" className="form-error">

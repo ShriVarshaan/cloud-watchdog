@@ -65,7 +65,7 @@ export function StopAction({ resource }: { resource: PricedResource }) {
       <>
         <p>
           <button type="button" className="button-destructive" onClick={check} disabled={phase.step === 'checking'}>
-            {phase.step === 'checking' ? 'Checking in AWS' : `Stop This ${kind.title}`}
+            {phase.step === 'checking' ? 'Checking in AWS…' : `Stop This ${kind.title}`}
           </button>
         </p>
         {problem && <p role="alert">{problem}</p>}
