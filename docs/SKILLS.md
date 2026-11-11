@@ -20,6 +20,7 @@ npx skills add antfu/skills --skill vite vitest
 npx skills add currents-dev/playwright-best-practices-skill --skill playwright-best-practices
 npx skills add gentleman-programming/gentleman-skills --skill electron
 npx skills add mym0404/agent-skills --skill electron-skills
+npx skills add raintree-technology/apple-hig-skills --skill hig-foundations hig-platforms hig-patterns hig-inputs hig-components-layout hig-components-content hig-components-controls hig-components-menus hig-components-dialogs hig-components-search hig-components-status
 ```
 
 Or restore from the lock file: `npx skills experimental_install`.
@@ -38,6 +39,7 @@ Or restore from the lock file: `npx skills experimental_install`.
 | M8 Main wiring | electron, electron-skills, playwright-best-practices |
 | M9 UI | frontend-design, web-design-guidelines, accessibility, vercel-react-best-practices, vercel-composition-patterns, playwright-best-practices |
 | M10 Actions | test-driven-development, electron-skills, requesting-code-review |
+| M13 Apple-style redesign | frontend-design, hig-* (foundations, platforms, patterns, inputs, components-layout, -content, -controls, -menus, -dialogs, -search, -status), web-design-guidelines, accessibility, playwright-best-practices, verification-before-completion |
 | M11 Packaging | electron |
 | M12 Final review | requesting-code-review, improve-codebase-architecture, verification-before-completion |
 
@@ -58,3 +60,16 @@ with `accessibility` in the same command).
   named methods only (see PLAN.md, section 3.5).
 - The Playwright skill's Electron example launches with `--no-sandbox`. The
   e2e tests here do not, because they verify the sandbox is on.
+- The `hig-*` skills (raintree-technology/apple-hig-skills, added for M13) are
+  markdown only: no scripts. They were scanned for shell, network and
+  instruction-override patterns before use; none found. They are written for
+  SwiftUI/UIKit/AppKit, so M13 uses them for principles, spacing, type scale
+  and behaviour, and translates the result to CSS. `hig-technologies`,
+  `hig-components-system` and `hig-project-context` are deliberately not
+  installed: they cover Apple frameworks, widgets and native project setup.
+- Apple's guideline text and the SF Pro and SF Symbols assets are Apple's. The
+  skills only guide the design; nothing from Apple is copied into the app
+  (PLAN.md open questions 13 and 14).
+- Installing with the current `skills` CLI migrated `skills-lock.json` to
+  version 2, which rewrote every hash in the file. The skills themselves were
+  not changed.

@@ -1,125 +1,191 @@
 {
-  "version": 1,
+  "version": 2,
   "skills": {
     "accessibility": {
       "source": "addyosmani/web-quality-skills",
       "sourceType": "github",
       "skillPath": "skills/accessibility/SKILL.md",
-      "computedHash": "88c64dead9bb55925c7b983f5fd95cfecf30bd8c076fd384cdb17019d1becd87"
+      "computedHash": "c668809f5df57feb87cc06f1bc37fb340d1d92e26bacb6edbeab9258d22e76a5"
     },
     "brainstorming": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "skillPath": "skills/brainstorming/SKILL.md",
-      "computedHash": "749e6b37996cb97f756fff55da436530a11eb01897aca133fa7befe57b009707"
+      "computedHash": "a7424777b7f81e3eb9b4556d29fe233553736d8255780d3e1feea190fef61fef"
     },
     "electron": {
       "source": "gentleman-programming/gentleman-skills",
       "sourceType": "github",
       "skillPath": "community/electron/SKILL.md",
-      "computedHash": "bbd212026af96f3bbc650885e98cac4e8e88a1c414133f216cc6e97c95a246d1"
+      "computedHash": "f0425bca85d0cb8f0cac6358b83c408e4c334f0b98066534dd6c2406cee86f29"
     },
     "electron-skills": {
       "source": "mym0404/agent-skills",
       "sourceType": "github",
       "skillPath": "skills/electron-skills/SKILL.md",
-      "computedHash": "0f429dcdb5f33525f6a8fa26025db476711714328844d2b55b611f889ee3e32f"
+      "computedHash": ""
     },
     "executing-plans": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "skillPath": "skills/executing-plans/SKILL.md",
-      "computedHash": "dcb31fb9f9b3748f5f4ac2c7d2f2c95c74558383f9dad3695df32f1ad0eca376"
+      "computedHash": "58b364f6e3f64602c7cfd0b34ceaad9de95d41fe7e4b46b274843ba19fc01ccc"
     },
     "frontend-design": {
       "source": "anthropics/skills",
       "sourceType": "github",
       "skillPath": "skills/frontend-design/SKILL.md",
-      "computedHash": "106acf230014cbb43ca34e6410371321b56ca742f9ee0442e8ec05bf02eb0384"
+      "computedHash": "83485963700bcf11d5bf78118facb301676b69d918fee2e45a95e7f1a2840f6c"
+    },
+    "hig-components-content": {
+      "source": "raintree-technology/hig-doctor",
+      "sourceType": "github",
+      "skillPath": "skills/hig-components-content/SKILL.md",
+      "computedHash": "90984818c00706bac39922c56ab5e4758b0344648b8b268171bbc367920f98f5"
+    },
+    "hig-components-controls": {
+      "source": "raintree-technology/hig-doctor",
+      "sourceType": "github",
+      "skillPath": "skills/hig-components-controls/SKILL.md",
+      "computedHash": "8ff92bb670bf7582cceb9ef5b0dbba30ad69ffdc15c52d4aaf941d8dece07c96"
+    },
+    "hig-components-dialogs": {
+      "source": "raintree-technology/hig-doctor",
+      "sourceType": "github",
+      "skillPath": "skills/hig-components-dialogs/SKILL.md",
+      "computedHash": "74a8c8c076a79b4acfacf673b409247500860a936b32ca16511973d23fc77ea0"
+    },
+    "hig-components-layout": {
+      "source": "raintree-technology/hig-doctor",
+      "sourceType": "github",
+      "skillPath": "skills/hig-components-layout/SKILL.md",
+      "computedHash": "6ca1ac077c48a8e6bb4373cb3609ec40f06a1cbdf20026c0dae2d4c44b908cf9"
+    },
+    "hig-components-menus": {
+      "source": "raintree-technology/hig-doctor",
+      "sourceType": "github",
+      "skillPath": "skills/hig-components-menus/SKILL.md",
+      "computedHash": "b28935d708c6dbf8e55b1a94a3a634649034d51711b9dd259eb916dd6a96a990"
+    },
+    "hig-components-search": {
+      "source": "raintree-technology/hig-doctor",
+      "sourceType": "github",
+      "skillPath": "skills/hig-components-search/SKILL.md",
+      "computedHash": "f2552213936ba57201bd2a200e6f68c787967e0f4513e8dd13e656ca2509ec29"
+    },
+    "hig-components-status": {
+      "source": "raintree-technology/hig-doctor",
+      "sourceType": "github",
+      "skillPath": "skills/hig-components-status/SKILL.md",
+      "computedHash": "43b280c679eb4e16fab9eac8e032352b6891d958084206a1ad8b5a39a0346684"
+    },
+    "hig-foundations": {
+      "source": "raintree-technology/hig-doctor",
+      "sourceType": "github",
+      "skillPath": "skills/hig-foundations/SKILL.md",
+      "computedHash": "1ab8083cc9c920c8d7c7707da07a3fdb8076da7e313040d0650ac22aab26e1ce"
+    },
+    "hig-inputs": {
+      "source": "raintree-technology/hig-doctor",
+      "sourceType": "github",
+      "skillPath": "skills/hig-inputs/SKILL.md",
+      "computedHash": "b81fee58a48c94dfb6a3d3d70208becc33cca3d0c1f27cb5179da6b9d03bf319"
+    },
+    "hig-patterns": {
+      "source": "raintree-technology/hig-doctor",
+      "sourceType": "github",
+      "skillPath": "skills/hig-patterns/SKILL.md",
+      "computedHash": "e53db49f557ab481b5c1280593b432ca2c32a1afcc9e1548a4c1a521449d7baf"
+    },
+    "hig-platforms": {
+      "source": "raintree-technology/hig-doctor",
+      "sourceType": "github",
+      "skillPath": "skills/hig-platforms/SKILL.md",
+      "computedHash": "1b89a4745d45f799ca73e072a541c866c552e31210fd324ab657c8f94cb0be64"
     },
     "improve-codebase-architecture": {
       "source": "mattpocock/skills",
       "sourceType": "github",
       "skillPath": "skills/engineering/improve-codebase-architecture/SKILL.md",
-      "computedHash": "11cfd9568d71445df710d5a9332c674ad773de0c9d5fc22d3ffa175bdd7d988b"
+      "computedHash": "f0820b18426a7d9a6c823a890988ba0ac70bf0fd596d30d7ef07c88558728c23"
     },
     "performance": {
       "source": "addyosmani/web-quality-skills",
       "sourceType": "github",
       "skillPath": "skills/performance/SKILL.md",
-      "computedHash": "25074989a0bbf636fd92e9079270b262a1c63422ed72a854494a8241dea0fcc5"
+      "computedHash": "06902ebc4a8b91bfb8d1a99a03f186f0535b03d1a776ef751206104ef9b86c4c"
     },
     "playwright-best-practices": {
       "source": "currents-dev/playwright-best-practices-skill",
       "sourceType": "github",
       "skillPath": "playwright-best-practices/SKILL.md",
-      "computedHash": "1c2babf492719b9fbfec4221df88e463b133ffb3983556073540f73427baa92e"
+      "computedHash": "111e9d3e9d63dea34814120fb6583c0b28ee45371662801d8e8d8bdf4b05dcb0"
     },
     "requesting-code-review": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "skillPath": "skills/requesting-code-review/SKILL.md",
-      "computedHash": "b095ac8c980339436b41de9989328f3f288f2e2a70452df28452bbeb6531d604"
+      "computedHash": "32bcc25e8c3315d0150f646ee0067c9d4bfbc7719c34012db9c202e17cce8a14"
     },
     "subagent-driven-development": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "skillPath": "skills/subagent-driven-development/SKILL.md",
-      "computedHash": "d04b3e0b04640f8a5cd8cd94ad1d1c5c062f8257ea2dd0cf67f23062bb835760"
+      "computedHash": "da0ad5e635b6ff70c2b6dbf25e51ae6ca1cad6beebfc61a791195675468c492e"
     },
     "systematic-debugging": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "skillPath": "skills/systematic-debugging/SKILL.md",
-      "computedHash": "b7b6e98c3bffe371893bdb69845ec61124a65b6a96313dc8d6a2bce4437b13eb"
+      "computedHash": "79ff0583175346e39431b0dc713b223edd1bd7a7ea2b6c8b78b2fb9a3fed6782"
     },
     "test-driven-development": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "skillPath": "skills/test-driven-development/SKILL.md",
-      "computedHash": "3cfe4ebb6fa7288f668d87880d279c8e48f7a92b63415e296857060f5ce22e05"
+      "computedHash": "2782702b2cf69ace085ed30d067b6f8bfd2d777ad51770fc5bdae9cb5c1b5c04"
     },
     "vercel-composition-patterns": {
       "source": "vercel-labs/agent-skills",
       "sourceType": "github",
       "skillPath": "skills/composition-patterns/SKILL.md",
-      "computedHash": "f98931159fa9c7fed043bcd18a891a46dcf89ababa38df13a4c5b7b30dc0ce07"
+      "computedHash": "f711ed8b16162eaa712abbcdbbae6c926f86c57e60127735fecc3ad0dd85b3fa"
     },
     "vercel-react-best-practices": {
       "source": "vercel-labs/agent-skills",
       "sourceType": "github",
       "skillPath": "skills/react-best-practices/SKILL.md",
-      "computedHash": "3219a1944e404ffc14d1d9d6aef6dd2e3855b81387ee0a044ccbfe14d34c2357"
+      "computedHash": "7991ed4fbecdac23f47c1a40c243e00a212a9e7f3604db93959b3ae11dffe299"
     },
     "verification-before-completion": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "skillPath": "skills/verification-before-completion/SKILL.md",
-      "computedHash": "b529822bdac4b197b180fe12225cff86b930b65910435103c10622df7f041651"
+      "computedHash": "09b0e3a4689c1c38a3b8fc6ef57a1d4165aa33c0013d546dbde9dd348941a319"
     },
     "vite": {
       "source": "antfu/skills",
       "sourceType": "github",
       "skillPath": "skills/vite/SKILL.md",
-      "computedHash": "1f96e440b315aa6570b2638d699e339c6838ee99c0c97aad46506498b78bd054"
+      "computedHash": "db9eea82d8bf6ce0f60a4a1d94a626c718df7d97160b5f1d5b150647e0c401b3"
     },
     "vitest": {
       "source": "antfu/skills",
       "sourceType": "github",
       "skillPath": "skills/vitest/SKILL.md",
-      "computedHash": "b26b7f8d10e860e944e0334c003207771707c4906514cb96c971faae13fba875"
+      "computedHash": "bd95e41d66d76da9008893c9bc48c30f0a68f352cd2b00017767f5e4c129501d"
     },
     "web-design-guidelines": {
       "source": "vercel-labs/agent-skills",
       "sourceType": "github",
       "skillPath": "skills/web-design-guidelines/SKILL.md",
-      "computedHash": "a6a44d5498f7e8f68289902f3dedfc6f38ae0cee1e96527c80724cf27f727c2a"
+      "computedHash": "4f68ae07187fb0d1fb78c88b503d089da4cf5a9d9625d1f2e425b1590bf96d92"
     },
     "writing-plans": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "skillPath": "skills/writing-plans/SKILL.md",
-      "computedHash": "c2647b5bf067be353a893e5a39a632cbbeb7ad81e61fa5ae227ece5490029073"
+      "computedHash": "ef082ddb5354d736059397133b3682e8a0c85c57906affe47c9da354cbb7c91e"
     }
   }
 }
