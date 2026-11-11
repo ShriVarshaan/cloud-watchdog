@@ -318,3 +318,30 @@ describe('repo: price cache', () => {
     old.close()
   })
 })
+
+describe('action log', () => {
+  const KEY = `${ACCOUNT}:ec2-instance:eu-west-1:i-1`
+  const entry = { at: '2026-11-11T10:00:00.000Z', accountId: ACCOUNT, resourceKey: KEY, action: 'stop-ec2', preState: 'running' }
+
+  it('keeps every attempt, oldest first, with what happened', () => {
+    repo.addActionLog({ ...entry, result: 'refused', error: 'The confirmation has expired.' })
+    repo.addActionLog({ ...entry, at: '2026-11-11T10:01:00.000Z', result: 'cancelled', error: null })
+    expect(repo.listActionLog(ACCOUNT)).toEqual([
+      { id: 1, ...entry, result: 'refused', error: 'The confirmation has expired.' },
+      { id: 2, ...entry, at: '2026-11-11T10:01:00.000Z', result: 'cancelled', error: null }
+    ])
+  })
+
+  it('records an attempt before the call to AWS, and its outcome after', () => {
+    const id = repo.addActionLog({ ...entry, result: 'attempting', error: null })
+    expect(repo.listActionLog(ACCOUNT)).toMatchObject([{ id, result: 'attempting' }])
+
+    repo.finishActionLog(id, 'failed', 'You are not authorized to perform this operation.')
+    expect(repo.listActionLog(ACCOUNT)).toMatchObject([{ id, result: 'failed', error: 'You are not authorized to perform this operation.' }])
+  })
+
+  it('lists only the account asked for', () => {
+    repo.addActionLog({ ...entry, result: 'stopped', error: null })
+    expect(repo.listActionLog('999999999999')).toEqual([])
+  })
+})

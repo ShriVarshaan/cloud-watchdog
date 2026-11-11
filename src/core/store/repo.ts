@@ -1,6 +1,5 @@
 // Reads and writes app data as typed objects. All SQL lives here; the rest
-// of the app never sees a row. Later milestones add their own functions
-// (price cache in M5, CPU cache in M7, action log in M10).
+// of the app never sees a row.
 
 import type {
   AttrValue,
@@ -40,6 +39,34 @@ export interface Repo {
   /** The last CPU reading taken for a resource, whatever window it was for. */
   getCpuReading(resourceKey: string): StoredCpuReading | null
   putCpuReading(resourceKey: string, reading: StoredCpuReading): void
+
+  /** Adds a row to the record of stop attempts. Returns its id. Rows are never deleted. */
+  addActionLog(entry: Omit<ActionLogEntry, 'id'>): number
+  /** Sets the outcome of a row written as 'attempting' just before the call to AWS. */
+  finishActionLog(id: number, result: ActionLogResult, error: string | null): void
+  /** Every attempt for an account, oldest first. */
+  listActionLog(accountId: string): ActionLogEntry[]
+}
+
+/**
+ * attempting  written just before the stop call; replaced by stopped or failed
+ * stopped     AWS accepted the stop
+ * failed      AWS refused the stop call, or it could not be sent
+ * refused     the app refused before calling AWS (expired token, changed state, ...)
+ * cancelled   the user said no in the confirmation
+ */
+export type ActionLogResult = 'attempting' | 'stopped' | 'failed' | 'refused' | 'cancelled'
+
+export interface ActionLogEntry {
+  id: number
+  at: string
+  accountId: string
+  resourceKey: string
+  action: string
+  /** The resource's state when the stop was previewed, when known. */
+  preState: string | null
+  result: ActionLogResult
+  error: string | null
 }
 
 export interface StoredCpuReading {
@@ -95,6 +122,17 @@ type FlagRow = {
   first_seen_at: string
   resolved_at: string | null
   dismissed_until: string | null
+}
+
+type ActionLogRow = {
+  id: number
+  at: string
+  account_id: string
+  resource_key: string
+  action: string
+  pre_state: string | null
+  result: ActionLogResult
+  error: string | null
 }
 
 type PlanRow = {
@@ -395,6 +433,46 @@ export function createRepo(db: Db): Repo {
         reading.maxCpu,
         reading.datapoints
       )
+    },
+
+    addActionLog(entry) {
+      const row = db.get<{ id: number }>(
+        `INSERT INTO action_log (at, account_id, resource_key, action, pre_state, result, error)
+         VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id`,
+        entry.at,
+        entry.accountId,
+        entry.resourceKey,
+        entry.action,
+        entry.preState,
+        entry.result,
+        entry.error
+      )
+      if (!row) throw new Error('The action log row was not written.')
+      return row.id
+    },
+
+    finishActionLog(id, result, error) {
+      if (db.run('UPDATE action_log SET result = ?, error = ? WHERE id = ?', result, error, id) !== 1) {
+        throw new Error(`There is no action log row ${id}.`)
+      }
+    },
+
+    listActionLog(accountId) {
+      return db
+        .all<ActionLogRow>(
+          'SELECT id, at, account_id, resource_key, action, pre_state, result, error FROM action_log WHERE account_id = ? ORDER BY id',
+          accountId
+        )
+        .map((row) => ({
+          id: row.id,
+          at: row.at,
+          accountId: row.account_id,
+          resourceKey: row.resource_key,
+          action: row.action,
+          preState: row.pre_state,
+          result: row.result,
+          error: row.error
+        }))
     }
   }
 }
