@@ -77,6 +77,11 @@ function identifiers(err: ErrorLike): string[] {
     .map((value) => value.replace(/^(Client|Server)\./, ''))
 }
 
+/** Whether the error is the AWS error called `name`, e.g. "DryRunOperation". */
+export function hasErrorName(error: unknown, name: string): boolean {
+  return error !== null && typeof error === 'object' && identifiers(error as ErrorLike).includes(name)
+}
+
 function codeOf(err: ErrorLike): ScanErrorCode | null {
   const ids = identifiers(err)
   const any = (set: Set<string>) => ids.some((id) => set.has(id))

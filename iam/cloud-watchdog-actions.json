@@ -1,0 +1,17 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "StopOnly",
+      "Effect": "Allow",
+      "Action": ["ec2:StopInstances", "rds:StopDBInstance"],
+      "Resource": ["arn:aws:ec2:*:*:instance/*", "arn:aws:rds:*:*:db:*"]
+    },
+    {
+      "Sid": "CheckBeforeStopping",
+      "Effect": "Allow",
+      "Action": ["ec2:DescribeInstanceTypes"],
+      "Resource": "*"
+    }
+  ]
+}

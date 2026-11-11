@@ -11,21 +11,27 @@
 //   demo             a free-plan account with credits, and a few typical
 //                    resources that raise flags
 //   freetier-denied  the same, but the Free Tier API refuses (degraded path)
+//
+// The pretend account can also be told to stop an instance: from then on it
+// reports that instance as stopped. Nothing else about it ever changes.
 
 import { CloudWatchClient, GetMetricDataCommand, type GetMetricDataCommandInput } from '@aws-sdk/client-cloudwatch'
 import {
   DescribeAddressesCommand,
   DescribeInstancesCommand,
+  DescribeInstanceTypesCommand,
   DescribeNatGatewaysCommand,
   DescribeRegionsCommand,
   DescribeVolumesCommand,
-  EC2Client
+  EC2Client,
+  StopInstancesCommand,
+  type Instance
 } from '@aws-sdk/client-ec2'
 import { ElasticLoadBalancingClient, DescribeLoadBalancersCommand as DescribeClassicLoadBalancersCommand } from '@aws-sdk/client-elastic-load-balancing'
 import { ElasticLoadBalancingV2Client, DescribeLoadBalancersCommand } from '@aws-sdk/client-elastic-load-balancing-v2'
 import { FreeTierClient, GetAccountPlanStateCommand, GetFreeTierUsageCommand } from '@aws-sdk/client-freetier'
 import { GetProductsCommand, PricingClient, type GetProductsCommandInput } from '@aws-sdk/client-pricing'
-import { DescribeDBInstancesCommand, RDSClient } from '@aws-sdk/client-rds'
+import { DescribeDBInstancesCommand, RDSClient, StopDBInstanceCommand } from '@aws-sdk/client-rds'
 import { ListEndpointsCommand, SageMakerClient } from '@aws-sdk/client-sagemaker'
 import { GetCallerIdentityCommand, STSClient } from '@aws-sdk/client-sts'
 import { createClientFactory, type ClientFactory } from '../core/aws/clients'
@@ -47,8 +53,13 @@ export function fakeScenarioFrom(value: string | undefined): FakeScenario | null
 
 const HOUR_MS = 3_600_000
 
-function awsError(name: string, message: string): Error {
-  return Object.assign(new Error(message), { name, $metadata: { httpStatusCode: 403 } })
+function awsError(name: string, message: string, httpStatusCode = 403): Error {
+  return Object.assign(new Error(message), { name, $metadata: { httpStatusCode } })
+}
+
+/** What has been done to one pretend account since it was created. */
+interface FakeState {
+  stoppedInstances: Set<string>
 }
 
 type Command = { input: unknown }
@@ -74,7 +85,7 @@ function products(input: GetProductsCommandInput): string[] {
   return found
 }
 
-function answer(scenario: FakeScenario, region: string, command: Command): unknown {
+function answer(scenario: FakeScenario, state: FakeState, region: string, command: Command): unknown {
   const now = Date.now()
   const ago = (hours: number) => new Date(now - hours * HOUR_MS)
   const home = region === 'eu-west-1'
@@ -86,41 +97,68 @@ function answer(scenario: FakeScenario, region: string, command: Command): unkno
     return { Regions: FAKE_REGIONS.map((RegionName) => ({ RegionName, OptInStatus: 'opt-in-not-required' })) }
   }
   if (command instanceof DescribeInstancesCommand) {
-    if (!home) return { Reservations: [] }
-    const base = { UsageOperation: 'RunInstances', PlatformDetails: 'Linux/UNIX', Placement: { Tenancy: 'default' as const }, RootDeviceType: 'ebs' as const }
-    return {
-      Reservations: [
-        {
-          Instances: [
-            {
-              ...base,
-              InstanceId: 'i-0demo0000000web01',
-              InstanceType: 't3.micro',
-              State: { Name: 'running', Code: 16 },
-              LaunchTime: ago(30),
-              PublicIpAddress: '203.0.113.10',
-              Tags: [{ Key: 'Name', Value: 'hackathon-api' }]
-            },
-            {
-              ...base,
-              InstanceId: 'i-0demo00000train01',
-              InstanceType: 'g4dn.xlarge',
-              State: { Name: 'running', Code: 16 },
-              LaunchTime: ago(3),
-              Tags: [{ Key: 'Name', Value: 'model-training' }]
-            },
-            {
-              ...base,
-              InstanceId: 'i-0demo0000000old01',
-              InstanceType: 't3.micro',
-              State: { Name: 'stopped', Code: 80 },
-              LaunchTime: ago(400),
-              Tags: [{ Key: 'Name', Value: 'old-prototype' }]
-            }
-          ]
-        }
-      ]
+    const wanted = command.input.InstanceIds
+    const notFound = (id: string) => awsError('InvalidInstanceID.NotFound', `The instance ID '${id}' does not exist`, 400)
+    if (!home) {
+      if (wanted?.[0]) throw notFound(wanted[0])
+      return { Reservations: [] }
     }
+    const base = { UsageOperation: 'RunInstances', PlatformDetails: 'Linux/UNIX', Placement: { Tenancy: 'default' as const }, RootDeviceType: 'ebs' as const }
+    const instances: Instance[] = [
+      {
+        ...base,
+        InstanceId: 'i-0demo0000000web01',
+        InstanceType: 't3.micro',
+        State: { Name: 'running', Code: 16 },
+        LaunchTime: ago(30),
+        PublicIpAddress: '203.0.113.10',
+        NetworkInterfaces: [{ Association: { PublicIp: '203.0.113.10', IpOwnerId: 'amazon' } }],
+        Tags: [{ Key: 'Name', Value: 'hackathon-api' }]
+      },
+      {
+        ...base,
+        InstanceId: 'i-0demo00000train01',
+        InstanceType: 'g4dn.xlarge',
+        State: { Name: 'running', Code: 16 },
+        LaunchTime: ago(3),
+        Tags: [{ Key: 'Name', Value: 'model-training' }]
+      },
+      {
+        ...base,
+        InstanceId: 'i-0demo0000000old01',
+        InstanceType: 't3.micro',
+        State: { Name: 'stopped', Code: 80 },
+        LaunchTime: ago(400),
+        Tags: [{ Key: 'Name', Value: 'old-prototype' }]
+      }
+    ]
+    const current = instances.map((instance): Instance => {
+      if (!state.stoppedInstances.has(instance.InstanceId!)) return instance
+      // A stopped instance gives back its automatic public address.
+      const { PublicIpAddress: _released, NetworkInterfaces: _detached, ...rest } = instance
+      return { ...rest, State: { Name: 'stopped', Code: 80 } }
+    })
+    const missing = wanted?.find((id) => !current.some((instance) => instance.InstanceId === id))
+    if (missing) throw notFound(missing)
+    return { Reservations: [{ Instances: wanted ? current.filter((instance) => wanted.includes(instance.InstanceId!)) : current }] }
+  }
+  if (command instanceof DescribeInstanceTypesCommand) {
+    // As in AWS: the GPU type comes with an instance-store disk, the small one does not.
+    return {
+      InstanceTypes: (command.input.InstanceTypes ?? []).map((InstanceType) => ({
+        InstanceType,
+        InstanceStorageSupported: InstanceType.startsWith('g4dn.')
+      }))
+    }
+  }
+  if (command instanceof StopInstancesCommand) {
+    if (command.input.DryRun) throw awsError('DryRunOperation', 'Request would have succeeded, but DryRun flag is set.', 412)
+    for (const id of command.input.InstanceIds ?? []) state.stoppedInstances.add(id)
+    return {}
+  }
+  // The pretend account has no databases.
+  if (command instanceof StopDBInstanceCommand) {
+    throw awsError('DBInstanceNotFoundFault', `DBInstance ${command.input.DBInstanceIdentifier} not found.`, 404)
   }
   if (command instanceof DescribeVolumesCommand) {
     if (!home) return { Volumes: [] }
@@ -215,6 +253,7 @@ export function createFakeClientFactory(scenario: FakeScenario): ClientFactory {
     credentials: async () => ({ accessKeyId: 'AKIAFAKEFAKEFAKEFAKE', secretAccessKey: 'fake' })
   })
   const patched = new WeakSet<object>()
+  const state: FakeState = { stoppedInstances: new Set() }
 
   return {
     profile: FAKE_PROFILE,
@@ -222,7 +261,7 @@ export function createFakeClientFactory(scenario: FakeScenario): ClientFactory {
       const client = real.get(service, region)
       if (!patched.has(client)) {
         if (!CLIENTS.some((known) => client instanceof known)) throw new Error(`Fake AWS does not know ${service.name}.`)
-        const fake = async (command: Command) => answer(scenario, region, command)
+        const fake = async (command: Command) => answer(scenario, state, region, command)
         ;(client as unknown as { send: typeof fake }).send = fake
         patched.add(client)
       }
