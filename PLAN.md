@@ -580,8 +580,8 @@ No start, modify, delete or terminate permission appears anywhere. A unit test f
 10. What `npx skills add` creates on disk (folders, lock file) and whether it prompts. The `.gitignore` entries are adjusted after the first install.
 11. `electron-vite` compatibility with Electron 45. If the template lags, the fallback is Electron Forge with its Vite plugin.
 12. The error names the credential chain raises for an expired SSO token inside Electron's main process. Captured in M2.
-13. Which typeface M13 ships. Apple's SF Pro licence limits it to Apple platforms, so it cannot be bundled in a Windows app. Plan: a font stack that uses SF Pro on macOS and falls back to Inter (SIL OFL, bundled, closest in feel) elsewhere, instead of Segoe UI. To be confirmed when M13 starts.
-14. Which icon set M13 uses. SF Symbols are likewise restricted to Apple platforms. Plan: a permissively licensed set with matching stroke weight (Lucide or Phosphor), inlined as SVG. To be confirmed when M13 starts.
+13. ~~Which typeface M13 ships.~~ **Answered in M13:** Inter, bundled (SIL OFL). The app is Windows only, and SF Pro's licence limits it to Apple platforms.
+14. ~~Which icon set M13 uses.~~ **Answered in M13:** Lucide (ISC licence) through `lucide-react`. SF Symbols are limited to Apple platforms.
 
 ---
 
