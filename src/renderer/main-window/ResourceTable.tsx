@@ -176,6 +176,7 @@ export function ResourceTable({
                     data-key={resource.key}
                     onClick={() => onSelect(resource.key)}
                     onKeyDown={(event) => onRowKey(event, index)}
+                    title={resource.name ? `${resource.name}, ${resource.id}` : resource.id}
                   >
                     <span className="row-name">{label(resource)}</span>
                     <span className="row-kind">

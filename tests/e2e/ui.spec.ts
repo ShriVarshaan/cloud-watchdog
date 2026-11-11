@@ -25,7 +25,7 @@ async function showPopover(app: ElectronApplication, page: Page) {
     url.searchParams.set('view', 'popover')
     await win.loadURL(url.toString())
   })
-  await page.setViewportSize({ width: 360, height: 560 })
+  await page.setViewportSize({ width: 360, height: 600 })
 }
 
 test.describe('the UI with the demo account', () => {

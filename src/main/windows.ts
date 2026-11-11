@@ -11,7 +11,7 @@ import { supportsMica, titleBarOverlay, windowBackground } from './windowChrome'
 type View = 'main' | 'popover'
 
 // Tall enough for the runway ring, two figures and three warnings without scrolling.
-const POPOVER_SIZE = { width: 360, height: 560 }
+const POPOVER_SIZE = { width: 360, height: 600 }
 // A click on the tray icon first blurs (and hides) an open popover. Ignore
 // the click that follows, or the popover would immediately reopen.
 const REOPEN_GUARD_MS = 250
@@ -83,8 +83,9 @@ export function showMainWindow(focusResourceKey: string | null = null): void {
 
 function createMainWindow(focus?: string): BrowserWindow {
   const win = new BrowserWindow({
-    width: 1100,
-    height: 720,
+    // Wide enough for the full sidebar, the table and the inspector side by side.
+    width: 1280,
+    height: 780,
     minWidth: 760,
     minHeight: 480,
     show: false,

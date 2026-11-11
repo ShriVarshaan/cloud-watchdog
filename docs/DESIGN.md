@@ -30,8 +30,8 @@ rarely. So:
 | Rule (skill, reference) | Where it applies |
 |---|---|
 | Translucent materials belong to window chrome, never the content layer (`hig-foundations`, materials.md) | Only the sidebar is translucent (Mica). Lists, the inspector and the summary are opaque. |
-| Sidebar for top-level navigation on the desktop; don't put critical information at the bottom; don't colour every sidebar icon (`hig-components-layout`, sidebars.md) | Resources, Scan Problems and Settings move from a tab strip to a sidebar. The account is shown at the top. Icons use the label colour; the selected row uses the accent. |
-| Hide the sidebar when the window gets narrow (sidebars.md) | Below 900px the sidebar collapses to icons; the names stay as accessible names. |
+| Sidebar for top-level navigation on the desktop; don't put critical information at the bottom; don't give sidebar icons a fixed colour of your own (`hig-components-layout`, sidebars.md) | Resources, Scan Problems and Settings move from a tab strip to a sidebar. Icons take the accent colour, as macOS sidebars do; the selected row is filled with the accent. The account is not in the sidebar but in the toolbar subtitle, so it stays visible when the sidebar collapses. |
+| Hide the sidebar when the window gets narrow (sidebars.md) | Below 1240px the sidebar collapses to icons, so the table and inspector keep room side by side; the names stay as accessible names. The window opens at 1280px. |
 | Alternating row colours in a multicolumn table (`hig-components-layout`, lists-and-tables.md) | The resource table. |
 | Switches in grouped-form rows; checkboxes for a hierarchy of settings (`hig-components-controls`, toggles.md) | Notifications and start-at-login are switches. Rules, which have sub-settings, stay checkboxes. |
 | Outside a list, use a button that behaves like a toggle, not a switch; a segmented control for closely related choices, labelled with nouns (toggles.md, segmented-controls.md) | "Only with warnings" becomes a segmented control: All / With Warnings. |
@@ -99,7 +99,8 @@ next to a word.
 Main window
 ┌ sidebar (Mica) ─┬ toolbar (drag region) ─────────────────── [– □ ×]
 │ Cloud Watchdog  │ Resources          Scanned just now  [⟳ Scan Now]
-│ Account 1111…   ├──────────────────────────────────────────────────
+│                 │ Account 1111…, user/demo, profile demo
+│                 ├──────────────────────────────────────────────────
 │                 │ ┌ runway ring + days │ running now │ plan ┐
 │ ▣ Resources   7 │ └───────────────────────────────────────┘
 │ ⚠ Scan Problems │ banners

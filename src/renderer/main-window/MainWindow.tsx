@@ -1,7 +1,7 @@
 // The main window, laid out like a macOS utility (docs/DESIGN.md): a sidebar
-// with the account and three sections (resources with the inspector, scan
-// problems, settings), and a toolbar with the section title and Scan Now.
-// The sidebar is a vertical tab list, so screen readers and the keyboard
+// with three sections (resources with the inspector, scan problems,
+// settings), and a toolbar with the section title, the account as its
+// subtitle, and Scan Now. The sidebar is a vertical tab list, so screen readers and the keyboard
 // treat it the way they treated the old tab strip.
 
 import { Boxes, RefreshCw, Settings as SettingsGlyph, TriangleAlert, type LucideIcon } from 'lucide-react'
@@ -103,14 +103,6 @@ export function MainWindow({ focusKey = null }: { focusKey?: string | null }) {
       <div className="sidebar">
         <div className="sidebar-head">
           <h1>Cloud Watchdog</h1>
-          {state.identity && (
-            <p className="identity">
-              <span>Account {state.identity.accountId}</span>
-              <span className="quiet" title={state.identity.arn}>
-                {state.identity.arn.split(':').slice(5).join(':') || state.identity.arn}, profile {state.identity.profile}
-              </span>
-            </p>
-          )}
         </div>
         <nav aria-label="Sections">
           <div role="tablist" aria-label="Sections" aria-orientation="vertical" className="sidebar-list">
@@ -146,7 +138,18 @@ export function MainWindow({ focusKey = null }: { focusKey?: string | null }) {
 
       <main className="content">
         <header className="main-header">
-          <h2 className="toolbar-title">{TAB_TITLE[tab]}</h2>
+          <div className="toolbar-titles">
+            <h2 className="toolbar-title">{TAB_TITLE[tab]}</h2>
+            {/* The window subtitle: which account this is, visible at every width. */}
+            {state.identity && (
+              <p className="identity">
+                <span>Account {state.identity.accountId}</span>
+                <span className="quiet" title={state.identity.arn}>
+                  {state.identity.arn.split(':').slice(5).join(':') || state.identity.arn}, profile {state.identity.profile}
+                </span>
+              </p>
+            )}
+          </div>
           <p className="toolbar-status quiet" aria-live="polite">
             {scanStatus}
           </p>
