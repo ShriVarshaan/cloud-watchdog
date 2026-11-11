@@ -215,6 +215,7 @@ Renderer to main, all `ipcRenderer.invoke`, all input validated with zod in main
 | `resource:openConsole` | `{ resourceKey }` | ok. Main builds the URL; the renderer never supplies one. |
 | `actions:preview` | `{ resourceKey, action }` | live state, consequences, blockers, one-time token |
 | `actions:execute` | `{ token }` | result |
+| `actions:setEnabled` | `{ enabled }` | settings. Added in M10: switching on asks in a native dialog first. `settings:update` cannot change this. |
 
 Main to renderer events: `scan:progress`, `state:changed`. That is the whole surface. There is no generic "call AWS" or "run SQL" channel, and the renderer can only refer to resources by a key that main looks up in its own data.
 
@@ -497,10 +498,18 @@ Shares of the Fable allowance (50% of the weekly limit):
       "Effect": "Allow",
       "Action": ["ec2:StopInstances", "rds:StopDBInstance"],
       "Resource": ["arn:aws:ec2:*:*:instance/*", "arn:aws:rds:*:*:db:*"]
+    },
+    {
+      "Sid": "CheckBeforeStopping",
+      "Effect": "Allow",
+      "Action": ["ec2:DescribeInstanceTypes"],
+      "Resource": "*"
     }
   ]
 }
 ```
+
+The second statement was added in M10. `DescribeInstances` does not list instance-store disks, so the only way to know an instance has them is to ask about its type. It is read-only, and is in this policy so that the read-only policy is unchanged for people who never switch stopping on.
 
 No start, modify, delete or terminate permission appears anywhere. A unit test fails if a scanner or action calls an API whose IAM action is missing from these files.
 
@@ -542,7 +551,7 @@ No start, modify, delete or terminate permission appears anywhere. A unit test f
 6. Which services credits do not apply to on the paid plan. Coverage says "covered by credits" without a per-service exclusion list.
 7. The exact Price List filter attributes for each kind (for example `operatingSystem`, `preInstalledSw`, `capacitystatus`, `tenancy`, `deploymentOption`, `licenseModel`), and current public IPv4 and Elastic IP rates. Confirmed in M5 from recorded `GetProducts` responses, not from memory.
 8. ~~CloudWatch `GetMetricData` request pricing and whether any of it falls in a free allowance.~~ **Answered in M7:** the CloudWatch pricing page says `GetMetricData` is excluded from the 1 million free API requests ("always charged"). It is billed per metric requested; the page's own examples use $0.01 per 1,000 metrics but it states no standalone rate. The app asks for one metric per running instance per hour (about 720 a month, under one cent each), so idle detection defaults to on and can be switched off.
-9. Resource-level ARN support for `ec2:StopInstances` and `rds:StopDBInstance` as written in the actions policy. Checked with Access Analyzer in M12; the fallback is `Resource: "*"`.
+9. ~~Resource-level ARN support for `ec2:StopInstances` and `rds:StopDBInstance` as written in the actions policy.~~ **Answered in M10:** AWS's machine-readable service reference lists the resource type `instance` (`arn:aws:ec2:region:account:instance/id`) for `ec2:StopInstances` and `db` (`arn:aws:rds:region:account:db:name`) for `rds:StopDBInstance`, so the ARNs in the policy are right. `ec2:DescribeInstanceTypes` has no resource type, so it takes `Resource: "*"`. **Still open:** running `aws accessanalyzer validate-policy` on the file, and a real stop on your account (the checklist in `docs/REVIEW.md`).
 10. What `npx skills add` creates on disk (folders, lock file) and whether it prompts. The `.gitignore` entries are adjusted after the first install.
 11. `electron-vite` compatibility with Electron 45. If the template lags, the fallback is Electron Forge with its Vite plugin.
 12. The error names the credential chain raises for an expired SSO token inside Electron's main process. Captured in M2.

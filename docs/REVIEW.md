@@ -169,6 +169,83 @@ Three places where knowledge is duplicated and would be better owned once:
 
 The 730 hours in a month is also defined twice (`pricing/engine.ts`, `shared/format.ts`).
 
+## Stop actions (M10), reviewed on 2026-11-11
+
+Built after the review above. This is the review the top of this file asks for.
+
+| | |
+|---|---|
+| `npm run check` | passes, 948 unit tests |
+| `npm run test:e2e` | passes, 28 tests (6 new, for stopping) |
+| Deliberate breaks caught by a test | 33 of 33 |
+| Tried against a real AWS account | **no** (see the checklist below) |
+
+**What can change an AWS account.** Two calls: `StopInstances` for one instance
+id, without `Force` or `Hibernate`, and `StopDBInstance` for one identifier,
+without a snapshot. `tests/unit/awsCalls.test.ts` fails if any other call that
+is not `Describe*`, `Get*` or `List*` is imported, or if either stop call is
+imported outside its own driver file. (`main/fakeAws.ts` also imports them, to
+answer them in the pretend account; it cannot send one.)
+
+**What stands between the UI and those calls** (`src/core/actions/guard.ts`):
+
+| Step | Where it is tested |
+|---|---|
+| Off by default; only `actions:setEnabled` switches it on, after a native dialog that names the account and the policy | `controller.test.ts`, `ipcHandlers.test.ts`, e2e |
+| Switched off again when another profile is chosen | `controller.test.ts` |
+| A preview looks at the resource in AWS, not at the last scan | `guard.test.ts` |
+| A token only when nothing blocks the stop; 60 seconds; one use; only in the session that issued it | `guard.test.ts` |
+| A native confirmation naming the resource, region and account. Cancel is the default. One dialog at a time. | `confirmations.test.ts`, `controller.test.ts` |
+| After the confirmation: the session still exists, the account is the same, and the resource is exactly as previewed | `guard.test.ts` |
+| A row in `action_log` for every execute, written before the stop call | `guard.test.ts`, `store.test.ts` |
+| Nothing is stopped when the database could not be opened | `controller.test.ts` |
+
+The 33 breaks were things like "a token can be used twice", "the account is not
+checked again", "an Auto Scaling group is not a blocker", "the stop is sent
+with `Force`" and "enabling skips the dialog". Each made at least one test fail.
+
+**Differences from `PLAN.md`**
+
+- One more IPC channel, `actions:setEnabled`. The plan asked for a separate
+  step with its own confirmation and did not name the channel.
+- One more read-only permission, `ec2:DescribeInstanceTypes`, in the actions
+  policy. It is how the app learns that an instance type has instance-store disks.
+- Previews are not written to `action_log`, only executes. A preview changes nothing.
+- The restart warning (`rds-restarted`) only knows about databases this app
+  stopped, and decides from scan history. If the computer was off for the whole
+  7 days, a database the user started by hand in that time is also flagged.
+
+**Open findings**
+
+1. *Medium.* **Not tried on a real account.** Everything above ran against
+   mocks and the fake account. The error names the code relies on
+   (`DryRunOperation`, `UnauthorizedOperation`, `InvalidInstanceID.NotFound`,
+   `DBInstanceNotFoundFault`) and the shape of `NetworkInterfaces[].Association`
+   are from the AWS documentation and SDK types.
+2. *Medium.* **`aws accessanalyzer validate-policy` was not run** on
+   `iam/cloud-watchdog-actions.json` (same command as for the read-only policy).
+3. *Low.* An instance with stop protection (`DisableApiStop`) is not detected at
+   the preview. AWS refuses the stop and the app shows AWS's message.
+4. *Low.* `actionsEnabled` is a line in `settings.json`. Someone who can edit
+   that file can switch stopping on without the first dialog. The dialog before
+   each stop cannot be skipped that way.
+5. *Low.* The demo account's GPU instance is blocked (its type has an
+   instance-store disk). That is correct, but it means the most expensive kind
+   of forgotten instance often has to be stopped by hand.
+6. *Low.* The auto-answer for dialogs in the end-to-end tests
+   (`WATCHDOG_FAKE_CONFIRM`) is read only with the fake account, and the fake
+   account only in a build that is not packaged. Like the fake account itself,
+   that is checked by reading `index.ts`, not by a test.
+
+**Checklist for the first real stop** (needs the actions policy attached)
+
+- [ ] Switching on shows the dialog with the real account id
+- [ ] Without the actions policy, the preview of a running `t3.micro` says the profile is not allowed
+- [ ] With the policy, the preview shows consequences, and the confirmation names the instance, region and account
+- [ ] The instance stops; the next scan shows it stopped; `action_log` has one `stopped` row
+- [ ] An instance in an Auto Scaling group gets a blocker and no Stop button to confirm
+- [ ] A test RDS database stops, and a `stopped` row is written
+
 ## Manual smoke checklist
 
 On 2026-11-10 the app was started with `npm run dev` against the real account
