@@ -389,6 +389,31 @@ Rules for every milestone: start by switching model, work test-first (`test-driv
 - **Review:** `docs/REVIEW.md`.
 - **Commit:** `chore: final security and correctness review, fixes and review notes`
 
+### M13. Apple-style redesign
+**Model: Opus** — visual and CSS work on a UI whose behaviour is already tested. *`/model` → Opus.*
+- **Goal:** the tray popover and main window look and feel like a first-party Apple product (macOS System Settings / Activity Monitor / Weather): calm, content first, generous space, quiet chrome. **No behaviour, IPC or core changes.** Every state, label and test hook that exists today still exists.
+- **Order of work (one commit each, per the commit-granularity rule):**
+  1. **Design brief** in `docs/DESIGN.md`: how each HIG principle maps to this app, the token table, and the rules below. Written first, using `hig-foundations`, `hig-platforms` (macOS section) and `frontend-design`, so later steps follow a spec.
+  2. **Tokens and base** in `src/renderer/styles.css`: semantic colour tokens in the system palette (label / secondary / tertiary label, system background, grouped background, separator, system blue/green/orange/red) with proper dark values and a high-contrast override; type scale on the macOS text styles (13px body, 11px caption, 22 and 28px titles, tight tracking on titles); 4px spacing scale; radius scale (6, 10, 14); soft layered shadows instead of borders; one easing curve and three durations.
+  3. **Materials and window chrome:** translucent sidebar and toolbar (`backdrop-filter` blur plus saturation, with a solid fallback), `backgroundMaterial` in `src/main/windows` where the OS supports it (Mica on Windows 11), hidden title bar with an accessible drag region.
+  4. **Main window:** sidebar navigation (Resources, Scan errors, Settings) in place of the current tabs; large title that collapses on scroll; resource list as an inset grouped list with hairline separators, a segmented control for filters, search field with the system look; detail panel as a trailing inspector; the first-run screen as a centred, single-purpose welcome.
+  5. **Popover:** the runway gauge as the hero (large numeral, one ring), burn rate below in secondary text, flags as a short grouped list, "Scan now" as the single prominent button.
+  6. **Controls and sheets:** switch for the actions opt-in, segmented controls, pill badges that still repeat their word (never colour alone), sheets for the stop preview, the destructive Stop button in the system red only inside the sheet.
+  7. **Motion:** short fades and gentle springs for panels and sheets; everything honours `prefers-reduced-motion` with a crossfade.
+  8. **Polish and audit:** `web-design-guidelines` and `accessibility` passes, screenshots light and dark at 100% and 150% scaling for the README.
+- **Rules:**
+  - Colour is never the only carrier of meaning (existing rule); an unknown price never renders a number (existing invariant, existing test).
+  - Contrast: 4.5:1 for text, 3:1 for UI components, checked in light, dark and high contrast.
+  - Keyboard: every interactive element reachable, visible focus ring in the accent colour, `Esc` closes sheets, arrow keys move through the list.
+  - No new runtime dependencies without a reason written in the commit. Icons are inline SVG in the style of SF Symbols (see open question 14), not an icon font.
+  - Do not copy Apple artwork, logos or the SF font files. The look is built from the published guidelines.
+- **Files:** `src/renderer/**`, `src/main/windows*` (material and title bar only), `docs/DESIGN.md`.
+- **Acceptance:** `npm run check` and `npm run test:e2e` pass unchanged (no test is weakened to fit the new markup; selectors that must change are changed in the same commit with the reason in the message); component tests for the badges still pass; an axe pass reports no serious or critical issue; light, dark and high-contrast screenshots are reviewed by you.
+- **Skills:** `frontend-design`, `hig-foundations`, `hig-platforms`, `hig-patterns`, `hig-inputs`, `hig-components-layout`, `hig-components-content`, `hig-components-controls`, `hig-components-menus`, `hig-components-dialogs`, `hig-components-search`, `hig-components-status`, `web-design-guidelines`, `accessibility`, `playwright-best-practices`, `verification-before-completion`.
+- **Review:** `docs/DESIGN.md`, `src/renderer/styles.css`, `src/renderer/main-window/MainWindow.tsx`, `src/renderer/popover/Popover.tsx`.
+- **Commit:** one per step above, e.g. `feat(ui): Apple-style design tokens and materials`
+- **Placement:** build it before M11 so the README screenshots show the final look.
+
 ---
 
 ## 5. Schedule (6 days, 4 to 6 hours each)
@@ -555,6 +580,8 @@ No start, modify, delete or terminate permission appears anywhere. A unit test f
 10. What `npx skills add` creates on disk (folders, lock file) and whether it prompts. The `.gitignore` entries are adjusted after the first install.
 11. `electron-vite` compatibility with Electron 45. If the template lags, the fallback is Electron Forge with its Vite plugin.
 12. The error names the credential chain raises for an expired SSO token inside Electron's main process. Captured in M2.
+13. Which typeface M13 ships. Apple's SF Pro licence limits it to Apple platforms, so it cannot be bundled in a Windows app. Plan: a font stack that uses SF Pro on macOS and falls back to Inter (SIL OFL, bundled, closest in feel) elsewhere, instead of Segoe UI. To be confirmed when M13 starts.
+14. Which icon set M13 uses. SF Symbols are likewise restricted to Apple platforms. Plan: a permissively licensed set with matching stroke weight (Lucide or Phosphor), inlined as SVG. To be confirmed when M13 starts.
 
 ---
 
