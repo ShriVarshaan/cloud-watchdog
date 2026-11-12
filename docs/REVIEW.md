@@ -120,6 +120,8 @@ Besides reading the code, I changed the code on purpose in small ways
    was not recorded (see the smoke checklist).
 6. **Development-tool vulnerabilities.** 10 moderate advisories in the ESLint
    toolchain. They do not ship in the app. `npm audit fix` resolves some.
+   *Since M11:* 15, all the same `minimatch` issue, now also through
+   electron-builder. Still 0 in production dependencies.
 7. **CI status not checked.** The GitHub CLI is not installed on this machine,
    so I could not see whether the Actions runs pass. The e2e tests show real
    Windows notifications, which may behave differently on the CI runner.
@@ -235,7 +237,8 @@ with `Force`" and "enabling skips the dialog". Each made at least one test fail.
 6. *Low.* The auto-answer for dialogs in the end-to-end tests
    (`WATCHDOG_FAKE_CONFIRM`) is read only with the fake account, and the fake
    account only in a build that is not packaged. Like the fake account itself,
-   that is checked by reading `index.ts`, not by a test.
+   that is checked by reading `index.ts`, not by a test. *Since M11, tested:*
+   the packaged smoke test sets it and the other development switches.
 
 **Checklist for the first real stop** (needs the actions policy attached)
 
