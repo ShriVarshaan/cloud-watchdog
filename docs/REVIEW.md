@@ -57,7 +57,7 @@ Two problems found earlier, while building, are worth knowing about:
 | Credentials never stored or logged | Yes. Keys stay in the SDK's provider chain in memory. The database, `settings.json` and logs hold a profile name, account id and ARN at most. | schema in `migrations.ts`; `settings.ts` drops unknown fields |
 | SQL injection | Not possible: every statement is parameterised and all SQL is in `repo.ts` | `repo.ts` |
 | The app cannot change an AWS account | Yes, until M10: every imported SDK call is read-only | `awsCalls.test.ts` |
-| Fake AWS mode cannot run in an installed app | By inspection only: `app.isPackaged ? null : ...` in `index.ts`. No test can cover a packaged build yet. | `src/main/index.ts` |
+| Fake AWS mode cannot run in an installed app | By inspection only: `app.isPackaged ? null : ...` in `index.ts`. No test can cover a packaged build yet. **Since M11, tested:** the packaged smoke test starts the exe with every development switch set and checks they are ignored. | `src/main/index.ts`, `tests/packaged/smoke.spec.ts` |
 | Dependencies | Production dependencies: 0 known vulnerabilities. Development tools: 10 moderate, all in the ESLint toolchain (`minimatch` and others). | `npm audit --omit=dev`, `npm audit` |
 
 ## Correctness

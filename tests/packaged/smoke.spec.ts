@@ -7,9 +7,11 @@
 // database, settings and login item are never touched; see loginItem.ts)
 // and --remote-debugging-port, which lets the test read the page over CDP.
 // The fresh data folder has no profile chosen, so no AWS call is made.
+// The development switches (pretend AWS account, data folder, dev server)
+// are all set, to show the installed app ignores them.
 
 import { spawn, type ChildProcess } from 'node:child_process'
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs'
+import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { DatabaseSync } from 'node:sqlite'
@@ -20,6 +22,8 @@ const APP_DIR = resolve('release', 'win-unpacked')
 const EXE = join(APP_DIR, 'Cloud Watchdog.exe')
 
 let userData: string
+/** Where CW_USER_DATA_DIR points. The installed app must ignore it. */
+let decoyData: string
 let child: ChildProcess
 let browser: Browser
 let page: Page
@@ -54,10 +58,14 @@ test.describe.configure({ mode: 'serial' })
 test.beforeAll(async () => {
   expect(existsSync(EXE), `${EXE} is missing: run npm run dist:dir first`).toBe(true)
   userData = mkdtempSync(join(tmpdir(), 'cloud-watchdog-packaged-'))
-  // A clean environment: none of the development switches may reach the app.
-  const env = { ...process.env }
-  for (const name of ['WATCHDOG_FAKE_AWS', 'WATCHDOG_FAKE_CONFIRM', 'CW_USER_DATA_DIR', 'ELECTRON_RENDERER_URL']) {
-    delete env[name]
+  decoyData = mkdtempSync(join(tmpdir(), 'cloud-watchdog-decoy-'))
+  // Every development switch is set, to show the installed app ignores them all.
+  const env = {
+    ...process.env,
+    WATCHDOG_FAKE_AWS: 'demo',
+    WATCHDOG_FAKE_CONFIRM: 'yes',
+    CW_USER_DATA_DIR: decoyData,
+    ELECTRON_RENDERER_URL: 'http://127.0.0.1:9/'
   }
   child = spawn(EXE, [`--user-data-dir=${userData}`, '--remote-debugging-port=0'], { env, stdio: 'ignore' })
   browser = await chromium.connectOverCDP(`http://127.0.0.1:${await devToolsPort()}`)
@@ -84,6 +92,7 @@ test.afterAll(async () => {
     })
   }
   rmSync(userData, { recursive: true, force: true, maxRetries: 5, retryDelay: 500 })
+  rmSync(decoyData, { recursive: true, force: true })
 })
 
 test('the exe carries the hardening fuses', async () => {
@@ -130,6 +139,19 @@ test('the page reaches the main process: the IPC sender check accepts app.asar',
   expect(result.ok).toBe(true)
   // With no profile chosen yet, the welcome screen asks for one.
   await expect(page.getByRole('heading', { name: 'Choose the AWS account to watch' })).toBeVisible()
+})
+
+test('the development switches do nothing in the packaged app', async () => {
+  // WATCHDOG_FAKE_AWS=demo would offer only the pretend profile "demo".
+  // This machine's real profiles are listed instead (none at all on CI).
+  const profiles = await page.evaluate(() =>
+    (globalThis as unknown as { watchdog: { listProfiles(): Promise<{ ok: boolean; value?: string[] }> } }).watchdog.listProfiles()
+  )
+  expect(profiles.ok).toBe(true)
+  expect(profiles.value).not.toEqual(['demo'])
+  // CW_USER_DATA_DIR was not used.
+  expect(readdirSync(decoyData)).toEqual([])
+  // ELECTRON_RENDERER_URL was not used: the page is the one in app.asar (tested above).
 })
 
 test('the database is created in the data folder, with its schema', async () => {
