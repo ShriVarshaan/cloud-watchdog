@@ -1,6 +1,7 @@
 // Main-process entry point: one instance, lives in the tray, hardened renderer.
 // The app's logic is in controller.ts; this file connects it to Electron.
 
+import { join } from 'node:path'
 import { app, dialog, ipcMain, powerMonitor, session, shell, type MessageBoxOptions } from 'electron'
 import { createClientFactory } from '../core/aws/clients'
 import { listProfileNames } from '../core/aws/profiles'
@@ -11,6 +12,7 @@ import type { ConfirmDialog } from './confirmations'
 import { createController } from './controller'
 import { createFakeClientFactory, FAKE_PROFILE, fakeConfirmFrom, fakeScenarioFrom } from './fakeAws'
 import { registerIpcHandlers } from './ipcHandlers'
+import { managesLoginItem } from './loginItem'
 import { hardenSession, installWebContentsGuards } from './security'
 import { createSenderCheck } from './senderCheck'
 import { openStore } from './store'
@@ -41,6 +43,11 @@ if (!app.requestSingleInstanceLock()) {
   installWebContentsGuards()
 
   const userData = app.getPath('userData')
+  const canSetLoginItem = managesLoginItem({
+    isPackaged: app.isPackaged,
+    userData,
+    defaultUserData: join(app.getPath('appData'), app.getName())
+  })
   let store: Db
   let storeOnDisk = true
   try {
@@ -86,9 +93,9 @@ if (!app.requestSingleInstanceLock()) {
     emit: broadcast,
     notify: showToasts,
     setTooltip: setTrayTooltip,
-    // Only the installed app registers itself; a development build would register electron.exe.
+    // Only the installed app in its usual data folder registers itself (see loginItem.ts).
     setLoginItem: (enabled) => {
-      if (app.isPackaged) app.setLoginItemSettings({ openAtLogin: enabled, args: ['--hidden'] })
+      if (canSetLoginItem) app.setLoginItemSettings({ openAtLogin: enabled, args: ['--hidden'] })
     },
     openExternal: (url) => shell.openExternal(url),
     confirm: (question) => (fakeConfirm === null ? confirm(question) : Promise.resolve(fakeConfirm)),
