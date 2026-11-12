@@ -1,0 +1,52 @@
+# Windows installer for Cloud Watchdog: `npm run dist` writes release/.
+# Unsigned (code signing is out of scope), so SmartScreen warns on first run;
+# the README says what to do.
+
+# Must match app.setAppUserModelId() in src/main/index.ts: Windows shows a
+# toast only for an id that a Start Menu shortcut carries, and the installer
+# makes that shortcut.
+appId: com.cloudwatchdog.app
+productName: Cloud Watchdog
+copyright: Copyright © 2026 Shri Varshaan
+
+directories:
+  output: release
+  buildResources: build
+
+# Only the built app. electron-builder adds the production dependencies
+# (the AWS SDK and zod, which the main process loads at run time); the
+# renderer's libraries are bundled by Vite and are dev dependencies.
+files:
+  - out/**/*
+  - '!out/**/*.map'
+  - package.json
+asar: true
+
+# Hardening switches compiled into the exe. The app needs none of these.
+electronFuses:
+  runAsNode: false # the exe cannot be used as a plain Node.js
+  enableNodeOptionsEnvironmentVariable: false # NODE_OPTIONS cannot inject code
+  enableNodeCliInspectArguments: false # --inspect cannot attach a debugger
+  enableEmbeddedAsarIntegrityValidation: true # app.asar must match the hash in the exe
+  onlyLoadAppFromAsar: true # no loose app folder next to app.asar is loaded instead
+  enableCookieEncryption: true
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  icon: build/icon.ico
+
+nsis:
+  # Per-user install to %LOCALAPPDATA%\Programs\Cloud Watchdog: no admin prompt.
+  oneClick: true
+  perMachine: false
+  allowElevation: false
+  runAfterFinish: true
+  # The app lives in the tray and starts at login; the Start Menu entry is enough.
+  createDesktopShortcut: false
+  createStartMenuShortcut: true
+  shortcutName: Cloud Watchdog
+  # Keep settings and scan history on uninstall, so a reinstall picks up where it left off.
+  deleteAppDataOnUninstall: false
+  artifactName: Cloud-Watchdog-Setup-${version}.exe

@@ -1,7 +1,7 @@
 {
   "name": "cloud-watchdog",
   "productName": "Cloud Watchdog",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Windows tray app that warns about AWS resources that are running and costing money.",
   "private": true,
   "license": "UNLICENSED",
@@ -23,7 +23,9 @@
     "record-fixtures": "node scripts/record-fixtures.ts",
     "record-prices": "node scripts/record-prices.ts",
     "build-bundled-prices": "node scripts/build-bundled-prices.ts",
-    "build-icon": "node scripts/build-icon.ts"
+    "build-icon": "node scripts/build-icon.ts",
+    "dist": "electron-vite build && electron-builder --win --publish never",
+    "dist:dir": "electron-vite build && electron-builder --win --dir --publish never"
   },
   "dependencies": {
     "@aws-sdk/client-cloudwatch": "^3.1165.0",
@@ -36,15 +38,12 @@
     "@aws-sdk/client-sagemaker": "^3.1165.0",
     "@aws-sdk/client-sts": "^3.1165.0",
     "@aws-sdk/credential-providers": "^3.1165.0",
-    "@fontsource-variable/inter": "^5.3.0",
-    "lucide-react": "^1.72.0",
-    "react": "^19.3.1",
-    "react-dom": "^19.3.1",
     "zod": "^4.6.7"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
     "@eslint/js": "^10.0.1",
+    "@fontsource-variable/inter": "^5.3.0",
     "@playwright/test": "^1.65.0",
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
@@ -52,13 +51,18 @@
     "@vitejs/plugin-react": "^6.3.0",
     "aws-sdk-client-mock": "^4.1.0",
     "electron": "45.2.3",
+    "electron-builder": "^26.18.0",
     "electron-vite": "^6.0.0",
     "eslint": "^10.14.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.14.0",
+    "lucide-react": "^1.72.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.72.2",
     "vite": "^8.3.7",
     "vitest": "^5.1.0"
-  }
+  },
+  "author": "Shri Varshaan"
 }
