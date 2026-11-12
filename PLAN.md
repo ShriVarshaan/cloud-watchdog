@@ -379,6 +379,10 @@ Rules for every milestone: start by switching model, work test-first (`test-driv
 - **Skills:** `electron`.
 - **Review:** `electron-builder.yml`, `README.md`, `docs/ARCHITECTURE.md`.
 - **Commit:** `build: Windows installer and documentation`
+- **Status:** built on 2026-11-12.
+  - **Verified:** `npm run dist` writes `release/Cloud-Watchdog-Setup-1.0.0.exe` (about 120 MB, most of it Electron). `npm run test:packaged` (also in CI) starts the packaged exe from `release/win-unpacked` with a throwaway data folder and passes: the fuses are set, the page loads from `app.asar`, IPC works through the sender check, `watchdog.db` is created with its schema, and every development switch is ignored. `npm run check` (1055 unit tests) and `npm run test:e2e` (30 tests, the scan in fake mode) pass.
+  - **Changed from this plan:** electron-builder's fuses are flipped (no run-as-Node, `NODE_OPTIONS` or `--inspect`; asar only, with integrity check), so the packaged test reads the page over `--remote-debugging-port` instead of Playwright's Electron launcher. The icon is drawn in code (`src/main/icon/`) and replaces the placeholder tray icon too. The login item is only set by the installed app in its usual data folder (`src/main/loginItem.ts`), so a smoke test cannot overwrite or delete it. React, lucide and the font moved to dev dependencies, since Vite bundles them. Version 1.0.0. Screenshots come from `npm run screenshots`. No desktop shortcut: the Start Menu entry is enough for a tray app.
+  - **Not verified:** running the installer itself (the installed app starting into the tray, its database under `%APPDATA%\Cloud Watchdog`, the Start Menu shortcut, toasts under the installed app id, start at login, uninstall), and a scan against your account from the installed app. These need your machine and account; it was not installed here because it would use your real data folder and login item.
 
 ### M12. Final review
 **Model: Fable** — a second look at the parts where mistakes cost money or trust. *`/model` → Fable.*
