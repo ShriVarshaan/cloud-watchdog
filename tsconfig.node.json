@@ -17,5 +17,5 @@
     "vitest.config.ts",
     "eslint.config.js"
   ],
-  "exclude": ["tests/e2e/**/*", "tests/packaged/**/*"]
+  "exclude": ["tests/e2e/**/*", "tests/packaged/**/*", "tests/screenshots/**/*"]
 }

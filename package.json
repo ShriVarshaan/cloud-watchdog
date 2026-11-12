@@ -26,7 +26,8 @@
     "build-icon": "node scripts/build-icon.ts",
     "dist": "electron-vite build && electron-builder --win --publish never",
     "dist:dir": "electron-vite build && electron-builder --win --dir --publish never",
-    "test:packaged": "npm run dist:dir && playwright test --config playwright.packaged.config.ts"
+    "test:packaged": "npm run dist:dir && playwright test --config playwright.packaged.config.ts",
+    "screenshots": "electron-vite build && playwright test --config playwright.screenshots.config.ts"
   },
   "dependencies": {
     "@aws-sdk/client-cloudwatch": "^3.1165.0",
