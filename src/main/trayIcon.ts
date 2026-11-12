@@ -1,28 +1,18 @@
-// Draws the tray icon in code: a filled amber dot with a darker ring.
-// Placeholder until the real icon arrives with packaging (M11); drawing it
-// avoids committing a binary asset that would be replaced anyway.
+// The tray icon: the app icon (icon/iconArt.ts) drawn at the tray slot's
+// size for 100%, 150% and 200% display scaling, so Windows never has to
+// shrink the 256px icon into a blur.
 
 import { nativeImage, type NativeImage } from 'electron'
+import { drawIcon } from './icon/iconArt'
+import { encodePng } from './icon/png'
 
-const SIZE = 32 // drawn at 2x for a 16px tray slot
+const TRAY_SIZE = 16
 
 export function createTrayIcon(): NativeImage {
-  const pixels = Buffer.alloc(SIZE * SIZE * 4) // BGRA, starts fully transparent
-  const centre = (SIZE - 1) / 2
-  const outer = SIZE / 2 - 1
-  const ring = outer - 3
-
-  for (let y = 0; y < SIZE; y++) {
-    for (let x = 0; x < SIZE; x++) {
-      const distance = Math.hypot(x - centre, y - centre)
-      if (distance > outer) continue
-      const i = (y * SIZE + x) * 4
-      const [r, g, b] = distance > ring ? [146, 64, 14] : [245, 158, 11]
-      pixels[i] = b
-      pixels[i + 1] = g
-      pixels[i + 2] = r
-      pixels[i + 3] = 255
-    }
+  const image = nativeImage.createEmpty()
+  for (const scaleFactor of [1, 1.5, 2]) {
+    const size = Math.round(TRAY_SIZE * scaleFactor)
+    image.addRepresentation({ scaleFactor, buffer: encodePng(drawIcon(size), size, size) })
   }
-  return nativeImage.createFromBitmap(pixels, { width: SIZE, height: SIZE, scaleFactor: 2 })
+  return image
 }
