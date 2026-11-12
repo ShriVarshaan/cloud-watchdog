@@ -25,7 +25,8 @@
     "build-bundled-prices": "node scripts/build-bundled-prices.ts",
     "build-icon": "node scripts/build-icon.ts",
     "dist": "electron-vite build && electron-builder --win --publish never",
-    "dist:dir": "electron-vite build && electron-builder --win --dir --publish never"
+    "dist:dir": "electron-vite build && electron-builder --win --dir --publish never",
+    "test:packaged": "npm run dist:dir && playwright test --config playwright.packaged.config.ts"
   },
   "dependencies": {
     "@aws-sdk/client-cloudwatch": "^3.1165.0",
@@ -42,6 +43,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
+    "@electron/fuses": "^1.8.0",
     "@eslint/js": "^10.0.1",
     "@fontsource-variable/inter": "^5.3.0",
     "@playwright/test": "^1.65.0",
