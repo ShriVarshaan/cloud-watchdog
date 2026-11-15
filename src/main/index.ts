@@ -8,6 +8,7 @@ import { listProfileNames } from '../core/aws/profiles'
 import { openDb, type Db } from '../core/store/db'
 import { migrate } from '../core/store/migrations'
 import { createRepo } from '../core/store/repo'
+import { detectAwsCli, runProgram } from './awsCli'
 import type { ConfirmDialog } from './confirmations'
 import { createController } from './controller'
 import { createFakeClientFactory, FAKE_PROFILE, fakeConfirmFrom, fakeScenarioFrom } from './fakeAws'
@@ -89,6 +90,8 @@ if (!app.requestSingleInstanceLock()) {
     userDataDir: userData,
     repo: createRepo(store),
     listProfiles: fakeScenario ? async () => [FAKE_PROFILE] : () => listProfileNames(),
+    // The pretend account has a profile, so the setup steps never show with it.
+    detectAwsCli: fakeScenario ? async () => ({ installed: true, version: '2.0.0' }) : () => detectAwsCli({ run: runProgram, env: process.env }),
     createClients: (profile) => (fakeScenario ? createFakeClientFactory(fakeScenario) : createClientFactory({ profile })),
     emit: broadcast,
     notify: showToasts,

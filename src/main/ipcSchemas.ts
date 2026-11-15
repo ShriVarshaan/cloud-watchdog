@@ -5,7 +5,7 @@
 
 import { z } from 'zod'
 import type { IpcChannel, IpcInput } from '../shared/ipc'
-import { ACTION_KINDS, RESOURCE_KINDS, SCAN_INTERVAL_MINUTES } from '../shared/types'
+import { ACTION_KINDS, RESOURCE_KINDS, SCAN_INTERVAL_MINUTES, SETUP_GUIDES } from '../shared/types'
 
 const noInput = z.undefined()
 
@@ -40,6 +40,8 @@ export const ipcSchemas = {
   'app:getState': noInput,
   'profiles:list': noInput,
   'profiles:select': z.strictObject({ profile: profileName }),
+  'setup:checkAwsCli': noInput,
+  'setup:openGuide': z.strictObject({ guide: z.enum(SETUP_GUIDES) }),
   'scan:run': noInput,
   'scan:getLatest': noInput,
   'flags:dismiss': z.strictObject({

@@ -2,7 +2,16 @@
 // console and the AWS documentation, over HTTPS. Checked in the main process
 // right before shell.openExternal, even though main built the URL itself.
 
+import type { SetupGuide } from '../shared/types'
+
 const ALLOWED_HOSTS = ['console.aws.amazon.com', 'docs.aws.amazon.com']
+
+/** The AWS CLI guides behind the setup steps on the welcome screen. */
+export const SETUP_GUIDE_URLS: Record<SetupGuide, string> = {
+  'install-cli': 'https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html',
+  'access-keys': 'https://docs.aws.amazon.com/cli/latest/userguide/cli-authentication-user.html',
+  sso: 'https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html'
+}
 
 export function isAllowedExternalUrl(text: string): boolean {
   let url: URL

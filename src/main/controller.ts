@@ -13,7 +13,7 @@
 // Every change ends with one `state:changed` event and a new tray tooltip.
 
 import type { IpcEventChannel, IpcEvents } from '../shared/ipc'
-import type { AppState, Identity, ScanErrorCode, ScanResult, Settings } from '../shared/types'
+import type { AppState, AwsCliStatus, Identity, ScanErrorCode, ScanResult, Settings } from '../shared/types'
 import { ACTION_DRIVERS } from '../core/actions'
 import { createActionGuard } from '../core/actions/guard'
 import { buildManualSteps } from '../core/actions/manualSteps'
@@ -31,7 +31,7 @@ import { completeScan, loadLatestResult, summarize } from '../core/scan/pipeline
 import { ALL_SCANNERS } from '../core/scanners'
 import type { Repo } from '../core/store/repo'
 import { enableActionsConfirmation, stopConfirmation, type ConfirmDialog } from './confirmations'
-import { isAllowedExternalUrl } from './externalLinks'
+import { isAllowedExternalUrl, SETUP_GUIDE_URLS } from './externalLinks'
 import { fail, ok, type IpcHandlers } from './ipcHandlers'
 import { planToasts, trayTooltip, type Toast } from './notifications'
 import { createScheduler, type ScanOutcome, type Scheduler } from './scheduler'
@@ -42,6 +42,7 @@ export interface ControllerDeps {
   userDataDir: string
   repo: Repo
   listProfiles(): Promise<string[]>
+  detectAwsCli(): Promise<AwsCliStatus>
   createClients(profile: string): ClientFactory
   emit<C extends IpcEventChannel>(channel: C, payload: IpcEvents[C]): void
   notify(toasts: Toast[]): void
@@ -244,6 +245,15 @@ export function createController(deps: ControllerDeps): Controller {
     'app:getState': async () => ok(state()),
 
     'profiles:list': async () => ok(await deps.listProfiles()),
+
+    'setup:checkAwsCli': async () => ok(await deps.detectAwsCli()),
+
+    'setup:openGuide': async ({ guide }) => {
+      const url = SETUP_GUIDE_URLS[guide]
+      if (!isAllowedExternalUrl(url)) return fail('internal', 'That link cannot be opened.')
+      await deps.openExternal(url)
+      return ok(null)
+    },
 
     'profiles:select': async ({ profile }) => {
       if (!(await deps.listProfiles()).includes(profile)) {

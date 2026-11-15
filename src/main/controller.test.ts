@@ -53,6 +53,7 @@ function build(profiles = ['demo', 'other']) {
     userDataDir: dir,
     repo,
     listProfiles: async () => profiles,
+    detectAwsCli: async () => ({ installed: true, version: '2.17.3' }),
     createClients: (profile) => (brokenProfiles.has(profile) ? brokenFactory(profile) : createFakeClientFactory('demo')),
     emit: <C extends IpcEventChannel>(channel: C, payload: IpcEvents[C]) => void events.push({ channel, payload }),
     notify: (batch) => void toasts.push(batch),
@@ -124,6 +125,19 @@ describe('before a profile is chosen', () => {
 
   it('lists profile names', async () => {
     expect(value(await build().handlers['profiles:list'](undefined))).toEqual(['demo', 'other'])
+  })
+
+  it('says whether the AWS CLI is installed', async () => {
+    expect(value(await build().handlers['setup:checkAwsCli'](undefined))).toEqual({ installed: true, version: '2.17.3' })
+  })
+
+  it.each([
+    ['install-cli', 'https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html'],
+    ['access-keys', 'https://docs.aws.amazon.com/cli/latest/userguide/cli-authentication-user.html'],
+    ['sso', 'https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html']
+  ] as const)('opens the AWS guide for %s, a page the app chose', async (guide, url) => {
+    expect(value(await build().handlers['setup:openGuide']({ guide }))).toBeNull()
+    expect(opened).toEqual([url])
   })
 
   it('refuses to scan', async () => {

@@ -16,11 +16,13 @@ import type {
   ActionPreview,
   ActionResult,
   AppState,
+  AwsCliStatus,
   Identity,
   ManualSteps,
   ScanErrorCode,
   ScanProgress,
   ScanResult,
+  SetupGuide,
   Settings
 } from './types'
 
@@ -66,6 +68,10 @@ export interface IpcContract {
   /** Profile names only. Keys and secrets never cross this boundary. */
   'profiles:list': { input: undefined; output: string[] }
   'profiles:select': { input: { profile: string }; output: Identity }
+  /** For the setup steps shown when there is no profile yet. */
+  'setup:checkAwsCli': { input: undefined; output: AwsCliStatus }
+  /** Opens one of the AWS guides the app knows. The UI names the guide, never a URL. */
+  'setup:openGuide': { input: { guide: SetupGuide }; output: null }
   /** Starts a scan, or joins the one already running. Returns its id. */
   'scan:run': { input: undefined; output: { scanId: string } }
   'scan:getLatest': { input: undefined; output: ScanResult | null }
@@ -93,6 +99,8 @@ export const API_METHODS = {
   getState: 'app:getState',
   listProfiles: 'profiles:list',
   selectProfile: 'profiles:select',
+  checkAwsCli: 'setup:checkAwsCli',
+  openSetupGuide: 'setup:openGuide',
   runScan: 'scan:run',
   getLatestScan: 'scan:getLatest',
   dismissFlag: 'flags:dismiss',

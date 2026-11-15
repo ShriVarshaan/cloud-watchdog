@@ -17,6 +17,7 @@ test.describe('IPC bridge', () => {
     expect(keys).toEqual(
       [
         'apiVersion',
+        'checkAwsCli',
         'dismissFlag',
         'executeAction',
         'getLatestScan',
@@ -26,6 +27,7 @@ test.describe('IPC bridge', () => {
         'onScanProgress',
         'onStateChanged',
         'openConsole',
+        'openSetupGuide',
         'previewAction',
         'runScan',
         'selectProfile',
@@ -65,6 +67,7 @@ test.describe('IPC bridge', () => {
       return Promise.all([
         watchdog['dismissFlag']!({ flagId: 5 }),
         watchdog['openConsole']!({ resourceKey: 'https://example.com/' }),
+        watchdog['openSetupGuide']!({ guide: 'https://example.com/' }),
         watchdog['updateSettings']!({ actionsEnabled: true }),
         watchdog['previewAction']!({ resourceKey: '111122223333:ec2-instance:eu-west-1:i-0abc', action: 'terminate' })
       ])
