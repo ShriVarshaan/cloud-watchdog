@@ -245,7 +245,7 @@ with `Force`" and "enabling skips the dialog". Each made at least one test fail.
 - [ ] Switching on shows the dialog with the real account id
 - [ ] Without the actions policy, the preview of a running `t3.micro` says the profile is not allowed
 - [ ] With the policy, the preview shows consequences, and the confirmation names the instance, region and account
-- [ ] The instance stops; the next scan shows it stopped; `action_log` has one `stopped` row
+- [x] The instance stops; the next scan shows it stopped; `action_log` has one `stopped` row (confirmed 2026-11-15: `i-030f7913e479b0f42` in us-east-1, burn rate fell from $0.0154/h to $0 on the next scan)
 - [ ] An instance in an Auto Scaling group gets a blocker and no Stop button to confirm
 - [ ] A test RDS database stops, and a `stopped` row is written
 
@@ -260,5 +260,5 @@ confirmed one by one**, so they are still open.
 - [ ] An unattached volume and an unused Elastic IP, created for the test, are flagged and priced
 - [ ] Removing the `freetier` statement from the policy shows the "Plan details unavailable" banner
 - [ ] Removing the `pricing` statement turns prices into estimates or "—"
-- [ ] A notification appears for a new warning, and clicking it opens that resource
+- [x] A notification appears for a new warning, and clicking it opens that resource (confirmed 2026-11-15)
 - [ ] The tray tooltip shows the burn rate
