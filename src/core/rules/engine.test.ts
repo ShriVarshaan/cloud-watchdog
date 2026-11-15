@@ -186,7 +186,13 @@ describe('account rules', () => {
     fetchedAt: NOW.toISOString(),
     ...over
   })
-  const runway = (days: number | null, isUpperBound = false): Runway => ({ creditDays: days, planDays: null, days, isUpperBound })
+  const runway = (days: number | null, isUpperBound = false): Runway => ({
+    creditDays: days,
+    planDays: null,
+    days,
+    wholeDays: days === null ? null : Math.floor(days),
+    isUpperBound
+  })
 
   it('flags a runway under 14 days as critical, for the account', () => {
     expect(only('low-runway', [], { plan: plan(), runway: runway(13.9) })).toEqual([
@@ -202,6 +208,19 @@ describe('account rules', () => {
   it('says "less than a day" at the end', () => {
     const [flag] = only('low-runway', [], { plan: plan(), runway: runway(0.4) })
     expect(flag!.message).toBe('Credits or the plan run out in less than a day.')
+  })
+
+  it('names the same number of days as the runway shown on screen', () => {
+    // The plan end date is the limit, so 12.75 days by the clock are 14 calendar days.
+    const byPlanDate: Runway = { creditDays: null, planDays: 12.75, days: 12.75, wholeDays: 14, isUpperBound: false }
+    const [flag] = only('low-runway', [], { plan: plan(), runway: byPlanDate })
+    expect(flag!.message).toBe('Credits or the plan run out in about 14 days.')
+  })
+
+  it('says one day, not less than a day, on the last day of the plan', () => {
+    const lastDay: Runway = { creditDays: null, planDays: 0.4, days: 0.4, wholeDays: 1, isUpperBound: false }
+    const [flag] = only('low-runway', [], { plan: plan(), runway: lastDay })
+    expect(flag!.message).toBe('Credits or the plan run out in about 1 day.')
   })
 
   it('does not flag at exactly 14 days, or when there is no limit', () => {
@@ -234,7 +253,7 @@ describe('account rules', () => {
 describe('the engine', () => {
   it('raises nothing for an empty, healthy account', () => {
     const plan: PlanState = { planType: 'PAID', status: 'ACTIVE', remainingCreditsUsd: null, expiresAt: null, fetchedAt: NOW.toISOString() }
-    const result = run([], { plan, runway: { creditDays: null, planDays: null, days: null, isUpperBound: false } })
+    const result = run([], { plan, runway: { creditDays: null, planDays: null, days: null, wholeDays: null, isUpperBound: false } })
     expect(result.drafts).toEqual([])
     expect(result.undecided.size).toBe(0)
   })

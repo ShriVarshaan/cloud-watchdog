@@ -46,7 +46,15 @@ describe('formatPrice', () => {
 })
 
 describe('formatRunway', () => {
-  const runway = (days: number | null, isUpperBound = false) => ({ creditDays: days, planDays: null, days, isUpperBound })
+  const runway = (days: number | null, isUpperBound = false) => ({
+    creditDays: days,
+    planDays: null,
+    days,
+    wholeDays: days === null ? null : Math.floor(days),
+    isUpperBound
+  })
+  // The plan end date is the limit: whole days are counted like the AWS console counts them.
+  const byPlanDate = (days: number, wholeDays: number) => ({ creditDays: null, planDays: days, days, wholeDays, isUpperBound: false })
 
   it.each([
     [null, 'Plan unknown'],
@@ -55,7 +63,9 @@ describe('formatRunway', () => {
     [runway(0.4), 'Less than a day'],
     [runway(1.2), '1 day'],
     [runway(13.9), '13 days'],
-    [runway(13.9, true), 'At most 13 days']
+    [runway(13.9, true), 'At most 13 days'],
+    [byPlanDate(94.75, 96), '96 days'],
+    [byPlanDate(0.4, 1), '1 day']
   ])('%j -> %s', (value, text) => {
     expect(formatRunway(value)).toBe(text)
   })

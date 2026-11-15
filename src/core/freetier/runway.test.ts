@@ -36,6 +36,7 @@ describe('computeRunway', () => {
       creditDays: 8.33,
       planDays: 60,
       days: 8.33,
+      wholeDays: 8,
       isUpperBound: false
     })
   })
@@ -46,7 +47,7 @@ describe('computeRunway', () => {
   })
 
   it('has no credit limit when nothing is running: only the plan date counts', () => {
-    expect(computeRunway(plan(), burn(0), [], NOW)).toEqual({ creditDays: null, planDays: 60, days: 60, isUpperBound: false })
+    expect(computeRunway(plan(), burn(0), [], NOW)).toEqual({ creditDays: null, planDays: 60, days: 60, wholeDays: 61, isUpperBound: false })
   })
 
   it('is zero days on the free plan once the credits are gone, even with nothing running', () => {
@@ -58,6 +59,7 @@ describe('computeRunway', () => {
       creditDays: 8.33,
       planDays: null,
       days: 8.33,
+      wholeDays: 8,
       isUpperBound: false
     })
   })
@@ -75,6 +77,7 @@ describe('computeRunway', () => {
       creditDays: null,
       planDays: null,
       days: null,
+      wholeDays: null,
       isUpperBound: false
     })
   })
@@ -95,6 +98,7 @@ describe('computeRunway', () => {
       creditDays: null,
       planDays: 0,
       days: 0,
+      wholeDays: 0,
       isUpperBound: false
     })
   })
@@ -115,6 +119,7 @@ describe('computeRunway', () => {
       creditDays: null,
       planDays: 60,
       days: 60,
+      wholeDays: 61,
       isUpperBound: true
     })
   })
@@ -136,11 +141,50 @@ describe('computeRunway', () => {
       creditDays: null,
       planDays: null,
       days: null,
+      wholeDays: null,
       isUpperBound: false
     })
   })
 
   it('has no runway when the plan is not known', () => {
     expect(computeRunway(null, burn(0.5), [exact(0.5)], NOW)).toBeNull()
+  })
+
+  describe('whole days, as the user reads them', () => {
+    // Local dates, so the expectations hold in any time zone.
+    const at = (y: number, m: number, d: number, h = 0, min = 0) => new Date(y, m - 1, d, h, min)
+
+    it('counts the calendar days to the plan end, today and the last day included, as the AWS console does', () => {
+      // Seen on a real account: 94.75 days left by the clock, 96 in the console.
+      const now = at(2026, 11, 15, 18, 51)
+      const runway = computeRunway(plan({ expiresAt: at(2027, 2, 18, 12, 52).toISOString() }), burn(0.0154), [exact(0.0154)], now)
+      expect(runway).toMatchObject({ days: 94.75, wholeDays: 96 })
+    })
+
+    it('is one day on the last day of the plan', () => {
+      const runway = computeRunway(plan({ expiresAt: at(2026, 11, 15, 20).toISOString() }), burn(0), [], at(2026, 11, 15, 9))
+      expect(runway?.wholeDays).toBe(1)
+    })
+
+    it('does not count a last day that ends at its first moment', () => {
+      // Ending at midnight means the plan is over when that day starts.
+      const runway = computeRunway(plan({ expiresAt: at(2026, 11, 16).toISOString() }), burn(0), [], at(2026, 11, 15, 9))
+      expect(runway?.wholeDays).toBe(1)
+    })
+
+    it('counts whole calendar days across a daylight saving change', () => {
+      const runway = computeRunway(plan({ expiresAt: at(2027, 4, 10, 12).toISOString() }), burn(0), [], at(2027, 3, 1, 12))
+      expect(runway?.wholeDays).toBe(41)
+    })
+
+    it('rounds down when the credits run out first: they can run out at any hour', () => {
+      const runway = computeRunway(plan(), burn(0.4, 0.1), [exact(0.4)], NOW)
+      expect(runway).toMatchObject({ days: 8.33, wholeDays: 8 })
+    })
+
+    it('is zero once the end date has passed', () => {
+      const runway = computeRunway(plan({ expiresAt: '2026-11-01T00:00:00.000Z' }), burn(0), [], NOW)
+      expect(runway).toMatchObject({ days: 0, wholeDays: 0 })
+    })
   })
 })

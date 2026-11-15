@@ -35,8 +35,8 @@ export function formatRunway(runway: Runway | null): string {
   if (!runway) return 'Plan unknown'
   if (runway.days === null) return 'No limit'
   if (runway.days <= 0) return 'Ended'
-  if (runway.days < 1) return 'Less than a day'
-  const whole = Math.floor(runway.days)
+  const whole = runway.wholeDays ?? 0
+  if (whole < 1) return 'Less than a day'
   const text = `${whole} ${whole === 1 ? 'day' : 'days'}`
   return runway.isUpperBound ? `At most ${text}` : text
 }

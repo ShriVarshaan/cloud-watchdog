@@ -202,7 +202,8 @@ export const RULES: readonly Rule[] = [
       // An expired plan has its own rule and its own message.
       if (plan.status === 'EXPIRED' || !runway || runway.days === null) return null
       if (!(runway.days < params.days!)) return null
-      const whole = Math.floor(runway.days)
+      // The same count the popover and main window show.
+      const whole = runway.wholeDays ?? 0
       if (whole < 1) return { message: 'Credits or the plan run out in less than a day.' }
       const qualifier = runway.isUpperBound ? 'at most' : 'about'
       return { message: `Credits or the plan run out in ${qualifier} ${whole} ${whole === 1 ? 'day' : 'days'}.` }

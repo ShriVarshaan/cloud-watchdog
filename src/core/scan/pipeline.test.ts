@@ -116,7 +116,7 @@ describe('completeScan', () => {
     expect(result.burn).toEqual({ exactUsdPerHour: 0.048, estimateUsdPerHour: 0, unknownCount: 0 })
     expect(result.plan).toEqual(freePlan)
     // $115.20 / ($0.048 x 24) = 100 days, before the plan ends; NAT data processing is not in the rate.
-    expect(result.runway).toEqual({ creditDays: 100, planDays: 200, days: 100, isUpperBound: true })
+    expect(result.runway).toEqual({ creditDays: 100, planDays: 200, days: 100, wholeDays: 100, isUpperBound: true })
     expect(result.flags.map((f) => [f.ruleId, f.resourceKey]).sort()).toEqual([
       ['nat-gateway', nat.key],
       ['stopped-storage', stoppedInstance.key]

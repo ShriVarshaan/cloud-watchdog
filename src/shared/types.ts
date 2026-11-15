@@ -128,8 +128,14 @@ export interface BurnRate {
 export interface Runway {
   creditDays: number | null
   planDays: number | null
-  /** The smaller of the two that exist. */
+  /** The smaller of the two that exist. Rules compare against this. */
   days: number | null
+  /**
+   * The number of days shown to the user. When the plan end date is the
+   * limit, the calendar days left with today and the last day both counted,
+   * as the AWS console counts them; when credits are, `days` rounded down.
+   */
+  wholeDays: number | null
   /** true when some cost is unpriced, so the real runway may be shorter. */
   isUpperBound: boolean
 }

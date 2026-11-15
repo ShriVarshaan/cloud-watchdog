@@ -37,8 +37,8 @@ function ringText(runway: Runway): { prefix: string | null; number: string; unit
   const days = runway.days ?? 0
   const prefix = runway.isUpperBound ? 'at most' : null
   if (days <= 0) return { prefix: null, number: '0', unit: 'days left' }
-  if (days < 1) return { prefix, number: '<1', unit: 'day' }
-  const whole = Math.floor(days)
+  const whole = runway.wholeDays ?? 0
+  if (whole < 1) return { prefix, number: '<1', unit: 'day' }
   return { prefix, number: String(whole), unit: whole === 1 ? 'day' : 'days' }
 }
 
