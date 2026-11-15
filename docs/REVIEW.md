@@ -14,7 +14,7 @@ because it is the only code that changes anything in an AWS account.
 | Critical findings open | none |
 | Fixed during the review | 1 bug (high), 1 missing test |
 | Left for follow-up | 7 medium, 11 low (below) |
-| Still to do by hand | Access Analyzer policy check, the smoke checklist (both below) |
+| Still to do by hand | Access Analyzer policy check (below). The smoke and stop checklists passed on 2026-11-15 |
 
 ## Fixed during the review
 
@@ -242,23 +242,26 @@ with `Force`" and "enabling skips the dialog". Each made at least one test fail.
 
 **Checklist for the first real stop** (needs the actions policy attached)
 
-- [ ] Switching on shows the dialog with the real account id
-- [ ] Without the actions policy, the preview of a running `t3.micro` says the profile is not allowed
-- [ ] With the policy, the preview shows consequences, and the confirmation names the instance, region and account
+Run on the real account with the installed app on 2026-11-15; all passed.
+
+- [x] Switching on shows the dialog with the real account id
+- [x] Without the actions policy, the preview of a running `t3.micro` says the profile is not allowed
+- [x] With the policy, the preview shows consequences, and the confirmation names the instance, region and account
 - [x] The instance stops; the next scan shows it stopped; `action_log` has one `stopped` row (confirmed 2026-11-15: `i-030f7913e479b0f42` in us-east-1, burn rate fell from $0.0154/h to $0 on the next scan)
-- [ ] An instance in an Auto Scaling group gets a blocker and no Stop button to confirm
-- [ ] A test RDS database stops, and a `stopped` row is written
+- [x] An instance in an Auto Scaling group gets a blocker and no Stop button to confirm
+- [x] A test RDS database stops, and a `stopped` row is written
 
 ## Manual smoke checklist
 
 On 2026-11-10 the app was started with `npm run dev` against the real account
-and reported as "seems to be working". The individual checks below were **not
-confirmed one by one**, so they are still open.
+and reported as "seems to be working", without the checks below. On 2026-11-15
+they were run one by one on the real account with the installed app, and all
+passed.
 
-- [ ] The header shows the real account id and identity
-- [ ] A scan completes; the Scan problems tab is empty or shows only expected entries
-- [ ] An unattached volume and an unused Elastic IP, created for the test, are flagged and priced
-- [ ] Removing the `freetier` statement from the policy shows the "Plan details unavailable" banner
-- [ ] Removing the `pricing` statement turns prices into estimates or "—"
+- [x] The header shows the real account id and identity
+- [x] A scan completes; the Scan problems tab is empty or shows only expected entries
+- [x] An unattached volume and an unused Elastic IP, created for the test, are flagged and priced
+- [x] Removing the `freetier` statement from the policy shows the "Plan details unavailable" banner
+- [x] Removing the `pricing` statement turns prices into estimates or "—"
 - [x] A notification appears for a new warning, and clicking it opens that resource (confirmed 2026-11-15)
-- [ ] The tray tooltip shows the burn rate
+- [x] The tray tooltip shows the burn rate
