@@ -84,6 +84,11 @@ Cloud Watchdog uses a profile from your AWS CLI configuration
 offer you a choice and signs in through the AWS SDK's normal credential chain.
 **It never asks for, stores or copies keys.**
 
+If there is no profile on the computer yet, the welcome screen says so and
+walks you through it: it checks whether the AWS CLI is installed, gives the
+command to install it if not, and shows the commands below with links to
+AWS's guides. "Check Again" picks up the new profile without a restart.
+
 Give that profile **only the read-only policy** in
 [`iam/cloud-watchdog-readonly.json`](iam/cloud-watchdog-readonly.json). Do not
 use an administrator profile: the app needs to read a handful of things, and
