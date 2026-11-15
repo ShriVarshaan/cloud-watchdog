@@ -144,6 +144,17 @@ export interface Runway {
 // Scan result
 // ---------------------------------------------------------------------------
 
+/** Whether the AWS CLI is on this computer. The app does not need it, but it is how most people create a profile. */
+export interface AwsCliStatus {
+  installed: boolean
+  /** For example "2.17.3". null when not installed. */
+  version: string | null
+}
+
+/** AWS documentation pages the setup steps link to. The main process holds the URLs. */
+export const SETUP_GUIDES = ['install-cli', 'access-keys', 'sso'] as const
+export type SetupGuide = (typeof SETUP_GUIDES)[number]
+
 /** Who the app is signed in as. Shown on first run so the user can confirm the account. */
 export interface Identity {
   accountId: string
